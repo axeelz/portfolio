@@ -1,0 +1,32 @@
+{
+  "presentation": {
+    "title": "computer science student",
+    "about": "About me",
+    "part1": "I'm 19 years old and I live in the Paris area.",
+    "part2": "I am in my third year of computer science degree at <1>Sorbonne\u00A0University</1> in Paris.",
+    "seeProjects": "See my projects"
+  },
+  "navbar": {
+    "switchTo": "Passer en",
+    "switchLang": "Switch language",
+    "switchTheme": "Switch theme",
+    "presentation": "Presentation",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "projects": {
+    "title": "Main projects",
+    "card": {
+      "website": "Visit website",
+      "source": "See on GitHub",
+      "users": "users"
+    }
+  },
+  "contact": {
+    "title": "Let's keep in touch!"
+  },
+  "footer": {
+    "createdBy": "Created by",
+    "views": "views"
+  }
+}

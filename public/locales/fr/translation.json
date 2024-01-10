@@ -1,0 +1,32 @@
+{
+  "presentation": {
+    "title": "étudiant en informatique",
+    "about": "À propos",
+    "part1": "J'ai 19 ans et j'habite en région parisienne.",
+    "part2": "Je suis en troisième année de licence d'informatique à <1>Sorbonne\u00A0Université</1> à Paris.",
+    "seeProjects": "Voir mes projets"
+  },
+  "navbar": {
+    "switchTo": "Switch to",
+    "switchLang": "Changer de langue",
+    "switchTheme": "Changer le thème",
+    "presentation": "Présentation",
+    "projects": "Projets",
+    "contact": "Contact"
+  },
+  "projects": {
+    "title": "Projets principaux",
+    "card": {
+      "website": "Visiter le site",
+      "source": "Voir sur GitHub",
+      "users": "utilisateurs"
+    }
+  },
+  "contact": {
+    "title": "Restons en contact\u00A0!"
+  },
+  "footer": {
+    "createdBy": "Créé par",
+    "views": "vues"
+  }
+}

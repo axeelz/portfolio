@@ -1,0 +1,98 @@
+{
+  "projects": [
+    {
+      "name": "Café sans-fil",
+      "image": "cafesansfil.png",
+      "date": "2023",
+      "desc_fr": "Projet pilote visant à améliorer le service des cafés étudiants de l'Université de Montréal.",
+      "desc_en": "Pilot project to improve service at Université de Montréal student cafés.",
+      "techs": ["React", "FastAPI", "TailwindCSS", "MongoDB"],
+      "links": {
+        "source": "https://github.com/ceduni/cafe-sans-fil",
+        "url": "https://ceduni.github.io/cafe-sans-fil/"
+      }
+    },
+    {
+      "name": "Canvas Downloader",
+      "image": "cdfs.jpg",
+      "date": "2022",
+      "desc_fr": "Un site qui permet de télécharger les vidéos de fond sur Spotify.",
+      "desc_en": "A tool to download background video loops on Spotify.",
+      "techs": ["HTML", "CSS", "JavaScript", "Flask", "Jinja", "PostgreSQL", "Cloudflare", "Nginx"],
+      "links": {
+        "url": "https://www.canvasdownloader.com/"
+      },
+      "stats": {
+        "endpoint": "https://www.canvasdownloader.com/api/visitors",
+        "field": "unique_ips"
+      }
+    },
+    {
+      "name": "MealRush",
+      "image": "mealrush.png",
+      "date": "2022",
+      "desc_fr": "Un site de commande de plats à domicile type Uber Eats avec portail restaurateur et administrateur.",
+      "desc_en": "An Uber Eats-type food ordering site.",
+      "techs": ["HTML", "JavaScript", "PHP", "TailwindCSS", "MariaDB"],
+      "links": {
+        "source": "https://github.com/axeelz/mealrush",
+        "url": "https://mealrush.axeelz.com/"
+      }
+    },
+    {
+      "name": "Portfolio",
+      "image": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2831&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "date": "2024",
+      "desc_fr": "Vous êtes dessus !",
+      "desc_en": "You're on it!",
+      "techs": ["React", "styled-components"],
+      "links": {
+        "source": "https://github.com/axeelz/portfolio"
+      }
+    },
+    {
+      "name": "TrustMe",
+      "image": "trustme.png",
+      "date": "2023",
+      "desc_fr": "Refonte du site TrustMe pour l'entreprise A3BC.",
+      "desc_en": "TrustMe website revamp.",
+      "techs": ["Hugo", "HTML", "CSS", "JavaScript"],
+      "links": {
+        "url": "https://www.trustmeid.io/"
+      }
+    },
+    {
+      "name": "A3BC",
+      "image": "a3bc.png",
+      "date": "2023",
+      "desc_fr": "Refonte du site de l'entreprise A3BC.",
+      "desc_en": "A3BC company website revamp.",
+      "techs": ["Hugo", "HTML", "CSS", "JavaScript"],
+      "links": {
+        "url": "https://www.a3bc.io/"
+      }
+    },
+    {
+      "name": "Ultrasafe",
+      "image": "ultrasafe.jpg",
+      "date": "2021",
+      "desc_fr": "Un projet sur Raspberry Pi avec un site permettant de gérer une alarme et consulter ses données.",
+      "desc_en": "A project on Raspberry Pi with a site allowing to manage an alarm and consult its data.",
+      "techs": ["PHP", "Python", "HTML", "CSS", "JavaScript", "MariaDB", "Figma"],
+      "links": {
+        "source": "https://github.com/axeelz/ultrasafearchive"
+      }
+    },
+    {
+      "name": "Realtime Lyrics",
+      "image": "lyrics.jpg",
+      "date": "2021",
+      "desc_fr": "Une web app affichant les paroles Genius de la chanson que vous jouez sur Spotify (avant que Spotify implémente les paroles).",
+      "desc_en": "A web app that displays the Genius lyrics of the song you are playing on Spotify (before Spotify had lyrics).",
+      "techs": ["Bottle.py", "HTML", "CSS", "JavaScript", "jQuery"],
+      "links": {
+        "source": "https://github.com/axeelz/realtimelyrics"
+      }
+    }
+  ]
+}
