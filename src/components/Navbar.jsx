@@ -28,8 +28,7 @@ const NavbarContainer = styled.nav`
 `;
 
 const IconBtn = styled.button`
-  width: 48px;
-  height: 48px;
+  padding: 8px;
   background-color: transparent;
   border: none;
   color: var(--text-color);
@@ -120,7 +119,7 @@ const Navbar = ({ isDark, setIsDark }) => {
       <NavbarContainer>
         <ButtonsContainer>
           <IconBtn aria-label="Collapsable menu" onClick={handleCollapsableClose}>
-            <div>{collapsableOpen ? <AiOutlineClose /> : <AiOutlineMenu />}</div>
+            {collapsableOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
           </IconBtn>
           {collapsableOpen && <CollapsableNav ref={collapsableRef} />}
         </ButtonsContainer>
@@ -135,9 +134,7 @@ const Navbar = ({ isDark, setIsDark }) => {
             placement="bottom"
             key={i18n.language}>
             <IconBtn aria-label={t("navbar.switchLang")} onClick={switchLanguage}>
-              <div>
-                <IoLanguage />
-              </div>
+              <IoLanguage />
             </IconBtn>
           </Tippy>
           <Tippy

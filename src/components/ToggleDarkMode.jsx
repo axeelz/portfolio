@@ -18,7 +18,7 @@ const ToggleDarkMode = React.forwardRef(({ isDark, setIsDark, IconBtn }, ref) =>
 
   return (
     <IconBtn aria-label="Switch theme" onClick={toggleTheme} ref={ref} key={isDark}>
-      <div>{isDark ? <IoSunny /> : <IoMoon />}</div>
+      {isDark ? <IoSunny /> : <IoMoon />}
     </IconBtn>
   );
 });
