@@ -46,9 +46,11 @@ const App = () => {
 
   useEffect(() => {
     if (isDark) {
+      document.querySelector('meta[name="theme-color"]').setAttribute("content", "#000000");
       document.body.classList.add("dark");
       saveTheme("dark");
     } else {
+      document.querySelector('meta[name="theme-color"]').setAttribute("content", "#FAF8FF");
       document.body.classList.remove("dark");
       saveTheme("light");
     }
