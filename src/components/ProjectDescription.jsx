@@ -13,6 +13,7 @@ const Badge = styled.span`
   color: white;
   border-radius: 5rem;
   font-weight: 600;
+  white-space: nowrap;
 `;
 
 const ProjectDescription = ({ desc, stats }) => {
