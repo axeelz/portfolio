@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 const ProjectDesc = styled.p`
   font-weight: 500;
+  line-height: 1.75;
 `;
 
 const Badge = styled.span`
