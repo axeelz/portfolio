@@ -47,7 +47,6 @@ const IconBtn = styled.button`
 
   &:active {
     transform: scale(0.9);
-    font-size: 1.75rem;
     transition: transform 0.1s ease-in-out;
   }
 `;
