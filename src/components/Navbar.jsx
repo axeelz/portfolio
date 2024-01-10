@@ -120,7 +120,7 @@ const Navbar = ({ isDark, setIsDark }) => {
       <NavbarContainer>
         <ButtonsContainer>
           <IconBtn aria-label="Collapsable menu" onClick={handleCollapsableClose}>
-            {collapsableOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
+            <div>{collapsableOpen ? <AiOutlineClose /> : <AiOutlineMenu />}</div>
           </IconBtn>
           {collapsableOpen && <CollapsableNav ref={collapsableRef} />}
         </ButtonsContainer>
@@ -135,7 +135,9 @@ const Navbar = ({ isDark, setIsDark }) => {
             placement="bottom"
             key={i18n.language}>
             <IconBtn aria-label={t("navbar.switchLang")} onClick={switchLanguage}>
-              <IoLanguage />
+              <div>
+                <IoLanguage />
+              </div>
             </IconBtn>
           </Tippy>
           <Tippy
