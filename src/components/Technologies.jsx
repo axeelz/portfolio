@@ -3,11 +3,11 @@ import projects from "../data/projects.json";
 import { showAfter } from "../styled/animations";
 import { useState } from "react";
 import useMediaQuery from "../hooks/useMediaQuery";
+import { useTranslation } from "react-i18next";
 
 const Chip = styled.div`
   background-color: var(--card-background-color);
-  background-image: ${(props) =>
-    props.$clickable ? "linear-gradient(to top, transparent, hsl(0 0% 100% / 0.2))" : "none"};
+  background-image: ${(props) => (props.$clickable ? "var(--gradient-techs)" : "none")};
   padding: ${(props) => (props.$clickable ? "5px 8px" : "5px")};
   border-radius: 10px;
   display: inline-block;
@@ -34,6 +34,7 @@ const TechsContainer = styled.div`
 const Technologies = () => {
   const [showAll, setShowAll] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
+  const { t } = useTranslation();
 
   const getTechs = () => {
     const data = projects.projects;
@@ -66,7 +67,7 @@ const Technologies = () => {
         </Chip>
       ))}
       <Chip $clickable onClick={() => setShowAll(!showAll)} index={displayedTechs.length}>
-        {showAll ? "Moins" : `+${remainingTechsCount} autres`}
+        {showAll ? t("presentation.less") : `+${remainingTechsCount} ${t("presentation.others")}`}
       </Chip>
     </TechsContainer>
   );

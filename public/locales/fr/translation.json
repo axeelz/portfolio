@@ -4,6 +4,8 @@
     "about": "À propos",
     "part1": "J'ai 20 ans et j'habite en région parisienne.",
     "part2": "Je suis en troisième année de licence d'informatique à <1>Sorbonne\u00A0Université</1> à Paris.",
+    "others": "autres",
+    "less": "Afficher moins",
     "seeProjects": "Voir mes projets"
   },
   "navbar": {
