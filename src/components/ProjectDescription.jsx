@@ -19,7 +19,7 @@ const Badge = styled.span`
 
 const ProjectDescription = ({ desc, stats }) => {
   const { t, i18n } = useTranslation();
-  const [stat, setStat] = useState(30000);
+  const [stat, setStat] = useState(40000);
 
   const { fr, en } = desc;
   const description = i18n.language === "fr" ? fr : en;
@@ -37,8 +37,10 @@ const ProjectDescription = ({ desc, stats }) => {
         })
         .then((data) => {
           const stat = data[field];
-          const rounded = Math.floor(stat / 100) * 100;
-          setStat(rounded);
+          if (stat) {
+            const rounded = Math.floor(stat / 100) * 100;
+            setStat(rounded);
+          }
         })
         .catch((err) => {
           console.error(err);

@@ -24,7 +24,7 @@
       },
       "stats": {
         "endpoint": "https://www.canvasdownloader.com/api/visitors",
-        "field": "unique_ips"
+        "field": "visitors_count"
       }
     },
     {
