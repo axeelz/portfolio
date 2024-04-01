@@ -23,7 +23,7 @@
         "url": "https://www.canvasdownloader.com/"
       },
       "stats": {
-        "endpoint": "https://www.canvasdownloader.com/api/visitors",
+        "endpoint": "https://www.canvasdownloader.com/api/stats",
         "field": "visitors_count"
       }
     },
