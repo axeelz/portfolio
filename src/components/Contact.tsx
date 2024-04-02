@@ -73,6 +73,7 @@ const Contact = () => {
   const copyText = copied ? "Copié 🎉" : "Copier l'adresse mail";
 
   const [githubData, setGithubData] = useState<any>(null);
+  const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
   useEffect(() => {
     if (copied) {
@@ -82,11 +83,20 @@ const Contact = () => {
     }
   }, [copied]);
 
+  // Get my GitHub data to display in the tooltip
   useEffect(() => {
-    // Get my GitHub data to display in the tooltip
     fetch("https://api.github.com/users/axeelz")
       .then((res) => res.json())
       .then((data) => setGithubData(data));
+  }, []);
+
+  // Update time in real-time
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const handleCopy = () => {
@@ -100,7 +110,7 @@ const Contact = () => {
       <Subtitle>
         {t("contact.currently")}{" "}
         <strong>
-          {new Date().toLocaleString([], {
+          {currentTime.toLocaleString([], {
             timeZone: "Europe/Paris",
             hour: "numeric",
             minute: "numeric",
