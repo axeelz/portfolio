@@ -40,15 +40,15 @@ const ProjectButtons = ({ links }: ProjectButtonsProps) => {
     <>
       {url && source ? (
         <TwoButtonsContainer>
-          <SecondaryButton as="a" href={source}>
+          <SecondaryButton as="a" href={source} target="_blank">
             {t("projects.card.source")}
           </SecondaryButton>
-          <PrimaryButton as="a" href={url}>
+          <PrimaryButton as="a" href={url} target="_blank">
             {t("projects.card.website")}
           </PrimaryButton>
         </TwoButtonsContainer>
       ) : (
-        <FullWidthButton as="a" href={url ?? source}>
+        <FullWidthButton as="a" href={url ?? source} target="_blank">
           {url ? t("projects.card.website") : t("projects.card.source")}
         </FullWidthButton>
       )}
