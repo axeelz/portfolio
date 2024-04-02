@@ -3,7 +3,6 @@ import { Button } from "../styled/shared";
 import { Trans, useTranslation } from "react-i18next";
 import { showAfter, trackingInExpand } from "../styled/animations";
 import Technologies from "./Technologies";
-// @ts-ignore: Library is not typed
 import useSound from "use-sound";
 
 const TitleContainer = styled.div`

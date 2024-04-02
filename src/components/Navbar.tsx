@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import useKeyPress from "../hooks/useKeyPress";
 import CollapsableNav from "./CollapsableNav";
 import { useState, useRef, Dispatch, SetStateAction } from "react";
-// @ts-ignore: Library is not typed
 import useSound from "use-sound";
 import { fadeIn } from "../styled/animations";
 import { IconBtn } from "../styled/shared";

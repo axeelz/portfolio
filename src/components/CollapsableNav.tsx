@@ -2,7 +2,6 @@ import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { slideInBlurredLeft, slideOutBlurredLeft } from "../styled/animations";
-// @ts-ignore: Library is not typed
 import useSound from "use-sound";
 
 const NavContainer = styled.nav`

@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction } from "react";
-// @ts-ignore: Library is not typed
 import useSound from "use-sound";
 import { IoMoon, IoSunny } from "react-icons/io5";
 import useKeyPress from "../hooks/useKeyPress";
