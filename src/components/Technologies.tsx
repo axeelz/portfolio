@@ -49,7 +49,7 @@ const Technologies = () => {
     // Sort techs by how many times they appear
     const techs = Object.entries(techsCount).sort((a, b) => b[1] - a[1]);
     // Additional techs to add to the list
-    const additionalTechs = ["Git", "Linux", "Java", "Astro", "Mapbox", "Firebase"];
+    const additionalTechs: string[] = projects.additionalTechs;
     const addedTechs: [string, number][] = additionalTechs.map((tech) => [tech, 1]);
     techs.push(...addedTechs);
     return techs.map((tech) => tech[0]);
