@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-const supabase = createClient("https://sxjyvjtxxqqatlvhdsgq.supabase.co", import.meta.env.VITE_PUBLIC_SUPABASE_KEY);
+const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_PUBLIC_SUPABASE_KEY);
 
 const CountContainer = styled.span``;
 
@@ -16,7 +16,7 @@ const Count = styled.code`
 `;
 
 const ViewCount = () => {
-  const [count, setCount] = useState("...");
+  const [count, setCount] = useState<number | "...">("...");
   const { t } = useTranslation();
 
   useEffect(() => {

@@ -2,6 +2,8 @@ import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { slideInBlurredLeft, slideOutBlurredLeft } from "../styled/animations";
+// @ts-ignore: Library is not typed
+import useSound from "use-sound";
 
 const NavContainer = styled.nav`
   position: absolute;
@@ -52,12 +54,19 @@ const ButtonItem = styled.button`
   }
 `;
 
-const CollapsableNav = forwardRef(({}, ref) => {
+const CollapsableNav = forwardRef<HTMLElement>((_, ref) => {
   const { t } = useTranslation();
+  const [playSound] = useSound("/sounds/pop.mp3", { volume: 0.2 });
+
   return (
     <NavContainer ref={ref}>
       {["presentation", "projects", "contact"].map((item) => (
-        <ButtonItem key={item} onClick={() => document.getElementById(item).scrollIntoView({ behavior: "smooth" })}>
+        <ButtonItem
+          key={item}
+          onClick={() => {
+            playSound();
+            document.getElementById(item)?.scrollIntoView({ behavior: "smooth" });
+          }}>
           {t(`navbar.${item}`)}
         </ButtonItem>
       ))}

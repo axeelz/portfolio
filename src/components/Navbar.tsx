@@ -8,9 +8,11 @@ import ToggleDarkMode from "./ToggleDarkMode";
 import { useTranslation } from "react-i18next";
 import useKeyPress from "../hooks/useKeyPress";
 import CollapsableNav from "./CollapsableNav";
-import { useState, useRef } from "react";
+import { useState, useRef, Dispatch, SetStateAction } from "react";
+// @ts-ignore: Library is not typed
 import useSound from "use-sound";
 import { fadeIn } from "../styled/animations";
+import { IconBtn } from "../styled/shared";
 
 const NavbarContainer = styled.nav`
   width: 100%;
@@ -24,31 +26,8 @@ const NavbarContainer = styled.nav`
   background-color: var(--navbar-color);
   padding: 1rem;
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   margin-bottom: 1rem;
-`;
-
-const IconBtn = styled.button`
-  padding: 8px;
-  background-color: transparent;
-  border: none;
-  color: var(--text-color);
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out, font-size 0.2s ease-in-out, opacity 0.2s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  font-size: 2rem;
-  opacity: 0.65;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  &:active {
-    transform: scale(0.9);
-    transition: transform 0.1s ease-in-out;
-  }
 `;
 
 const ButtonsContainer = styled.div`
@@ -77,25 +56,30 @@ const Kbd = styled.kbd`
   }
 `;
 
-const Navbar = ({ isDark, setIsDark }) => {
+interface NavbarProps {
+  isDark: boolean;
+  setIsDark: Dispatch<SetStateAction<boolean>>;
+}
+
+const Navbar = ({ isDark, setIsDark }: NavbarProps) => {
   const { t, i18n } = useTranslation();
 
   const switchLanguage = () => {
-    i18n.changeLanguage(i18n.language === "fr" ? "en" : "fr");
+    i18n.changeLanguage(i18n.languages[0] === "fr" ? "en" : "fr");
   };
 
   useKeyPress("l", () => {
     switchLanguage();
   });
 
-  const [collapsableOpen, setCollapsableOpen] = useState(false);
-  const collapsableRef = useRef(null);
-  const [playOpen] = useSound("/sounds/whoosh-open.mp3", { volume: 0.2 });
+  const [collapsableOpen, setCollapsableOpen] = useState<boolean>(false);
+  const collapsableRef = useRef<HTMLElement>(null);
+  const [playOpen] = useSound("/sounds/whoosh-open.mp3", { volume: 0.1 });
   const [playClose] = useSound("/sounds/whoosh-close.mp3", { volume: 0.1 });
 
   const handleCollapsableClose = () => {
     if (collapsableOpen) {
-      collapsableRef.current.classList.add("exiting");
+      if (collapsableRef.current) collapsableRef.current.classList.add("exiting");
       setTimeout(() => {
         playClose();
       }, 100);
@@ -126,13 +110,13 @@ const Navbar = ({ isDark, setIsDark }) => {
           <Tippy
             content={
               <span>
-                {`${t("navbar.switchTo")} ${i18n.language === "fr" ? "English" : "français"}`} <Kbd>L</Kbd>
+                {`${t("navbar.switchTo")} ${i18n.languages[0] === "fr" ? "English" : "français"}`} <Kbd>L</Kbd>
               </span>
             }
             animation="scale-subtle"
             placement="bottom"
             key={i18n.language}>
-            <IconBtn aria-label={t("navbar.switchLang")} onClick={switchLanguage}>
+            <IconBtn aria-label={t("navbar.switchLang") as string} onClick={switchLanguage}>
               <IoLanguage />
             </IconBtn>
           </Tippy>
@@ -144,8 +128,8 @@ const Navbar = ({ isDark, setIsDark }) => {
             }
             animation="scale-subtle"
             placement="bottom"
-            key={isDark}>
-            <ToggleDarkMode isDark={isDark} setIsDark={setIsDark} IconBtn={IconBtn} />
+            key={isDark.toString()}>
+            <ToggleDarkMode isDark={isDark} setIsDark={setIsDark} />
           </Tippy>
         </ButtonsContainer>
       </NavbarContainer>

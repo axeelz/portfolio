@@ -6,7 +6,8 @@
     "part2": "I am in my third year of computer science degree at <1>Sorbonne\u00A0University</1> in Paris.",
     "others": "others",
     "less": "Show less",
-    "seeProjects": "See my projects"
+    "seeProjects": "See my projects",
+    "contactMe": "Contact me"
   },
   "navbar": {
     "switchTo": "Passer en",
@@ -20,12 +21,13 @@
     "title": "Main projects",
     "card": {
       "website": "Visit website",
-      "source": "See on GitHub",
-      "users": "users"
+      "source": "See on GitHub"
     }
   },
   "contact": {
-    "title": "Let's keep in touch!"
+    "title": "Let's keep in touch!",
+    "currently": "it's currently",
+    "forMe": "for me"
   },
   "footer": {
     "createdBy": "Created by",

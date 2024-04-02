@@ -40,3 +40,27 @@ export const Button = styled.button`
     transition: transform 0.1s ease-in-out;
   }
 `;
+
+export const IconBtn = styled.button`
+  padding: 8px;
+  background-color: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, font-size 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 2rem;
+  opacity: 0.65;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease-in-out;
+  }
+`;

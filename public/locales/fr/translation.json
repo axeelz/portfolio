@@ -6,7 +6,8 @@
     "part2": "Je suis en troisième année de licence d'informatique à <1>Sorbonne\u00A0Université</1> à Paris.",
     "others": "autres",
     "less": "Afficher moins",
-    "seeProjects": "Voir mes projets"
+    "seeProjects": "Voir mes projets",
+    "contactMe": "Me contacter"
   },
   "navbar": {
     "switchTo": "Switch to",
@@ -20,12 +21,13 @@
     "title": "Projets principaux",
     "card": {
       "website": "Visiter le site",
-      "source": "Voir sur GitHub",
-      "users": "utilisateurs"
+      "source": "Voir sur GitHub"
     }
   },
   "contact": {
-    "title": "Restons en contact\u00A0!"
+    "title": "Restons en contact\u00A0!",
+    "currently": "il est actuellement",
+    "forMe": "chez moi"
   },
   "footer": {
     "createdBy": "Créé par",

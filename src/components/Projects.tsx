@@ -19,13 +19,28 @@ const Grid = styled.div`
   }
 `;
 
+export interface Project {
+  name: string; // Project name
+  image: string; // Image URL
+  date: string; // YYYY
+  desc_fr: string; // Description in French
+  desc_en: string; // Description in English
+  techs: string[]; // List of technologies used
+  links: { source?: string; url?: string }; // URLs
+  stats?: {
+    endpoint: string; // API endpoint
+    /* Fields to display in the project stats */
+    fields: { field: string; label_fr: string; label_en: string; default: number }[];
+  };
+}
+
 const Projects = () => {
   const { t } = useTranslation();
   return (
     <>
       <SectionTitle>{t("projects.title")}</SectionTitle>
       <Grid>
-        {data.projects.map((project, i) => (
+        {data.projects.map((project: Project, i: number) => (
           <ProjectCard key={i} project={project} />
         ))}
       </Grid>

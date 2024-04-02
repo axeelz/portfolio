@@ -38,19 +38,21 @@ const App = () => {
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   };
 
-  const [isDark, setIsDark] = useState(getTheme);
+  const [isDark, setIsDark] = useState<boolean>(getTheme());
 
-  const saveTheme = (theme) => {
+  const saveTheme = (theme: "dark" | "light") => {
     localStorage.setItem("theme", theme);
   };
 
   useEffect(() => {
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
     if (isDark) {
-      document.querySelector('meta[name="theme-color"]').setAttribute("content", "#000000");
+      metaThemeColor?.setAttribute("content", "#000000");
       document.body.classList.add("dark");
       saveTheme("dark");
     } else {
-      document.querySelector('meta[name="theme-color"]').setAttribute("content", "#FAF8FF");
+      metaThemeColor?.setAttribute("content", "#FAF8FF");
       document.body.classList.remove("dark");
       saveTheme("light");
     }

@@ -5,14 +5,14 @@ import { useState } from "react";
 import useMediaQuery from "../hooks/useMediaQuery";
 import { useTranslation } from "react-i18next";
 
-const Chip = styled.div`
+const Chip = styled.div<{ $clickable?: boolean; $additional?: boolean; index: number }>`
   background-color: var(--card-background-color);
   background-image: ${(props) => (props.$clickable ? "var(--gradient-techs)" : "none")};
   padding: ${(props) => (props.$clickable ? "5px 8px" : "5px")};
   border-radius: 10px;
   display: inline-block;
   font-size: 0.9rem;
-  cursor: ${(props) => (props.$clickable ? "pointer" : "crosshair")};
+  cursor: ${(props) => (props.$clickable ? "pointer" : "auto")};
   animation: ${showAfter} ${(props) => (props.$additional ? 0 : props.index * 0.15 + 0.5)}s ease-in-out;
 
   &:hover {
@@ -32,25 +32,26 @@ const TechsContainer = styled.div`
 `;
 
 const Technologies = () => {
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState<boolean>(false);
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const { t } = useTranslation();
 
   const getTechs = () => {
     const data = projects.projects;
     // Get techs with how many times they appear
-    const techsCount = data
+    const techsCount: { [key: string]: number } = data
       .map((project) => project.techs)
       .flat()
-      .reduce((acc, tech) => {
-        acc[tech] = (acc[tech] || 0) + 1;
+      .reduce((acc: { [key: string]: number }, tech: string) => {
+        acc[tech] = acc[tech] ? acc[tech] + 1 : 1;
         return acc;
       }, {});
     // Sort techs by how many times they appear
     const techs = Object.entries(techsCount).sort((a, b) => b[1] - a[1]);
-    const additionalTechs = ["Git", "Mapbox", "Firebase", "Linux", "Java"];
-    // Add additional techs to the list
-    techs.push(...additionalTechs.map((tech) => [tech, 1]));
+    // Additional techs to add to the list
+    const additionalTechs = ["Git", "Linux", "Java", "Astro", "Mapbox", "Firebase"];
+    const addedTechs: [string, number][] = additionalTechs.map((tech) => [tech, 1]);
+    techs.push(...addedTechs);
     return techs.map((tech) => tech[0]);
   };
 

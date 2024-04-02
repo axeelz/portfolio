@@ -23,6 +23,7 @@ const SocialButton = styled.button`
   border-radius: 20px;
   font-family: inherit;
   font-size: inherit;
+  font-weight: 500;
   border: none;
 
   /* As link */
@@ -34,7 +35,7 @@ const SocialButton = styled.button`
   }
 `;
 
-const SocialButtonWithIcon = styled(SocialButton)`
+const SocialButtonWithIcon = styled(SocialButton)<{ social?: "linkedin" | "github" }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,11 +46,33 @@ const SocialButtonWithIcon = styled(SocialButton)`
   }
 `;
 
+const Subtitle = styled.p`
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-align: center;
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+`;
+
+const GithubInfo = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  & img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+`;
+
 const Contact = () => {
   const { t } = useTranslation();
 
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<boolean>(false);
   const copyText = copied ? "Copié 🎉" : "Copier l'adresse mail";
+
+  const [githubData, setGithubData] = useState<any>(null);
 
   useEffect(() => {
     if (copied) {
@@ -59,6 +82,13 @@ const Contact = () => {
     }
   }, [copied]);
 
+  useEffect(() => {
+    // Get my GitHub data to display in the tooltip
+    fetch("https://api.github.com/users/axeelz")
+      .then((res) => res.json())
+      .then((data) => setGithubData(data));
+  }, []);
+
   const handleCopy = () => {
     navigator.clipboard.writeText("axelzareb@gmail.com");
     setCopied(true);
@@ -67,6 +97,17 @@ const Contact = () => {
   return (
     <>
       <SectionTitle>{t("contact.title")}</SectionTitle>
+      <Subtitle>
+        {t("contact.currently")}{" "}
+        <strong>
+          {new Date().toLocaleString([], {
+            timeZone: "Europe/Paris",
+            hour: "numeric",
+            minute: "numeric",
+          })}
+        </strong>{" "}
+        {t("contact.forMe")} :)
+      </Subtitle>
       <Divider />
       <SocialsContainer>
         <Tippy content={copyText} placement="top" hideOnClick={false} animation="scale-subtle">
@@ -78,10 +119,27 @@ const Contact = () => {
           <BsLinkedin />
           LinkedIn
         </SocialButtonWithIcon>
-        <SocialButtonWithIcon as="a" href="https://github.com/axeelz" target="_blank" social="github">
-          <BsGithub />
-          GitHub
-        </SocialButtonWithIcon>
+        <Tippy
+          content={
+            <GithubInfo>
+              {(githubData?.avatar_url && (
+                <>
+                  <img src={githubData.avatar_url} alt="Avatar" />
+                  <div>
+                    <strong>{githubData.name}</strong>
+                  </div>
+                </>
+              )) || <span>axeelz</span>}
+            </GithubInfo>
+          }
+          placement="top"
+          hideOnClick={false}
+          animation="scale-subtle">
+          <SocialButtonWithIcon as="a" href="https://github.com/axeelz" target="_blank" social="github">
+            <BsGithub />
+            GitHub
+          </SocialButtonWithIcon>
+        </Tippy>
       </SocialsContainer>
     </>
   );

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import type { Project } from "./Projects";
 
 const ImageLink = styled.a`
   display: flex;
@@ -25,13 +26,19 @@ const ProjectImage = styled.img`
   user-select: none;
 `;
 
-const ProjectThumbnail = ({ image, name, links }) => {
+interface ProjectThumbnailProps {
+  image: Project["image"];
+  name: Project["name"];
+  links: Project["links"];
+}
+
+const ProjectThumbnail = ({ image, name, links }: ProjectThumbnailProps) => {
   const { url, source } = links;
   const imageSrc = image.startsWith("http") ? image : "/img/" + image;
 
   return (
     <>
-      <ImageLink href={url ?? source} target="_blank" tabIndex="-1">
+      <ImageLink href={url ?? source} target="_blank" tabIndex={-1}>
         <ProjectImage src={imageSrc} alt={name} loading="lazy" />
       </ImageLink>
     </>

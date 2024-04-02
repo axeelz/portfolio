@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ProjectButtons from "./ProjectButtons";
 import ProjectThumbnail from "./ProjectThumbnail";
 import ProjectDescription from "./ProjectDescription";
+import type { Project } from "./Projects";
 
 const Card = styled.div`
   background-color: var(--card-background-color);
@@ -44,7 +45,7 @@ const TechStack = styled.p`
   font-weight: 600;
 `;
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project }: { project: Project }) => {
   let { name, date, image, techs, desc_fr, desc_en } = project;
   if (!image) image = "placeholder.jpeg";
 

@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Button } from "../styled/shared";
+import type { Project } from "./Projects";
 
 const TwoButtonsContainer = styled.div`
   display: flex;
@@ -27,7 +28,11 @@ const FullWidthButton = styled(PrimaryButton)`
   width: 100%;
 `;
 
-const ProjectButtons = ({ links }) => {
+interface ProjectButtonsProps {
+  links: Project["links"];
+}
+
+const ProjectButtons = ({ links }: ProjectButtonsProps) => {
   const { t } = useTranslation();
   const { url, source } = links;
 

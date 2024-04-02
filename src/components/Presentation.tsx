@@ -3,6 +3,8 @@ import { Button } from "../styled/shared";
 import { Trans, useTranslation } from "react-i18next";
 import { showAfter, trackingInExpand } from "../styled/animations";
 import Technologies from "./Technologies";
+// @ts-ignore: Library is not typed
+import useSound from "use-sound";
 
 const TitleContainer = styled.div`
   display: flex;
@@ -66,23 +68,37 @@ const BodyContainer = styled.div`
 
   & a {
     text-decoration: underline;
+    text-underline-offset: 4px;
     color: var(--text-color);
     margin: 0 0.1rem;
     padding: 5px;
     border-radius: 10px;
     transition: all 0.2s;
 
-    &:hover {
-      background-color: var(--card-background-color);
-      text-decoration: none;
+    @media (min-width: 768px) {
+      &:hover {
+        background-color: var(--card-background-color);
+        text-decoration: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      padding: 0;
     }
   }
+`;
+
+const CallToActionContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
 `;
 
 const CallToAction = styled(Button)`
   background-color: var(--button-background-color);
   color: var(--button-text-color);
-  margin: 1.5rem auto 0 auto;
   padding: 0.75rem 2rem;
   display: block;
   width: 100%;
@@ -105,8 +121,21 @@ const CallToAction = styled(Button)`
   }
 `;
 
+const SecondaryCallToAction = styled(CallToAction)`
+  background-color: var(--button-background-secondary);
+  color: var(--button-text-secondary);
+  border: 1px solid var(--secondary-border-color);
+`;
+
+const LineBreakHiddenOnMobile = styled.br`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const Presentation = () => {
   const { t } = useTranslation();
+  const [playSound] = useSound("/sounds/pop.mp3", { volume: 0.2 });
 
   return (
     <div>
@@ -118,7 +147,7 @@ const Presentation = () => {
         <span>{t("presentation.about")}</span>
         <p>
           {t("presentation.part1")}
-          <br />
+          <LineBreakHiddenOnMobile />{" "}
           <Trans i18nKey="presentation.part2">
             Je suis en troisième année de licence d'informatique à
             <a href="https://www.sorbonne-universite.fr/" target="_blank">
@@ -132,9 +161,22 @@ const Presentation = () => {
         <span>Technologies</span>
         <Technologies />
       </BodyContainer>
-      <CallToAction onClick={() => document.getElementById("projects").scrollIntoView({ behavior: "smooth" })}>
-        {t("presentation.seeProjects")}
-      </CallToAction>
+      <CallToActionContainer>
+        <CallToAction
+          onClick={() => {
+            playSound();
+            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+          }}>
+          {t("presentation.seeProjects")}
+        </CallToAction>
+        <SecondaryCallToAction
+          onClick={() => {
+            playSound();
+            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+          }}>
+          {t("presentation.contactMe")}
+        </SecondaryCallToAction>
+      </CallToActionContainer>
     </div>
   );
 };

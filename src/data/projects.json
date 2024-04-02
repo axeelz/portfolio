@@ -9,7 +9,18 @@
       "techs": ["React", "FastAPI", "TailwindCSS", "MongoDB"],
       "links": {
         "source": "https://github.com/ceduni/cafe-sans-fil",
-        "url": "https://ceduni.github.io/cafe-sans-fil/"
+        "url": "https://cafesansfil.onrender.com"
+      },
+      "stats": {
+        "endpoint": " https://api.github.com/repos/ceduni/cafe-sans-fil",
+        "fields": [
+          {
+            "field": "stargazers_count",
+            "label_fr": "⭐️ GitHub",
+            "label_en": "GitHub ⭐️",
+            "default": 6
+          }
+        ]
       }
     },
     {
@@ -24,30 +35,43 @@
       },
       "stats": {
         "endpoint": "https://www.canvasdownloader.com/api/stats",
-        "field": "visitors_count"
-      }
-    },
-    {
-      "name": "MealRush",
-      "image": "mealrush.png",
-      "date": "2022",
-      "desc_fr": "Un site de commande de plats à domicile type Uber Eats avec portail restaurateur et administrateur.",
-      "desc_en": "An Uber Eats-type food ordering site with an owner and administrator panel.",
-      "techs": ["HTML", "JavaScript", "PHP", "TailwindCSS", "MariaDB"],
-      "links": {
-        "source": "https://github.com/axeelz/mealrush",
-        "url": "https://mealrush.axeelz.com/"
+        "fields": [
+          {
+            "field": "visitors_count",
+            "label_fr": "utilisateurs",
+            "label_en": "users",
+            "default": 40000
+          },
+          {
+            "field": "canvas_count",
+            "label_fr": "downloads",
+            "label_en": "downloads",
+            "default": 100000
+          }
+        ]
       }
     },
     {
       "name": "axeelz.com",
       "image": "portfolio.jpg",
       "date": "2024",
-      "desc_fr": "Mon site personnel, vous êtes dessus !",
-      "desc_en": "My personal website, you're on it!",
-      "techs": ["React", "styled-components"],
+      "desc_fr": "Mon site personnel, vous êtes dessus actuellement !",
+      "desc_en": "My personal website, you're on it now!",
+      "techs": ["TypeScript", "React", "styled-components"],
       "links": {
         "source": "https://github.com/axeelz/portfolio"
+      }
+    },
+    {
+      "name": "MealRush",
+      "image": "mealrush.png",
+      "date": "2022",
+      "desc_fr": "Un site de commande de plats à domicile type Uber Eats.",
+      "desc_en": "An Uber Eats-type food ordering site.",
+      "techs": ["HTML", "JavaScript", "PHP", "TailwindCSS", "MariaDB"],
+      "links": {
+        "source": "https://github.com/axeelz/mealrush",
+        "url": "https://mealrush.axeelz.com/"
       }
     },
     {
