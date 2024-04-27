@@ -52,6 +52,17 @@
       }
     },
     {
+      "name": "Link Manager",
+      "image": "link-manager.png",
+      "date": "2024",
+      "desc_fr": "Un gestionnaire et raccourcisseur de liens, avec dashboard pour les gérer.",
+      "desc_en": "A link redirection manager and shortener, with a dashboard to manage them.",
+      "techs": ["TypeScript", "Next.js", "ElysiaJS", "Docker", "Drizzle"],
+      "links": {
+        "url": "https://axlz.me/why"
+      }
+    },
+    {
       "name": "axeelz.com",
       "image": "portfolio.jpg",
       "date": "2024",
