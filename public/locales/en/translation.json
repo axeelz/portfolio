@@ -26,8 +26,8 @@
   },
   "contact": {
     "title": "Let's keep in touch!",
-    "currently": "it's currently",
-    "forMe": "for me"
+    "currently": "it is",
+    "forMe": "local time"
   },
   "footer": {
     "createdBy": "Created by",

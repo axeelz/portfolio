@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import { BsLinkedin, BsGithub } from "react-icons/bs";
 import { SectionTitle } from "../styled/shared";
-import { Divider } from "../styled/shared";
 import { FaCopy } from "react-icons/fa";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale-subtle.css";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { IoLocationSharp } from "react-icons/io5";
+
+/* Socials */
 
 const SocialsContainer = styled.div`
   display: flex;
@@ -46,13 +48,54 @@ const SocialButtonWithIcon = styled(SocialButton)<{ social?: "linkedin" | "githu
   }
 `;
 
-const Subtitle = styled.p`
-  color: var(--text-secondary);
+/* Location widget */
+
+const LocationContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
   font-weight: 500;
-  text-align: center;
-  margin-top: -1rem;
   margin-bottom: 2rem;
+  padding: 1rem 2rem;
+  border-radius: var(--card-border-radius);
+  background-color: var(--card-background-color);
+  border: 2px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    padding: 1rem;
+  }
 `;
+
+const IconContainer = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    font-size: 1.5rem;
+  }
+`;
+
+const LocalTimeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CityName = styled.span`
+  font-weight: 700;
+`;
+
+const Description = styled.div`
+  color: var(--text-secondary);
+`;
+
+const Time = styled.span`
+  font-weight: 600;
+`;
+
+/* GitHub tooltip */
 
 const GithubInfo = styled.div`
   display: inline-flex;
@@ -107,18 +150,25 @@ const Contact = () => {
   return (
     <>
       <SectionTitle>{t("contact.title")}</SectionTitle>
-      <Subtitle>
-        {t("contact.currently")}{" "}
-        <strong>
-          {currentTime.toLocaleString([], {
-            timeZone: "Europe/Paris",
-            hour: "numeric",
-            minute: "numeric",
-          })}
-        </strong>{" "}
-        {t("contact.forMe")} :)
-      </Subtitle>
-      <Divider />
+      <LocationContainer>
+        <IconContainer>
+          <IoLocationSharp />
+        </IconContainer>
+        <LocalTimeContainer>
+          <CityName>Paris, France</CityName>
+          <Description>
+            {t("contact.currently")}{" "}
+            <Time>
+              {currentTime.toLocaleString([], {
+                timeZone: "Europe/Paris",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </Time>{" "}
+            {t("contact.forMe")}
+          </Description>
+        </LocalTimeContainer>
+      </LocationContainer>
       <SocialsContainer>
         <Tippy content={copyText} placement="top" hideOnClick={false} animation="scale-subtle">
           <SocialButtonWithIcon onClick={handleCopy}>

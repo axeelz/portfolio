@@ -7,12 +7,6 @@ export const SectionTitle = styled.h2`
   margin: 2rem 0;
 `;
 
-export const Divider = styled.hr`
-  margin: 1rem auto 2rem auto;
-  background-color: var(--text-color);
-  opacity: 0.1;
-`;
-
 export const Button = styled.button`
   font-family: var(--font-body);
   line-height: 1;
