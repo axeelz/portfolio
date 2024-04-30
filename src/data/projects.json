@@ -6,7 +6,7 @@
       "date": "2023",
       "desc_fr": "Projet pilote visant à améliorer le service des cafés étudiants de l'Université de Montréal.",
       "desc_en": "Pilot project to improve service at Université de Montréal student cafés.",
-      "techs": ["React", "FastAPI", "TailwindCSS", "MongoDB"],
+      "techs": ["React", "FastAPI", "MongoDB", "TailwindCSS"],
       "links": {
         "source": "https://github.com/ceduni/cafe-sans-fil",
         "url": "https://cafesansfil.onrender.com"
@@ -29,7 +29,7 @@
       "date": "2022",
       "desc_fr": "Un site qui permet de télécharger les vidéos de fond sur Spotify.",
       "desc_en": "A tool to download background video loops on Spotify.",
-      "techs": ["HTML", "CSS", "JavaScript", "Flask", "Jinja", "PostgreSQL", "Cloudflare", "Nginx"],
+      "techs": ["Flask", "Jinja", "PostgreSQL", "HTML", "CSS", "JavaScript"],
       "links": {
         "url": "https://www.canvasdownloader.com/"
       },
@@ -74,12 +74,23 @@
       }
     },
     {
+      "name": "moodrecap",
+      "image": "moodrecap.png",
+      "date": "2023",
+      "desc_fr": "Un mood tracker simple qui aide à garder trace de ses journées.",
+      "desc_en": "A simple mood tracker that helps you keep track of your daily mood.",
+      "techs": ["React", "Firebase", "PWA", "MUI"],
+      "links": {
+        "url": "https://axlz.me/mood"
+      }
+    },
+    {
       "name": "MealRush",
       "image": "mealrush.png",
       "date": "2022",
       "desc_fr": "Un site de commande de plats à domicile type Uber Eats.",
       "desc_en": "An Uber Eats-type food ordering site.",
-      "techs": ["HTML", "JavaScript", "PHP", "TailwindCSS", "MariaDB"],
+      "techs": ["PHP", "MariaDB", "HTML", "TailwindCSS", "JavaScript"],
       "links": {
         "source": "https://github.com/axeelz/mealrush",
         "url": "https://mealrush.axeelz.com/"
@@ -113,7 +124,7 @@
       "date": "2021",
       "desc_fr": "Un projet sur Raspberry Pi avec un site permettant de gérer une alarme et consulter ses données.",
       "desc_en": "A project on Raspberry Pi with a site allowing to manage an alarm and consult its data.",
-      "techs": ["PHP", "Python", "HTML", "CSS", "JavaScript", "MariaDB", "Figma"],
+      "techs": ["PHP", "Python", "MariaDB", "HTML", "CSS", "JavaScript", "Figma"],
       "links": {
         "source": "https://github.com/axeelz/ultrasafearchive"
       }
@@ -130,5 +141,5 @@
       }
     }
   ],
-  "additionalTechs": ["Git", "Linux", "Java", "Astro", "Mapbox", "Firebase", "Ionic", "PWA"]
+  "additionalTechs": ["Git", "Linux", "Cloudflare", "Nginx", "Java", "Astro", "Mapbox", "Ionic"]
 }
