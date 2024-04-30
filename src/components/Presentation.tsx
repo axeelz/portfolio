@@ -92,7 +92,7 @@ const CallToActionContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 `;
 
 const CallToAction = styled(Button)`
