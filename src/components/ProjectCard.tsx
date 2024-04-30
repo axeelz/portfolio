@@ -7,6 +7,8 @@ import type { Project } from "./Projects";
 const Card = styled.div`
   background-color: var(--card-background-color);
   border-radius: var(--card-border-radius);
+  border: 2px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   padding: 2rem;
   max-width: 400px;
   word-break: break-word;

@@ -107,7 +107,7 @@ const CallToAction = styled(Button)`
 
   &:hover {
     transform: scale(1.02);
-    box-shadow: 0 20px 80px -10px var(--button-background-color);
+    box-shadow: 0 20px 60px -10px var(--button-background-color);
   }
 
   &:active {

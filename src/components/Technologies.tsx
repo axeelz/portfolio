@@ -10,6 +10,7 @@ const Chip = styled.div<{ $clickable?: boolean; $additional?: boolean; index: nu
   background-image: ${(props) => (props.$clickable ? "var(--gradient-techs)" : "none")};
   padding: ${(props) => (props.$clickable ? "5px 8px" : "5px")};
   border-radius: 10px;
+  border: ${(props) => (props.$clickable ? "none" : "1px solid var(--border-color)")};
   display: inline-block;
   font-size: 0.9rem;
   cursor: ${(props) => (props.$clickable ? "pointer" : "auto")};

@@ -23,7 +23,7 @@ export const Button = styled.button`
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   user-select: none;
 
   /* As a link */
