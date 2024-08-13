@@ -9,7 +9,7 @@
       "techs": ["React", "FastAPI", "MongoDB", "TailwindCSS"],
       "links": {
         "source": "https://github.com/ceduni/cafe-sans-fil",
-        "url": "https://cafesansfil.onrender.com"
+        "url": "https://ceduni.github.io/cafe-sans-fil/"
       },
       "stats": {
         "endpoint": " https://api.github.com/repos/ceduni/cafe-sans-fil",
