@@ -126,12 +126,6 @@ const SecondaryCallToAction = styled(CallToAction)`
   border: 1px solid var(--secondary-border-color);
 `;
 
-const LineBreakHiddenOnMobile = styled.br`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
 const Presentation = () => {
   const { t } = useTranslation();
   const [playSound] = useSound("/sounds/pop.mp3", { volume: 0.2 });
@@ -145,15 +139,14 @@ const Presentation = () => {
       <BodyContainer>
         <span>{t("presentation.about")}</span>
         <p>
-          {t("presentation.part1")}
-          <LineBreakHiddenOnMobile />{" "}
-          <Trans i18nKey="presentation.part2">
-            Je suis en troisième année de licence d'informatique à
-            <a href="https://www.sorbonne-universite.fr/" target="_blank">
-              Sorbonne&nbsp;Université
-            </a>
-            à Paris.
-          </Trans>
+          {t("presentation.part1")}{" "}
+          <Trans
+            i18nKey="presentation.part2"
+            components={{
+              sct: <a href="https://www.sncf-connect-tech.fr/" target="_blank" />,
+              upc: <a href="https://u-paris.fr/" target="_blank" />,
+            }}
+          />
         </p>
       </BodyContainer>
       <BodyContainer>
