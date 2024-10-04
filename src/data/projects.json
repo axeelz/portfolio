@@ -120,7 +120,7 @@
     },
     {
       "name": "Ultrasafe",
-      "image": "ultrasafe.jpg",
+      "image": "ultrasafe.jpeg",
       "date": "2021",
       "desc_fr": "Un projet sur Raspberry Pi avec un site permettant de gérer une alarme et consulter ses données.",
       "desc_en": "A project on Raspberry Pi with a site allowing to manage an alarm and consult its data.",
