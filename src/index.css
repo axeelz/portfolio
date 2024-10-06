@@ -11,18 +11,18 @@
 }
 
 body {
-  --background-color: #faf8ff;
+  --background-color: #e6e4e4;
   --text-color: #242424;
   --text-secondary: #6f6f6f;
-  --navbar-color: rgb(250, 248, 255, var(--navbar-opacity));
+  --navbar-color: rgb(230, 228, 228, var(--navbar-opacity));
 
   --button-background-color: #121212;
   --button-text-color: rgba(255, 255, 255, 0.95);
   --button-background-secondary: transparent;
   --button-text-secondary: inherit;
 
-  --card-background-color: #e6e4e4;
-  --section-background-color: #eeeeee;
+  --card-background-color: #eeeeee;
+  --section-background-color: #faf8ff;
 
   --border-color: rgba(59, 7, 100, 0.05);
   --secondary-border-color: rgba(0, 0, 0, 0.2);
