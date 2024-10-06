@@ -22,9 +22,31 @@ const ProjectImage = styled.img`
   aspect-ratio: 16/9;
   object-fit: cover;
   border-radius: 0.25rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   user-select: none;
+  filter: url(#backlight);
 `;
+
+export const SvgBacklightFilter = () => (
+  <svg width="0" height="0">
+    <filter id="backlight" width="300%" height="300%" x="-0.75" y="-0.75" colorInterpolationFilters="sRGB">
+      <feOffset in="SourceGraphic" result="source-copy" />
+      <feColorMatrix in="source-copy" type="saturate" values="1" result="saturated-copy" />
+      <feColorMatrix
+        in="saturated-copy"
+        type="matrix"
+        values="1 0 0 0 0
+              0 1 0 0 0
+              0 0 1 0 0
+              33 33 33 101 -100"
+        result="bright-colors"
+      />
+      <feMorphology in="bright-colors" operator="dilate" radius="1" result="spread" />
+      <feGaussianBlur in="spread" stdDeviation="30" result="ambilight-light" />
+      <feOffset in="SourceGraphic" result="source" />
+      <feComposite in="source" in2="ambilight-light" operator="over" />
+    </filter>
+  </svg>
+);
 
 interface ProjectThumbnailProps {
   image: Project["image"];
