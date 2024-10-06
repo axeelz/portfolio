@@ -11,9 +11,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.39.2",
     "@tippyjs/react": "^4.2.6",
-    "@types/aos": "^3.0.7",
     "@types/styled-components": "^5.1.34",
-    "aos": "^2.3.4",
     "i18next": "^22.5.0",
     "i18next-browser-languagedetector": "^7.0.2",
     "i18next-http-backend": "^2.2.1",

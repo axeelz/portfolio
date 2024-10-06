@@ -5,8 +5,6 @@ import Contact from "./Contact";
 import Presentation from "./Presentation";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { useTranslation } from "react-i18next";
 import { fadeBgColor, fadeUp } from "../styled/animations";
 
@@ -58,10 +56,6 @@ const App = () => {
     }
   }, [isDark]);
 
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -78,7 +72,7 @@ const App = () => {
         <Section id="projects">
           <Projects />
         </Section>
-        <Section id="contact" data-aos="fade-up">
+        <Section id="contact">
           <Contact />
         </Section>
       </main>

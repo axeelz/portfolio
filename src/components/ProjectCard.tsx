@@ -53,7 +53,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
   if (!image) image = "placeholder.jpeg";
 
   return (
-    <Card data-aos="fade-in">
+    <Card>
       <div>
         <ProjectThumbnail image={image} name={name} links={project.links} />
         <NameDateContainer>
