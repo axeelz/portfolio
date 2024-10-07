@@ -86,7 +86,7 @@
     },
     {
       "name": "MealRush",
-      "image": "mealrush.png",
+      "image": "mealrush.webp",
       "date": "2022",
       "desc_fr": "Un site de commande de plats à domicile type Uber Eats.",
       "desc_en": "An Uber Eats-type food ordering site.",
@@ -109,7 +109,7 @@
     },
     {
       "name": "A3BC",
-      "image": "a3bc.png",
+      "image": "a3bc.webp",
       "date": "2023",
       "desc_fr": "Refonte du site de l'entreprise A3BC.",
       "desc_en": "A3BC company website revamp.",
