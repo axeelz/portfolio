@@ -6,6 +6,7 @@ const ImageLink = styled.a`
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease-in-out, filter 0.3s ease-in-out;
+  isolation: isolate;
 
   &:hover {
     filter: brightness(0.9);
@@ -17,36 +18,27 @@ const ImageLink = styled.a`
   }
 `;
 
-const ProjectImage = styled.img`
+const ProjectImage = styled.div<{ $src: string }>`
   width: 100%;
   aspect-ratio: 16/9;
-  object-fit: cover;
+  background-image: url(${({ $src }) => $src});
+  background-size: cover;
+  background-position: center;
   border-radius: 0.25rem;
-  user-select: none;
-  filter: url(#backlight);
-`;
+  position: relative;
 
-export const SvgBacklightFilter = () => (
-  <svg width="0" height="0">
-    <filter id="backlight" width="300%" height="300%" x="-0.75" y="-0.75" colorInterpolationFilters="sRGB">
-      <feOffset in="SourceGraphic" result="source-copy" />
-      <feColorMatrix in="source-copy" type="saturate" values="1" result="saturated-copy" />
-      <feColorMatrix
-        in="saturated-copy"
-        type="matrix"
-        values="1 0 0 0 0
-              0 1 0 0 0
-              0 0 1 0 0
-              33 33 33 101 -100"
-        result="bright-colors"
-      />
-      <feMorphology in="bright-colors" operator="dilate" radius="1" result="spread" />
-      <feGaussianBlur in="spread" stdDeviation="30" result="ambilight-light" />
-      <feOffset in="SourceGraphic" result="source" />
-      <feComposite in="source" in2="ambilight-light" operator="over" />
-    </filter>
-  </svg>
-);
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    position: absolute;
+    background: inherit;
+    filter: blur(20px) saturate(1.5);
+    transform: scale(1.03);
+    z-index: -1;
+  }
+`;
 
 interface ProjectThumbnailProps {
   image: Project["image"];
@@ -61,7 +53,7 @@ const ProjectThumbnail = ({ image, name, links }: ProjectThumbnailProps) => {
   return (
     <>
       <ImageLink href={url ?? source} target="_blank" tabIndex={-1}>
-        <ProjectImage src={imageSrc} alt={name} loading="lazy" />
+        <ProjectImage role="img" aria-label={name} $src={imageSrc} />
       </ImageLink>
     </>
   );

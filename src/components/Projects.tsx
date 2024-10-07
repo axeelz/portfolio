@@ -3,7 +3,6 @@ import { SectionTitle } from "../styled/shared";
 import ProjectCard from "./ProjectCard";
 import { styled } from "styled-components";
 import { useTranslation } from "react-i18next";
-import { SvgBacklightFilter } from "./ProjectThumbnail";
 
 const Grid = styled.div`
   display: grid;
@@ -45,7 +44,6 @@ const Projects = () => {
           <ProjectCard key={i} project={project} />
         ))}
       </Grid>
-      <SvgBacklightFilter />
     </>
   );
 };
