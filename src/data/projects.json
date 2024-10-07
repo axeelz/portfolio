@@ -5,7 +5,7 @@
       "image": "cafesansfil.png",
       "date": "2023",
       "desc_fr": "Projet pour améliorer le service des cafés de l'Université de Montréal.",
-      "desc_en": "Pilot project to improve service at Université de Montréal student cafés.",
+      "desc_en": "Project to improve service at Université de Montréal student cafés.",
       "techs": ["React", "FastAPI", "MongoDB", "TailwindCSS"],
       "links": {
         "source": "https://github.com/ceduni/cafe-sans-fil",
