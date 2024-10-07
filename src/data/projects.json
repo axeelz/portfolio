@@ -4,7 +4,7 @@
       "name": "Café sans-fil",
       "image": "cafesansfil.png",
       "date": "2023",
-      "desc_fr": "Projet pilote visant à améliorer le service des cafés étudiants de l'Université de Montréal.",
+      "desc_fr": "Projet pour améliorer le service des cafés de l'Université de Montréal.",
       "desc_en": "Pilot project to improve service at Université de Montréal student cafés.",
       "techs": ["React", "FastAPI", "MongoDB", "TailwindCSS"],
       "links": {
@@ -38,7 +38,7 @@
         "fields": [
           {
             "field": "visitors_count",
-            "label_fr": "utilisateurs",
+            "label_fr": "users",
             "label_en": "users",
             "default": 40000
           },

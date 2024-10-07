@@ -11,7 +11,7 @@ const StatsContainer = styled.div`
 `;
 
 const Badge = styled.span`
-  padding: 0.35em 0.65em;
+  padding: 0.35em 0.45em;
   font-size: 0.85em;
   background-color: var(--cdfs-color);
   background-image: linear-gradient(to top, transparent, hsl(0 0% 100% / 0.2));
@@ -19,6 +19,10 @@ const Badge = styled.span`
   border-radius: 5rem;
   font-weight: 600;
   white-space: nowrap;
+
+  @media (min-width: 768px) {
+    padding: 0.35em 0.65em;
+  }
 `;
 
 interface ProjectStatsProps {

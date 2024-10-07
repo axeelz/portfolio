@@ -7,6 +7,7 @@ import ProjectStats from "./ProjectStats";
 const ProjectDesc = styled.div`
   font-weight: 500;
   line-height: 1.75;
+  text-wrap: pretty;
 `;
 
 interface ProjectDescriptionProps {
