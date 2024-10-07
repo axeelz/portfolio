@@ -16,6 +16,10 @@ const Card = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+
+  @media (min-width: 830px) {
+    max-width: unset;
+  }
 `;
 
 const NameDateContainer = styled.div`
