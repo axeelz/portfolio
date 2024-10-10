@@ -34,6 +34,7 @@ const ProjectImage = styled.div<{ $src: string }>`
     top: 0;
     position: absolute;
     background: inherit;
+    will-change: filter, transform;
     filter: blur(20px) saturate(1.5);
     transform: scale(1.03);
     z-index: -1;
