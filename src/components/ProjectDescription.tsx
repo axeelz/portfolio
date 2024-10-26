@@ -6,7 +6,7 @@ import ProjectStats from "./ProjectStats";
 
 const ProjectDesc = styled.div`
   font-weight: 500;
-  line-height: 1.75;
+  line-height: 1.5;
   text-wrap: pretty;
 `;
 
