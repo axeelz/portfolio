@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { fadeBgColor, fadeUp } from "../styled/animations";
-import "non.geist";
 
 const Section = styled.section`
   padding: 2rem;

@@ -40,7 +40,7 @@ body {
   /* Font */
   --font-title: "Unbounded", sans-serif;
   --font-body: "Plus Jakarta Sans", sans-serif;
-  --font-secondary: "Geist Variable", sans-serif;
+  --font-secondary: "Geist", sans-serif;
 }
 
 body.dark {
