@@ -28,7 +28,8 @@
     "title": "Let's keep in touch!",
     "currently": "it is",
     "forMe": "local time",
-    "randomSong": "Random song from my\u00A0playlist"
+    "randomSong": "Random song from my\u00A0playlist",
+    "getRandomSong": "Get a random song"
   },
   "footer": {
     "createdBy": "Created by",

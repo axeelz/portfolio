@@ -201,7 +201,7 @@ const MusicWidget = () => {
           <TrackInfo>
             <TrackName>{t("contact.randomSong")}</TrackName>
           </TrackInfo>
-          <ShuffleBtn onClick={fetchRandomTrack}>
+          <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
             <IoShuffle />
           </ShuffleBtn>
         </TrackWrapper>
@@ -224,7 +224,7 @@ const MusicWidget = () => {
           </TrackName>
           <TrackDetails>{track.artists}</TrackDetails>
         </TrackInfo>
-        <ShuffleBtn onClick={fetchRandomTrack}>
+        <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
           <IoShuffle />
         </ShuffleBtn>
       </TrackWrapper>

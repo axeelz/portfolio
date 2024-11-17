@@ -28,7 +28,8 @@
     "title": "Restons en contact\u00A0!",
     "currently": "il est",
     "forMe": "chez moi",
-    "randomSong": "Musique aléatoire de ma\u00A0playlist"
+    "randomSong": "Musique aléatoire de ma\u00A0playlist",
+    "getRandomSong": "Obtenir une musique aléatoire"
   },
   "footer": {
     "createdBy": "Créé par",
