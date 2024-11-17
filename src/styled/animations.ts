@@ -13,7 +13,7 @@ export const fadeBgColor = keyframes`
 
 export const fadeUp = keyframes`
     from {
-    opacity: 0;
+    opacity: 0.1;
     transform: translate3d(0, 100px, 0);
     filter: blur(4px);
     }
@@ -29,7 +29,7 @@ export const fadeUp = keyframes`
 export const trackingInExpand = keyframes`
     0% {
       letter-spacing: -0.5em;
-      opacity: 0;
+      opacity: 0.1;
       filter: blur(4px);
     }
     40% {
@@ -44,7 +44,7 @@ export const trackingInExpand = keyframes`
 
 export const showAfter = keyframes`
     0% {
-      opacity: 0;
+      opacity: 0.1;
     }
     100% {
       opacity: 1;
@@ -55,7 +55,7 @@ export const showAfter = keyframes`
 
 export const fadeIn = keyframes`
     from {
-      opacity: 0;
+      opacity: 0.1;
       transform: translateY(-1rem);
     }
     to {
