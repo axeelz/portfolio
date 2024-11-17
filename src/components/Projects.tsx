@@ -1,4 +1,5 @@
 import data from "../data/projects.json";
+import { memo } from "react";
 import { SectionTitle } from "../styled/shared";
 import ProjectCard from "./ProjectCard";
 import { styled } from "styled-components";
@@ -34,7 +35,7 @@ export interface Project {
   };
 }
 
-const Projects = () => {
+const Projects = memo(() => {
   const { t } = useTranslation();
   return (
     <>
@@ -46,6 +47,6 @@ const Projects = () => {
       </Grid>
     </>
   );
-};
+});
 
 export default Projects;

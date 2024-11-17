@@ -4,6 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { showAfter, trackingInExpand } from "../styled/animations";
 import Technologies from "./Technologies";
 import useSound from "use-sound";
+import { memo } from "react";
 
 const TitleContainer = styled.div`
   display: flex;
@@ -126,7 +127,7 @@ const SecondaryCallToAction = styled(CallToAction)`
   border: 1px solid var(--secondary-border-color);
 `;
 
-const Presentation = () => {
+const Presentation = memo(() => {
   const { t } = useTranslation();
   const [playSound] = useSound("/sounds/pop.mp3", { volume: 0.2 });
 
@@ -171,6 +172,6 @@ const Presentation = () => {
       </CallToActionContainer>
     </div>
   );
-};
+});
 
 export default Presentation;

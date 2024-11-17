@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import projects from "../data/projects.json";
 import { showAfter } from "../styled/animations";
-import { useState } from "react";
+import { useState, memo } from "react";
 import useMediaQuery from "../hooks/useMediaQuery";
 import { useTranslation } from "react-i18next";
 
@@ -32,7 +32,7 @@ const TechsContainer = styled.div`
   gap: 0.5rem;
 `;
 
-const Technologies = () => {
+const Technologies = memo(() => {
   const [showAll, setShowAll] = useState<boolean>(false);
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const { t } = useTranslation();
@@ -73,6 +73,6 @@ const Technologies = () => {
       </Chip>
     </TechsContainer>
   );
-};
+});
 
 export default Technologies;
