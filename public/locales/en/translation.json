@@ -27,7 +27,8 @@
   "contact": {
     "title": "Let's keep in touch!",
     "currently": "it is",
-    "forMe": "local time"
+    "forMe": "local time",
+    "randomSong": "Random song from my\u00A0playlist"
   },
   "footer": {
     "createdBy": "Created by",

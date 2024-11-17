@@ -58,3 +58,12 @@ export const IconBtn = styled.button`
     transition: transform 0.1s ease-in-out;
   }
 `;
+
+export const WidgetContainer = styled.div`
+  font-weight: 500;
+  margin-bottom: 2rem;
+  border-radius: var(--card-border-radius);
+  background-color: var(--card-background-color);
+  border: 2px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+`;

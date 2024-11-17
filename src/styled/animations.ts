@@ -107,3 +107,14 @@ export const slideOutBlurredLeft = keyframes`
       opacity: 0;
     }
 `;
+
+// MusicWidget animations
+
+export const pulse = keyframes`
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    `;
