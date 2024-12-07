@@ -118,3 +118,27 @@ export const pulse = keyframes`
         opacity: 0.5;
     }
     `;
+
+// Tooltip animations
+
+export const scaleInSubtle = keyframes`
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+`;
+
+export const scaleOutSubtle = keyframes`
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+`;

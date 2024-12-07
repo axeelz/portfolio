@@ -29,7 +29,9 @@
     "currently": "it is",
     "forMe": "local time",
     "randomSong": "Random song from my\u00A0playlist",
-    "getRandomSong": "Get a random song"
+    "getRandomSong": "Get a random song",
+    "copy": "Copy email address",
+    "copied": "Copied"
   },
   "footer": {
     "createdBy": "Created by",

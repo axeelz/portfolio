@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { IoLanguage } from "react-icons/io5";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
-import "tippy.js/animations/scale-subtle.css";
 import ToggleDarkMode from "./ToggleDarkMode";
 import { useTranslation } from "react-i18next";
 import useKeyPress from "../hooks/useKeyPress";
@@ -12,6 +9,7 @@ import { useState, useRef, Dispatch, SetStateAction, memo } from "react";
 import useSound from "use-sound";
 import { fadeIn } from "../styled/animations";
 import { IconBtn } from "../styled/shared";
+import { Tooltip } from "./Tooltip";
 
 const NavbarContainer = styled.nav`
   width: 100%;
@@ -106,30 +104,24 @@ const Navbar = memo(({ isDark, setIsDark }: NavbarProps) => {
           {collapsableOpen && <CollapsableNav ref={collapsableRef} />}
         </ButtonsContainer>
         <ButtonsContainer>
-          <Tippy
+          <Tooltip
             content={
               <span>
                 {`${t("navbar.switchTo")} ${i18n.languages[0] === "fr" ? "English" : "français"}`} <Kbd>L</Kbd>
               </span>
-            }
-            animation="scale-subtle"
-            placement="bottom"
-            key={i18n.language}>
-            <IconBtn aria-label={t("navbar.switchLang") as string} onClick={switchLanguage}>
+            }>
+            <IconBtn aria-label={t("navbar.switchLang") || ""} onClick={switchLanguage}>
               <IoLanguage />
             </IconBtn>
-          </Tippy>
-          <Tippy
+          </Tooltip>
+          <Tooltip
             content={
               <span>
                 {t("navbar.switchTheme")} <Kbd>M</Kbd>
               </span>
-            }
-            animation="scale-subtle"
-            placement="bottom"
-            key={isDark.toString()}>
+            }>
             <ToggleDarkMode isDark={isDark} setIsDark={setIsDark} />
-          </Tippy>
+          </Tooltip>
         </ButtonsContainer>
       </NavbarContainer>
     </>

@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { fadeBgColor, fadeUp } from "../styled/animations";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const Section = styled.section`
   padding: 2rem;
@@ -63,7 +64,7 @@ const App = () => {
   }, [i18n.language]);
 
   return (
-    <>
+    <TooltipProvider>
       <Navbar isDark={isDark} setIsDark={setIsDark} />
       <main>
         <Section id="presentation">
@@ -77,7 +78,7 @@ const App = () => {
         </Section>
       </main>
       <Footer />
-    </>
+    </TooltipProvider>
   );
 };
 

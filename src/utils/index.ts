@@ -34,3 +34,28 @@ export async function updateCount(): Promise<number | null> {
   }
   return newCount;
 }
+
+export const GITHUB_USERNAME = "axeelz";
+
+export type GithubUser = {
+  avatar_url: string;
+  name: string;
+};
+
+export function fetchGithubData() {
+  return fetch(`https://api.github.com/users/${GITHUB_USERNAME}`).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  });
+}
+
+export function useHasHover() {
+  try {
+    return matchMedia("(hover: hover)").matches;
+  } catch {
+    // Assume that if browser too old to support matchMedia it's likely not a touch device
+    return true;
+  }
+}

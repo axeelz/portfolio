@@ -13,6 +13,7 @@ const TitleContainer = styled.div`
   justify-content: center;
   animation: ${trackingInExpand} 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s both;
   margin-bottom: 2rem;
+  text-align: center;
 `;
 
 const Title = styled.h1`
@@ -31,7 +32,6 @@ const SecondaryTitle = styled.h2`
   color: var(--text-secondary);
   font-size: 1.75rem;
   font-weight: 500;
-  text-align: center;
 
   @media (max-width: 768px) {
     font-size: 1.25rem;

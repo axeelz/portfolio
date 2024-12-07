@@ -36,8 +36,8 @@ const ProjectDescription = ({ desc, stats }: ProjectDescriptionProps) => {
         .then((data) => {
           setFetchResponse(data);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch(() => {
+          console.warn(`Error fetching ${endpoint}, fallback to default stats`);
         });
     }
   }, []);
