@@ -72,7 +72,7 @@ const Navbar = memo(({ isDark, setIsDark }: NavbarProps) => {
   });
 
   const [collapsableOpen, setCollapsableOpen] = useState<boolean>(false);
-  const collapsableRef = useRef<HTMLElement>(null);
+  const collapsableRef = useRef<HTMLElement | null>(null);
   const [playOpen] = useSound("/sounds/whoosh-open.mp3", { volume: 0.1 });
   const [playClose] = useSound("/sounds/whoosh-close.mp3", { volume: 0.1 });
 

@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { slideInBlurredLeft, slideOutBlurredLeft } from "../styled/animations";
@@ -53,11 +52,12 @@ const ButtonItem = styled.button`
   }
 `;
 
-const CollapsableNav = forwardRef<HTMLElement>((_, ref) => {
+const CollapsableNav = ({ ref }: { ref: React.RefObject<HTMLElement | null> }) => {
   const { t } = useTranslation();
   const [playSound] = useSound("/sounds/pop.mp3", { volume: 0.2 });
 
   return (
+    // ref is required for the exit animation
     <NavContainer ref={ref}>
       {["presentation", "projects", "contact"].map((item) => (
         <ButtonItem
@@ -71,6 +71,6 @@ const CollapsableNav = forwardRef<HTMLElement>((_, ref) => {
       ))}
     </NavContainer>
   );
-});
+};
 
 export default CollapsableNav;

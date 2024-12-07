@@ -134,7 +134,7 @@ const MusicWidget = () => {
   const [isFeatureEnabled, setIsFeatureEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const fetchRandomTrack = useCallback(() => {
     if (audioRef.current) {
@@ -240,7 +240,7 @@ const Player = ({
 }: {
   audioPreviewUrl: string;
   isPlayable: boolean;
-  audioRef: React.RefObject<HTMLAudioElement>;
+  audioRef: React.RefObject<HTMLAudioElement | null>;
 }) => {
   if (!isPlayable) {
     return null;
