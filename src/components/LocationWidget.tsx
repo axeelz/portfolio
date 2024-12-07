@@ -43,8 +43,7 @@ const Time = styled.span`
   font-weight: 600;
 `;
 
-const LocationWidget = () => {
-  const { t } = useTranslation();
+const CurrentTime = () => {
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
   // Update time in real-time
@@ -57,6 +56,20 @@ const LocationWidget = () => {
   }, []);
 
   return (
+    <Time>
+      {currentTime.toLocaleString([], {
+        timeZone: "Europe/Paris",
+        hour: "numeric",
+        minute: "numeric",
+      })}
+    </Time>
+  );
+};
+
+const LocationWidget = () => {
+  const { t } = useTranslation();
+
+  return (
     <LocationContainer>
       <IconContainer>
         <IoLocationSharp />
@@ -64,15 +77,7 @@ const LocationWidget = () => {
       <LocalTimeContainer>
         <CityName>Paris, France</CityName>
         <Description>
-          {t("contact.currently")}{" "}
-          <Time>
-            {currentTime.toLocaleString([], {
-              timeZone: "Europe/Paris",
-              hour: "numeric",
-              minute: "numeric",
-            })}
-          </Time>{" "}
-          {t("contact.forMe")}
+          {t("contact.currently")} <CurrentTime /> {t("contact.forMe")}
         </Description>
       </LocalTimeContainer>
     </LocationContainer>
