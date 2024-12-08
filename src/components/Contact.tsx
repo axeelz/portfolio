@@ -46,14 +46,14 @@ const SocialButton = styled.button`
   }
 `;
 
-const SocialButtonWithIcon = styled(SocialButton)<{ social?: "linkedin" | "github" }>`
+const SocialButtonWithIcon = styled(SocialButton)<{ $social?: "linkedin" | "github" }>`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
 
   &:hover svg {
-    color: ${(props) => `var(--${props.social}-color)`};
+    color: ${(props) => `var(--${props.$social}-color)`};
   }
 `;
 
@@ -101,12 +101,12 @@ const Contact = memo(() => {
             <FaCopy /> axelzareb&#64;gmail&#46;com
           </SocialButtonWithIcon>
         </Tooltip>
-        <SocialButtonWithIcon as="a" href="https://www.linkedin.com/in/axelzareb/" target="_blank" social="linkedin">
+        <SocialButtonWithIcon as="a" href="https://www.linkedin.com/in/axelzareb/" target="_blank" $social="linkedin">
           <BsLinkedin />
           LinkedIn
         </SocialButtonWithIcon>
         <Tooltip link content={<GithubTooltip user={githubData} />} side="top">
-          <SocialButtonWithIcon as="a" href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" social="github">
+          <SocialButtonWithIcon as="a" href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" $social="github">
             <BsGithub />
             GitHub
           </SocialButtonWithIcon>

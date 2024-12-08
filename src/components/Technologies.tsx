@@ -5,7 +5,7 @@ import { useState, memo } from "react";
 import useMediaQuery from "../hooks/useMediaQuery";
 import { useTranslation } from "react-i18next";
 
-const Chip = styled.div<{ $clickable?: boolean; $additional?: boolean; index: number }>`
+const Chip = styled.div<{ $clickable?: boolean; $additional?: boolean; $index: number }>`
   background-color: var(--card-background-color);
   background-image: ${(props) => (props.$clickable ? "var(--gradient-techs)" : "none")};
   padding: ${(props) => (props.$clickable ? "5px 8px" : "5px")};
@@ -14,7 +14,7 @@ const Chip = styled.div<{ $clickable?: boolean; $additional?: boolean; index: nu
   display: inline-block;
   font-size: 0.9rem;
   cursor: ${(props) => (props.$clickable ? "pointer" : "auto")};
-  animation: ${showAfter} ${(props) => (props.$additional ? 0 : props.index * 0.15 + 0.5)}s ease-in-out;
+  animation: ${showAfter} ${(props) => (props.$additional ? 0 : props.$index * 0.15 + 0.5)}s ease-in-out;
 
   &:hover {
     scale: ${(props) => (props.$clickable ? 1.03 : 1)};
@@ -64,11 +64,11 @@ const Technologies = memo(() => {
   return (
     <TechsContainer>
       {displayedTechs.map((tech, i) => (
-        <Chip key={tech} index={i} $additional={i > maxTechs - 1}>
+        <Chip key={tech} $index={i} $additional={i > maxTechs - 1}>
           {tech}
         </Chip>
       ))}
-      <Chip $clickable onClick={() => setShowAll(!showAll)} index={displayedTechs.length}>
+      <Chip $clickable onClick={() => setShowAll(!showAll)} $index={displayedTechs.length}>
         {showAll ? t("presentation.less") : `+${remainingTechsCount} ${t("presentation.others")}`}
       </Chip>
     </TechsContainer>

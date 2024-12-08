@@ -12,7 +12,7 @@ type TooltipProps = TooltipPrimitive.TooltipProps &
 
 const TOOLTIP_BG_COLOR = "#333";
 
-const TooltipContentStyled = styled(TooltipPrimitive.Content)<{ forceAnimation?: boolean }>`
+const TooltipContentStyled = styled(TooltipPrimitive.Content)<{ $forceAnimation?: boolean }>`
   padding: 4px 6px;
   background-color: ${TOOLTIP_BG_COLOR};
   color: #fff;
@@ -22,8 +22,8 @@ const TooltipContentStyled = styled(TooltipPrimitive.Content)<{ forceAnimation?:
   pointer-events: none;
 
   transform-origin: var(--radix-tooltip-content-transform-origin);
-  ${({ forceAnimation }) =>
-    forceAnimation &&
+  ${({ $forceAnimation }) =>
+    $forceAnimation &&
     css`
       animation: ${scaleInSubtle} 0.2s ease-out;
     `}
@@ -66,7 +66,7 @@ export function Tooltip({
         align="center"
         collisionPadding={5}
         sideOffset={3}
-        forceAnimation={forceAnimation}
+        $forceAnimation={forceAnimation}
         onPointerDownOutside={(event) => {
           event.preventDefault();
         }}
