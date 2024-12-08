@@ -5,7 +5,7 @@ import ToggleDarkMode from "./ToggleDarkMode";
 import { useTranslation } from "react-i18next";
 import useKeyPress from "../hooks/useKeyPress";
 import CollapsableNav from "./CollapsableNav";
-import { useState, useRef, Dispatch, SetStateAction, memo } from "react";
+import { useState, useRef, Dispatch, SetStateAction } from "react";
 import useSound from "use-sound";
 import { fadeIn } from "../styled/animations";
 import { IconBtn } from "../styled/shared";
@@ -58,7 +58,7 @@ interface NavbarProps {
   setIsDark: Dispatch<SetStateAction<boolean>>;
 }
 
-const Navbar = memo(({ isDark, setIsDark }: NavbarProps) => {
+const Navbar = ({ isDark, setIsDark }: NavbarProps) => {
   const { t, i18n } = useTranslation();
 
   const switchLanguage = () => {
@@ -126,6 +126,6 @@ const Navbar = memo(({ isDark, setIsDark }: NavbarProps) => {
       </NavbarContainer>
     </>
   );
-});
+};
 
 export default Navbar;

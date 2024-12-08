@@ -15,7 +15,11 @@ const ToggleDarkMode = ({ isDark, setIsDark }: ToggleDarkModeProps) => {
 
   const toggleTheme = () => {
     setIsDark(!isDark);
-    isDark ? playOn() : playOff();
+    if (isDark) {
+      playOn();
+    } else {
+      playOff();
+    }
   };
 
   useKeyPress("m", () => {

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { IconBtn, WidgetContainer } from "../styled/shared";
 import { IoShuffle } from "react-icons/io5";
@@ -136,7 +136,7 @@ const MusicWidget = () => {
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const fetchRandomTrack = useCallback(() => {
+  const fetchRandomTrack = () => {
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPreviewPlaying(false);
@@ -152,9 +152,9 @@ const MusicWidget = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [audioRef]);
+  };
 
-  const togglePlayPause = useCallback(() => {
+  const togglePlayPause = () => {
     if (audioRef.current) {
       if (isPreviewPlaying) {
         audioRef.current.pause();
@@ -163,7 +163,7 @@ const MusicWidget = () => {
       }
       setIsPreviewPlaying(!isPreviewPlaying);
     }
-  }, [isPreviewPlaying, audioRef]);
+  };
 
   useEffect(() => {
     getIsFeatureEnabled().then((enabled) => {

@@ -27,7 +27,7 @@ const Badge = styled.span`
 
 interface ProjectStatsProps {
   stats: Project["stats"];
-  fetchResponse: any;
+  fetchResponse: Record<string, unknown> | null;
 }
 
 const ProjectStats = ({ stats, fetchResponse }: ProjectStatsProps) => {
@@ -43,7 +43,7 @@ const ProjectStats = ({ stats, fetchResponse }: ProjectStatsProps) => {
         const label = i18n.languages[0] === "fr" ? field.label_fr : field.label_en;
         let stat: number = field.default;
         if (fetchResponse && fetchResponse[field.field]) {
-          stat = fetchResponse[field.field];
+          stat = fetchResponse[field.field] as number;
         }
         // const roundedStat = Math.floor(stat / 100) * 100;
         const fomattedStat = new Intl.NumberFormat().format(stat);

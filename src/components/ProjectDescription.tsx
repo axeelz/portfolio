@@ -17,7 +17,7 @@ interface ProjectDescriptionProps {
 
 const ProjectDescription = ({ desc, stats }: ProjectDescriptionProps) => {
   const { i18n } = useTranslation();
-  const [fetchResponse, setFetchResponse] = useState<any>();
+  const [fetchResponse, setFetchResponse] = useState<Record<string, unknown> | null>(null);
 
   const { fr, en } = desc;
   const description = i18n.languages[0] === "fr" ? fr : en;

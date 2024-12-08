@@ -53,7 +53,8 @@ const TechStack = styled.p`
 `;
 
 const ProjectCard = ({ project }: { project: Project }) => {
-  let { name, date, image, techs, desc_fr, desc_en } = project;
+  const { name, date, techs, desc_fr, desc_en } = project;
+  let { image } = project;
   if (!image) image = "placeholder.jpeg";
 
   return (

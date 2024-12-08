@@ -4,7 +4,6 @@ import { Trans, useTranslation } from "react-i18next";
 import { showAfter, trackingInExpand } from "../styled/animations";
 import Technologies from "./Technologies";
 import useSound from "use-sound";
-import { memo } from "react";
 
 const TitleContainer = styled.div`
   display: flex;
@@ -127,7 +126,10 @@ const SecondaryCallToAction = styled(CallToAction)`
   border: 1px solid var(--secondary-border-color);
 `;
 
-const Presentation = memo(() => {
+const Presentation = () => {
+  // React compiler auto memoization breaks rerender on language change
+  // eslint-disable-next-line react-compiler/react-compiler
+  "use no memo";
   const { t } = useTranslation();
   const [playSound] = useSound("/sounds/pop.mp3", { volume: 0.2 });
 
@@ -144,8 +146,8 @@ const Presentation = memo(() => {
           <Trans
             i18nKey="presentation.part2"
             components={{
-              sct: <a href="https://www.sncf-connect-tech.fr/" target="_blank" />,
-              upc: <a href="https://u-paris.fr/" target="_blank" />,
+              sct: <a key="sct" href="https://www.sncf-connect-tech.fr/" target="_blank" rel="noreferrer" />,
+              upc: <a key="upc" href="https://u-paris.fr/" target="_blank" rel="noreferrer" />,
             }}
           />
         </p>
@@ -172,6 +174,6 @@ const Presentation = memo(() => {
       </CallToActionContainer>
     </div>
   );
-});
+};
 
 export default Presentation;

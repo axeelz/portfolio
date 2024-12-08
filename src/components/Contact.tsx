@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BsLinkedin, BsGithub } from "react-icons/bs";
 import { SectionTitle } from "../styled/shared";
 import { FaCopy } from "react-icons/fa";
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import MusicWidget from "./MusicWidget";
 import LocationWidget from "./LocationWidget";
@@ -57,13 +57,13 @@ const SocialButtonWithIcon = styled(SocialButton)<{ $social?: "linkedin" | "gith
   }
 `;
 
-const Contact = memo(() => {
+const Contact = () => {
   const { t } = useTranslation();
 
   const [copied, setCopied] = useState<boolean>(false);
   const copyText = copied ? `${t("contact.copied")} 🎉` : t("contact.copy");
 
-  const [githubData, setGithubData] = useState<any>(null);
+  const [githubData, setGithubData] = useState<GithubUser | null>(null);
 
   const hasHover = useHasHover();
 
@@ -114,6 +114,6 @@ const Contact = memo(() => {
       </SocialsContainer>
     </>
   );
-});
+};
 
 export default Contact;
