@@ -216,7 +216,9 @@ const MusicWidget = () => {
       <Container $isLoading={isLoading}>
         <TrackWrapper>
           <TrackInfo>
-            <TrackName>{t("contact.randomSong")}</TrackName>
+            <TrackNameWrapper>
+              <TrackName>{t("contact.randomSong")}</TrackName>
+            </TrackNameWrapper>
           </TrackInfo>
           <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
             <ShuffleIcon />
