@@ -20,6 +20,7 @@ const TooltipContentStyled = styled(TooltipPrimitive.Content)<{ $forceAnimation?
   font-size: 14px;
   line-height: 1.4;
   pointer-events: none;
+  font-weight: 500;
 
   transform-origin: var(--radix-tooltip-content-transform-origin);
   ${({ $forceAnimation }) =>
