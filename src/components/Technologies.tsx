@@ -24,6 +24,10 @@ const Chip = styled.div<{ $clickable?: boolean; $additional?: boolean; $index: n
   @media (max-width: 768px) {
     font-size: 0.8rem;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `;
 
 const TechsContainer = styled.div`

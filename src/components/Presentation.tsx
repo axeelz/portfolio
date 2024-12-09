@@ -13,6 +13,10 @@ const TitleContainer = styled.div`
   animation: ${trackingInExpand} 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s both;
   margin-bottom: 2rem;
   text-align: center;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `;
 
 const Title = styled.h1`
@@ -50,6 +54,10 @@ const BodyContainer = styled.div`
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 
   & > span {
@@ -101,7 +109,6 @@ const CallToAction = styled(Button)`
   padding: 0.75rem 2rem;
   display: block;
   width: 100%;
-
   animation: ${showAfter} 1.5s ease-in-out;
   transition: all 0.2s;
 
@@ -117,6 +124,10 @@ const CallToAction = styled(Button)`
   @media (min-width: 768px) {
     width: fit-content;
     padding: 0.75rem 5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 `;
 

@@ -17,11 +17,15 @@ const Section = styled.section`
   scroll-margin-top: 5rem;
 
   &#presentation {
-    animation: ${fadeBgColor} 0.6s ease-in;
+    @media (prefers-reduced-motion: no-preference) {
+      animation: ${fadeBgColor} 0.6s ease-in;
+    }
   }
 
   &#projects {
-    animation: ${fadeUp} 0.8s ease;
+    @media (prefers-reduced-motion: no-preference) {
+      animation: ${fadeUp} 0.8s ease;
+    }
   }
 
   @media (max-width: 768px) {
