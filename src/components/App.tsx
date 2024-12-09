@@ -55,7 +55,7 @@ const App = () => {
       document.body.classList.add("dark");
       saveTheme("dark");
     } else {
-      metaThemeColor?.setAttribute("content", "#FAF8FF");
+      metaThemeColor?.setAttribute("content", "#e6e4e4");
       document.body.classList.remove("dark");
       saveTheme("light");
     }
