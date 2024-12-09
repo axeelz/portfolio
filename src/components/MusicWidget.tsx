@@ -70,7 +70,7 @@ const TrackInfo = styled.div<{ $ellipsis?: boolean }>`
   flex: 1;
   min-width: 0;
 
-  & > * {
+  & p {
     ${({ $ellipsis }) =>
       $ellipsis &&
       css`
@@ -81,16 +81,21 @@ const TrackInfo = styled.div<{ $ellipsis?: boolean }>`
   }
 `;
 
-const TrackName = styled.p<{ $isPlaying?: boolean }>`
+const TrackNameWrapper = styled.div<{ $isPlaying?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   font-weight: bold;
-  line-height: 2;
-  position: relative;
 
   ${({ $isPlaying }) =>
     $isPlaying &&
     css`
       animation: ${pulse} 2s infinite;
     `}
+`;
+
+const TrackName = styled.p`
+  line-height: 2;
 
   @media (max-width: 480px) {
     line-height: unset;
@@ -108,11 +113,7 @@ const ExplicitIcon = styled.span`
   width: 16px;
   height: 16px;
   user-select: none;
-  line-height: 1;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 0.25rem;
+  flex-shrink: 0;
 `;
 
 const TrackDetails = styled.p`
@@ -230,9 +231,10 @@ const MusicWidget = () => {
       <TrackWrapper>
         <CoverThumbnail role="img" aria-label={track.name} $src={track.coverUrl} onClick={togglePlayPause} />
         <TrackInfo $ellipsis>
-          <TrackName $isPlaying={isPreviewPlaying}>
-            {track.name} {track.isExplicit && <ExplicitIcon>E</ExplicitIcon>}
-          </TrackName>
+          <TrackNameWrapper $isPlaying={isPreviewPlaying}>
+            <TrackName>{track.name}</TrackName>
+            {track.isExplicit && <ExplicitIcon>E</ExplicitIcon>}
+          </TrackNameWrapper>
           <TrackDetails>{track.artists}</TrackDetails>
         </TrackInfo>
         <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
