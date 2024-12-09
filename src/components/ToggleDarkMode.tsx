@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import useSound from "use-sound";
-import { IoMoon, IoSunny } from "react-icons/io5";
 import useKeyPress from "../hooks/useKeyPress";
 import { IconBtn } from "../styled/shared";
+import { MoonIcon, SunIcon } from "lucide-react";
 
 interface ToggleDarkModeProps {
   isDark: boolean;
@@ -28,7 +28,7 @@ const ToggleDarkMode = ({ isDark, setIsDark }: ToggleDarkModeProps) => {
 
   return (
     <IconBtn aria-label="Switch theme" onClick={toggleTheme} key={isDark.toString()}>
-      {isDark ? <IoSunny /> : <IoMoon />}
+      {isDark ? <SunIcon /> : <MoonIcon />}
     </IconBtn>
   );
 };

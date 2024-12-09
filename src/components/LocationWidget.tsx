@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { WidgetContainer } from "../styled/shared";
 import { useEffect, useState } from "react";
-import { IoLocationSharp } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
+import { MapPinIcon } from "lucide-react";
 
 const LocationContainer = styled(WidgetContainer)`
   display: flex;
@@ -20,10 +20,6 @@ const IconContainer = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  svg {
-    font-size: 1.5rem;
-  }
 `;
 
 const LocalTimeContainer = styled.div`
@@ -72,7 +68,7 @@ const LocationWidget = () => {
   return (
     <LocationContainer>
       <IconContainer>
-        <IoLocationSharp />
+        <MapPinIcon />
       </IconContainer>
       <LocalTimeContainer>
         <CityName>Paris, France</CityName>

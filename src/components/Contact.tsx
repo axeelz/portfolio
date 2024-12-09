@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import { BsLinkedin, BsGithub } from "react-icons/bs";
 import { SectionTitle } from "../styled/shared";
-import { FaCopy } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import MusicWidget from "./MusicWidget";
@@ -9,6 +7,7 @@ import LocationWidget from "./LocationWidget";
 import { Tooltip } from "./Tooltip";
 import { GithubTooltip } from "./GithubTooltip";
 import { fetchGithubData, GithubUser, GITHUB_USERNAME, useHasHover } from "../utils";
+import { CopyIcon, GithubIcon, LinkedinIcon } from "lucide-react";
 
 /* Socials */
 
@@ -98,16 +97,16 @@ const Contact = () => {
       <SocialsContainer>
         <Tooltip content={copyText} side="top" {...(!hasHover && { open: copied, forceAnimation: true })}>
           <SocialButtonWithIcon onClick={handleCopy}>
-            <FaCopy /> axelzareb&#64;gmail&#46;com
+            <CopyIcon /> axelzareb&#64;gmail&#46;com
           </SocialButtonWithIcon>
         </Tooltip>
         <SocialButtonWithIcon as="a" href="https://www.linkedin.com/in/axelzareb/" target="_blank" $social="linkedin">
-          <BsLinkedin />
+          <LinkedinIcon />
           LinkedIn
         </SocialButtonWithIcon>
         <Tooltip link content={<GithubTooltip user={githubData} />} side="top">
           <SocialButtonWithIcon as="a" href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" $social="github">
-            <BsGithub />
+            <GithubIcon />
             GitHub
           </SocialButtonWithIcon>
         </Tooltip>

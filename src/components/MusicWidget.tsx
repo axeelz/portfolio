@@ -2,10 +2,9 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { IconBtn, WidgetContainer } from "../styled/shared";
-import { IoShuffle } from "react-icons/io5";
-import { BsExplicitFill } from "react-icons/bs";
 import { getIsFeatureEnabled } from "../utils";
 import { pulse } from "../styled/animations";
+import { ShuffleIcon } from "lucide-react";
 
 const Container = styled(WidgetContainer)<{ $isLoading: boolean }>`
   display: flex;
@@ -87,16 +86,28 @@ const TrackInfo = styled.div<{ $ellipsis?: boolean; $isPlaying?: boolean }>`
 const TrackName = styled.p`
   font-weight: bold;
   line-height: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 
   @media (max-width: 480px) {
     line-height: unset;
   }
 `;
 
-const InlineIcon = styled.span`
-  font-size: 0.8rem;
-  margin-left: 0.25rem;
-  vertical-align: middle;
+const ExplicitIcon = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--background-color);
+  background-color: var(--text-color);
+  font-family: "Arial Rounded MT Bold", sans-serif;
+  width: 16px;
+  height: 16px;
+  user-select: none;
 `;
 
 const TrackDetails = styled.p`
@@ -202,7 +213,7 @@ const MusicWidget = () => {
             <TrackName>{t("contact.randomSong")}</TrackName>
           </TrackInfo>
           <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
-            <IoShuffle />
+            <ShuffleIcon />
           </ShuffleBtn>
         </TrackWrapper>
       </Container>
@@ -215,17 +226,12 @@ const MusicWidget = () => {
         <CoverThumbnail role="img" aria-label={track.name} $src={track.coverUrl} onClick={togglePlayPause} />
         <TrackInfo $ellipsis $isPlaying={isPreviewPlaying}>
           <TrackName>
-            {track.name}{" "}
-            {track.isExplicit && (
-              <InlineIcon>
-                <BsExplicitFill />
-              </InlineIcon>
-            )}
+            {track.name} {track.isExplicit && <ExplicitIcon>E</ExplicitIcon>}
           </TrackName>
           <TrackDetails>{track.artists}</TrackDetails>
         </TrackInfo>
         <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
-          <IoShuffle />
+          <ShuffleIcon />
         </ShuffleBtn>
       </TrackWrapper>
       <Player audioPreviewUrl={track.audioPreviewUrl} isPlayable={track.isPlayable} audioRef={audioRef} />

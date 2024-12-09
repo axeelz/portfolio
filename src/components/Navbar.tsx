@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { IoLanguage } from "react-icons/io5";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import ToggleDarkMode from "./ToggleDarkMode";
 import { useTranslation } from "react-i18next";
 import useKeyPress from "../hooks/useKeyPress";
@@ -10,6 +8,7 @@ import useSound from "use-sound";
 import { fadeIn } from "../styled/animations";
 import { IconBtn } from "../styled/shared";
 import { Tooltip } from "./Tooltip";
+import { LanguagesIcon, MenuIcon, XIcon } from "lucide-react";
 
 const NavbarContainer = styled.nav`
   width: 100%;
@@ -25,6 +24,11 @@ const NavbarContainer = styled.nav`
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   margin-bottom: 1rem;
+
+  & .lucide {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const ButtonsContainer = styled.div`
@@ -99,7 +103,7 @@ const Navbar = ({ isDark, setIsDark }: NavbarProps) => {
       <NavbarContainer>
         <ButtonsContainer>
           <IconBtn aria-label="Collapsable menu" onClick={handleCollapsableClose}>
-            {collapsableOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
+            {collapsableOpen ? <XIcon /> : <MenuIcon />}
           </IconBtn>
           {collapsableOpen && <CollapsableNav ref={collapsableRef} />}
         </ButtonsContainer>
@@ -111,7 +115,7 @@ const Navbar = ({ isDark, setIsDark }: NavbarProps) => {
               </span>
             }>
             <IconBtn aria-label={t("navbar.switchLang") || ""} onClick={switchLanguage}>
-              <IoLanguage />
+              <LanguagesIcon />
             </IconBtn>
           </Tooltip>
           <Tooltip
