@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { GITHUB_USERNAME, GithubUser } from "../utils";
+import { type GithubUser, GITHUB_USERNAME } from "../utils";
 
 const Container = styled.div`
   display: inline-flex;

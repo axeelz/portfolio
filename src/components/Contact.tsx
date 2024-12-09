@@ -6,7 +6,7 @@ import MusicWidget from "./MusicWidget";
 import LocationWidget from "./LocationWidget";
 import { Tooltip } from "./Tooltip";
 import { GithubTooltip } from "./GithubTooltip";
-import { fetchGithubData, GithubUser, GITHUB_USERNAME, useHasHover } from "../utils";
+import { type GithubUser, GITHUB_USERNAME, useHasHover, fetchGithubData } from "../utils";
 import { CopyIcon, GithubIcon, LinkedinIcon } from "lucide-react";
 
 /* Socials */
