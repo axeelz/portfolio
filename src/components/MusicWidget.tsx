@@ -37,8 +37,12 @@ const CoverThumbnail = styled.div<{ $src: string }>`
   background-size: cover;
   background-position: center;
   position: relative;
-  transition: background-image 0.3s ease;
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    // disabled on mobile due to Safari iOS glitches
+    transition: background-image 0.3s ease;
+  }
 
   @media (max-width: 768px) {
     width: 75px;
@@ -62,15 +66,9 @@ const CoverThumbnail = styled.div<{ $src: string }>`
   }
 `;
 
-const TrackInfo = styled.div<{ $ellipsis?: boolean; $isPlaying?: boolean }>`
+const TrackInfo = styled.div<{ $ellipsis?: boolean }>`
   flex: 1;
   min-width: 0;
-
-  ${({ $isPlaying }) =>
-    $isPlaying &&
-    css`
-      animation: ${pulse} 2s infinite;
-    `}
 
   & > * {
     ${({ $ellipsis }) =>
@@ -83,12 +81,16 @@ const TrackInfo = styled.div<{ $ellipsis?: boolean; $isPlaying?: boolean }>`
   }
 `;
 
-const TrackName = styled.p`
+const TrackName = styled.p<{ $isPlaying?: boolean }>`
   font-weight: bold;
   line-height: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+  position: relative;
+
+  ${({ $isPlaying }) =>
+    $isPlaying &&
+    css`
+      animation: ${pulse} 2s infinite;
+    `}
 
   @media (max-width: 480px) {
     line-height: unset;
@@ -101,13 +103,16 @@ const ExplicitIcon = styled.span`
   justify-content: center;
   border-radius: 4px;
   font-size: 10px;
-  font-weight: bold;
   color: var(--background-color);
   background-color: var(--text-color);
-  font-family: "Arial Rounded MT Bold", sans-serif;
   width: 16px;
   height: 16px;
   user-select: none;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0.25rem;
 `;
 
 const TrackDetails = styled.p`
@@ -224,8 +229,8 @@ const MusicWidget = () => {
     <Container $isLoading={isLoading}>
       <TrackWrapper>
         <CoverThumbnail role="img" aria-label={track.name} $src={track.coverUrl} onClick={togglePlayPause} />
-        <TrackInfo $ellipsis $isPlaying={isPreviewPlaying}>
-          <TrackName>
+        <TrackInfo $ellipsis>
+          <TrackName $isPlaying={isPreviewPlaying}>
             {track.name} {track.isExplicit && <ExplicitIcon>E</ExplicitIcon>}
           </TrackName>
           <TrackDetails>{track.artists}</TrackDetails>
