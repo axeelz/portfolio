@@ -3,7 +3,7 @@ import Projects from "./Projects";
 import Footer from "./Footer";
 import Contact from "./Contact";
 import Presentation from "./Presentation";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { fadeBgColor, fadeUp } from "../styled/animations";
@@ -34,33 +34,6 @@ const Section = styled.section`
 `;
 
 const App = () => {
-  const getTheme = () => {
-    if (localStorage.getItem("theme")) {
-      return localStorage.getItem("theme") === "dark";
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  };
-
-  const [isDark, setIsDark] = useState<boolean>(getTheme());
-
-  const saveTheme = (theme: "dark" | "light") => {
-    localStorage.setItem("theme", theme);
-  };
-
-  useEffect(() => {
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-
-    if (isDark) {
-      metaThemeColor?.setAttribute("content", "#000000");
-      document.body.classList.add("dark");
-      saveTheme("dark");
-    } else {
-      metaThemeColor?.setAttribute("content", "#e6e4e4");
-      document.body.classList.remove("dark");
-      saveTheme("light");
-    }
-  }, [isDark]);
-
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -69,7 +42,7 @@ const App = () => {
 
   return (
     <TooltipProvider>
-      <Navbar isDark={isDark} setIsDark={setIsDark} />
+      <Navbar />
       <main>
         <Section id="presentation">
           <Presentation />

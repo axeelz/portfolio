@@ -3,7 +3,7 @@ import ToggleDarkMode from "./ToggleDarkMode";
 import { useTranslation } from "react-i18next";
 import useKeyPress from "../hooks/useKeyPress";
 import CollapsableNav from "./CollapsableNav";
-import { useState, useRef, Dispatch, SetStateAction } from "react";
+import { useState, useRef } from "react";
 import useSound from "use-sound";
 import { fadeIn } from "../styled/animations";
 import { IconBtn } from "../styled/shared";
@@ -57,12 +57,7 @@ const Kbd = styled.kbd`
   }
 `;
 
-interface NavbarProps {
-  isDark: boolean;
-  setIsDark: Dispatch<SetStateAction<boolean>>;
-}
-
-const Navbar = ({ isDark, setIsDark }: NavbarProps) => {
+const Navbar = () => {
   const { t, i18n } = useTranslation();
 
   const switchLanguage = () => {
@@ -124,7 +119,7 @@ const Navbar = ({ isDark, setIsDark }: NavbarProps) => {
                 {t("navbar.switchTheme")} <Kbd>M</Kbd>
               </span>
             }>
-            <ToggleDarkMode isDark={isDark} setIsDark={setIsDark} />
+            <ToggleDarkMode />
           </Tooltip>
         </ButtonsContainer>
       </NavbarContainer>
