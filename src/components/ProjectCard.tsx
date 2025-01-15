@@ -10,7 +10,7 @@ const Card = styled.div`
   border: 2px solid var(--border-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   padding: 2rem;
-  max-width: 400px;
+  max-width: 480px;
   word-break: break-word;
   display: flex;
   flex-direction: column;
