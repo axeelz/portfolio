@@ -21,7 +21,7 @@ const ToggleDarkMode = () => {
   };
 
   useKeyPress("m", handleToggle);
-  useKeyPress("r", resetTheme);
+  useKeyPress("p", resetTheme);
 
   return (
     <IconBtn aria-label={t("navbar.switchTheme")} onClick={handleToggle}>
