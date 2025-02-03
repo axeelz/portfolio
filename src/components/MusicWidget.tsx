@@ -12,6 +12,7 @@ const Container = styled(WidgetContainer)<{ $isLoading: boolean }>`
   gap: 1rem;
   padding: 1rem;
   transition: filter 0.3s ease;
+  margin-bottom: 2rem;
 
   ${({ $isLoading }) =>
     $isLoading &&

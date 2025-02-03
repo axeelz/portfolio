@@ -61,7 +61,6 @@ export const IconBtn = styled.button`
 
 export const WidgetContainer = styled.div`
   font-weight: 500;
-  margin-bottom: 2rem;
   border-radius: var(--card-border-radius);
   background-color: var(--card-background-color);
   border: 2px solid var(--border-color);

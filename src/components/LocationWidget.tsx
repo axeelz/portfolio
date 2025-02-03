@@ -9,6 +9,7 @@ const LocationContainer = styled(WidgetContainer)`
   gap: 2rem;
   align-items: center;
   padding: 1rem 2rem;
+  margin-bottom: 1rem;
 
   @media (max-width: 768px) {
     gap: 1rem;
