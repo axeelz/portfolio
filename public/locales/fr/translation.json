@@ -31,7 +31,8 @@
     "randomSong": "Musique aléatoire de ma\u00A0playlist",
     "getRandomSong": "Obtenir une musique aléatoire",
     "copy": "Copier l'adresse mail",
-    "copied": "Copié"
+    "copied": "Copié",
+    "errorFetchTrack": "Échec du chargement de la piste. Veuillez réessayer."
   },
   "footer": {
     "createdBy": "Créé par",

@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { fadeBgColor, fadeUp } from "../styled/animations";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { Toaster } from "sonner";
 
 const Section = styled.section`
   padding: 2rem;
@@ -55,6 +56,7 @@ const App = () => {
         </Section>
       </main>
       <Footer />
+      <Toaster />
     </TooltipProvider>
   );
 };

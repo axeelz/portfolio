@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import styled, { css } from "styled-components";
 import { IconBtn, WidgetContainer } from "../styled/shared";
 import { getIsFeatureEnabled } from "../utils";
 import { pulse } from "../styled/animations";
 import { ShuffleIcon } from "lucide-react";
+import { toast } from "sonner";
 
 const Container = styled(WidgetContainer)<{ $isLoading: boolean }>`
   display: flex;
@@ -154,23 +155,32 @@ const MusicWidget = () => {
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const fetchRandomTrack = () => {
+  const fetchRandomTrack = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPreviewPlaying(false);
     }
     setIsLoading(true);
     fetch("https://music.axlz.me/")
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error, status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data: MusicResponse) => {
         setIsInitialized(true);
         setTrack(data.track);
         window.umami.track("random-song", { title: data.track.name, artists: data.track.artists });
       })
+      .catch((error) => {
+        console.error("Failed to fetch track:", error);
+        toast.error(t("contact.errorFetchTrack"));
+      })
       .finally(() => {
         setIsLoading(false);
       });
-  };
+  }, [t]);
 
   const togglePlayPause = () => {
     if (audioRef.current) {

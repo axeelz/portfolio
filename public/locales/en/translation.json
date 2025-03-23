@@ -31,7 +31,8 @@
     "randomSong": "Random song from my\u00A0playlist",
     "getRandomSong": "Get a random song",
     "copy": "Copy email address",
-    "copied": "Copied"
+    "copied": "Copied",
+    "errorFetchTrack": "Failed to load track. Please try again."
   },
   "footer": {
     "createdBy": "Created by",
