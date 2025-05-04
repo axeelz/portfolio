@@ -40,7 +40,7 @@ const ProjectDescription = ({ desc, stats }: ProjectDescriptionProps) => {
           console.warn(`Error fetching ${endpoint}, fallback to default stats`);
         });
     }
-  }, []);
+  }, [stats]);
 
   return (
     <ProjectDesc>

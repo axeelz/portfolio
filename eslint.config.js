@@ -2,7 +2,7 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
-import reactCompiler from "eslint-plugin-react-compiler";
+import * as reactHooks from "eslint-plugin-react-hooks";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -11,13 +11,16 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  reactHooks.configs.recommended,
   {
-    plugins: {
-      "react-compiler": reactCompiler,
+    settings: {
+      react: {
+        version: "detect",
+      },
     },
     rules: {
-      "react-compiler/react-compiler": "error",
       "react/react-in-jsx-scope": "off",
+      "react-hooks/react-compiler": "error",
     },
   },
 ];
