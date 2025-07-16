@@ -133,17 +133,11 @@ const ShuffleBtn = styled(IconBtn)`
 
 interface Track {
   uri: string;
-  name: string;
-  album: string;
-  artists: string;
+  title: string;
+  artist: string;
   isExplicit: boolean;
+  previewUrl: string;
   coverUrl: string;
-  isPlayable: boolean;
-  audioPreviewUrl: string;
-}
-
-interface MusicResponse {
-  track: Track;
 }
 
 const MusicWidget = () => {
@@ -168,10 +162,10 @@ const MusicWidget = () => {
         }
         return response.json();
       })
-      .then((data: MusicResponse) => {
+      .then((track: Track) => {
         setIsInitialized(true);
-        setTrack(data.track);
-        window.umami.track("random-song", { title: data.track.name, artists: data.track.artists });
+        setTrack(track);
+        window.umami.track("random-song", { title: track.title, artists: track.artist });
       })
       .catch((error) => {
         console.error("Failed to fetch track:", error);
@@ -242,19 +236,19 @@ const MusicWidget = () => {
   return (
     <Container $isLoading={isLoading}>
       <TrackWrapper>
-        <CoverThumbnail role="img" aria-label={track.name} $src={track.coverUrl} onClick={togglePlayPause} />
+        <CoverThumbnail role="img" aria-label={track.title} $src={track.coverUrl} onClick={togglePlayPause} />
         <TrackInfo $ellipsis>
           <TrackNameWrapper $isPlaying={isPreviewPlaying}>
-            <TrackName>{track.name}</TrackName>
+            <TrackName>{track.title}</TrackName>
             {track.isExplicit && <ExplicitIcon>E</ExplicitIcon>}
           </TrackNameWrapper>
-          <TrackDetails>{track.artists}</TrackDetails>
+          <TrackDetails>{track.artist}</TrackDetails>
         </TrackInfo>
         <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
           <ShuffleIcon />
         </ShuffleBtn>
       </TrackWrapper>
-      <Player audioPreviewUrl={track.audioPreviewUrl} isPlayable={track.isPlayable} audioRef={audioRef} />
+      <Player audioPreviewUrl={track.previewUrl} isPlayable={!!track.previewUrl} audioRef={audioRef} />
     </Container>
   );
 };
