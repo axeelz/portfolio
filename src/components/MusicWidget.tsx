@@ -136,7 +136,7 @@ interface Track {
   title: string;
   artist: string;
   isExplicit: boolean;
-  previewUrl: string;
+  previewUrl: string | null;
   coverUrl: string;
 }
 
@@ -248,21 +248,19 @@ const MusicWidget = () => {
           <ShuffleIcon />
         </ShuffleBtn>
       </TrackWrapper>
-      <Player audioPreviewUrl={track.previewUrl} isPlayable={!!track.previewUrl} audioRef={audioRef} />
+      <Player audioPreviewUrl={track.previewUrl} audioRef={audioRef} />
     </Container>
   );
 };
 
 const Player = ({
   audioPreviewUrl,
-  isPlayable,
   audioRef,
 }: {
-  audioPreviewUrl: string;
-  isPlayable: boolean;
+  audioPreviewUrl: string | null;
   audioRef: React.RefObject<HTMLAudioElement | null>;
 }) => {
-  if (!isPlayable) {
+  if (!audioPreviewUrl) {
     return null;
   }
 
