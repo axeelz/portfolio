@@ -155,7 +155,7 @@ const MusicWidget = () => {
       setIsPreviewPlaying(false);
     }
     setIsLoading(true);
-    fetch("https://music.axlz.me/")
+    fetch("https://music.axlz.me/", { credentials: "include" })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Error, status: ${response.status}`);
