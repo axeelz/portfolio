@@ -116,6 +116,8 @@ const ExplicitIcon = styled.span`
   height: 16px;
   user-select: none;
   flex-shrink: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
 `;
 
 const TrackDetails = styled.p`
