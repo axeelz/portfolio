@@ -127,7 +127,8 @@ const AudioPreview = styled.audio`
 `;
 
 const ShuffleBtn = styled(IconBtn)`
-  background-color: var(--section-background-color);
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
   border: 1px solid var(--border-color);
 `;
 
