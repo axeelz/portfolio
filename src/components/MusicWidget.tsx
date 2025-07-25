@@ -165,7 +165,7 @@ const MusicWidget = () => {
       .then((track: Track) => {
         setIsInitialized(true);
         setTrack(track);
-        window.umami.track("random-song", { title: track.title, artists: track.artist });
+        window.umami.track("random-song", { track: track.title, artist: track.artist });
       })
       .catch((error) => {
         console.error("Failed to fetch track:", error);
