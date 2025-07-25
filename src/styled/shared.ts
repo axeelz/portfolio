@@ -49,8 +49,10 @@ export const IconBtn = styled.button`
   font-size: 2rem;
   opacity: 0.65;
 
-  &:hover {
-    opacity: 1;
+  @media (hover: hover) {
+    &:hover {
+      opacity: 1;
+    }
   }
 
   &:active {
