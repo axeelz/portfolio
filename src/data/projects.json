@@ -117,28 +117,6 @@
       "links": {
         "url": "https://www.a3bc.io/"
       }
-    },
-    {
-      "name": "Ultrasafe",
-      "image": "ultrasafe.jpeg",
-      "date": "2021",
-      "desc_fr": "Un projet sur Raspberry Pi avec un site permettant de gérer une alarme et consulter ses données.",
-      "desc_en": "A project on Raspberry Pi with a site allowing to manage an alarm and consult its data.",
-      "techs": ["PHP", "Python", "MariaDB", "HTML", "CSS", "JavaScript", "Figma"],
-      "links": {
-        "source": "https://github.com/axeelz/ultrasafearchive"
-      }
-    },
-    {
-      "name": "Realtime Lyrics",
-      "image": "lyrics.jpg",
-      "date": "2021",
-      "desc_fr": "Une web app affichant les paroles Genius de la chanson que vous jouez sur Spotify (avant que Spotify implémente les paroles).",
-      "desc_en": "A web app that displays the Genius lyrics of the song you are playing on Spotify (before Spotify had lyrics).",
-      "techs": ["Bottle.py", "HTML", "CSS", "JavaScript"],
-      "links": {
-        "source": "https://github.com/axeelz/realtimelyrics"
-      }
     }
   ],
   "additionalTechs": ["Git", "Linux", "Cloudflare", "Nginx", "Java", "Astro", "Mapbox", "Ionic"]
