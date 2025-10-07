@@ -62,7 +62,6 @@ const BodyContainer = styled.div`
 
   & > span {
     color: var(--text-secondary);
-    text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
