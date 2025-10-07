@@ -19,6 +19,18 @@ const Grid = styled.div`
   }
 `;
 
+const GitHubCTA = styled.p`
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-weight: 500;
+
+  & a {
+    color: inherit;
+    font-weight: 600;
+  }
+`;
+
 export interface Project {
   name: string; // Project name
   image: string; // Image URL
@@ -44,6 +56,12 @@ const Projects = () => {
           <ProjectCard key={i} project={project} />
         ))}
       </Grid>
+      <GitHubCTA>
+        {t("projects.moreProjectsOn")}{" "}
+        <a href="https://github.com/axeelz?tab=repositories" target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+      </GitHubCTA>
     </>
   );
 };
