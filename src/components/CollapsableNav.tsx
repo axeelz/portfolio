@@ -59,7 +59,7 @@ const CollapsableNav = ({ ref }: { ref: React.RefObject<HTMLElement | null> }) =
   return (
     // ref is required for the exit animation
     <NavContainer ref={ref}>
-      {["presentation", "projects", "contact"].map((item) => (
+      {["presentation", "projects", "about"].map((item) => (
         <ButtonItem
           key={item}
           onClick={() => {

@@ -1,11 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 import styled, { css } from "styled-components";
 import { IconBtn, WidgetContainer } from "../styled/shared";
 import { getIsFeatureEnabled } from "../utils";
 import { pulse } from "../styled/animations";
 import { ShuffleIcon } from "lucide-react";
 import { toast } from "sonner";
+import { fetchRandomTrack, QUERY_KEYS, type RandomTrack } from "../utils/fetch";
 
 const Container = styled(WidgetContainer)<{ $isLoading: boolean }>`
   display: flex;
@@ -13,7 +15,7 @@ const Container = styled(WidgetContainer)<{ $isLoading: boolean }>`
   gap: 1rem;
   padding: 1rem;
   transition: filter 0.3s ease;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   ${({ $isLoading }) =>
     $isLoading &&
@@ -134,50 +136,32 @@ const ShuffleBtn = styled(IconBtn)`
   border: 1px solid var(--border-color);
 `;
 
-interface Track {
-  uri: string;
-  title: string;
-  artist: string;
-  isExplicit: boolean;
-  previewUrl: string | null;
-  coverUrl: string;
-}
-
 const MusicWidget = () => {
   const { t } = useTranslation();
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [track, setTrack] = useState<Track | null>(null);
   const [isFeatureEnabled, setIsFeatureEnabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const fetchRandomTrack = useCallback(() => {
+  const {
+    data: track,
+    refetch,
+    isFetching,
+    error,
+  } = useQuery<RandomTrack, Error>({
+    queryKey: [QUERY_KEYS.randomTrack],
+    enabled: false,
+    retry: false,
+    queryFn: fetchRandomTrack,
+  });
+
+  const triggerRandomTrack = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPreviewPlaying(false);
     }
-    setIsLoading(true);
-    fetch("https://music.axeelz.com/", { credentials: "include" })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Error, status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((track: Track) => {
-        setIsInitialized(true);
-        setTrack(track);
-        window.umami?.track("random-song", { track: track.title, artist: track.artist });
-      })
-      .catch((error) => {
-        console.error("Failed to fetch track:", error);
-        toast.error(t("contact.errorFetchTrack"));
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [t]);
+
+    void refetch();
+  }, [refetch]);
 
   const togglePlayPause = () => {
     if (audioRef.current) {
@@ -195,6 +179,19 @@ const MusicWidget = () => {
       setIsFeatureEnabled(enabled);
     });
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      console.error("Failed to fetch track:", error);
+      toast.error(t("contact.errorFetchTrack"));
+    }
+  }, [error, t]);
+
+  useEffect(() => {
+    if (track) {
+      window.umami?.track("random-song", { track: track.title, artist: track.artist });
+    }
+  }, [track]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -219,16 +216,16 @@ const MusicWidget = () => {
     return null;
   }
 
-  if (!isInitialized || !track) {
+  if (!track) {
     return (
-      <Container $isLoading={isLoading}>
+      <Container $isLoading={isFetching}>
         <TrackWrapper>
           <TrackInfo>
             <TrackNameWrapper>
               <TrackName>{t("contact.randomSong")}</TrackName>
             </TrackNameWrapper>
           </TrackInfo>
-          <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
+          <ShuffleBtn onClick={triggerRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
             <ShuffleIcon />
           </ShuffleBtn>
         </TrackWrapper>
@@ -237,7 +234,7 @@ const MusicWidget = () => {
   }
 
   return (
-    <Container $isLoading={isLoading}>
+    <Container $isLoading={isFetching}>
       <TrackWrapper>
         <CoverThumbnail role="img" aria-label={track.title} $src={track.coverUrl} onClick={togglePlayPause} />
         <TrackInfo $ellipsis>
@@ -247,7 +244,7 @@ const MusicWidget = () => {
           </TrackNameWrapper>
           <TrackDetails>{track.artist}</TrackDetails>
         </TrackInfo>
-        <ShuffleBtn onClick={fetchRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
+        <ShuffleBtn onClick={triggerRandomTrack} aria-label={t("contact.getRandomSong") || ""}>
           <ShuffleIcon />
         </ShuffleBtn>
       </TrackWrapper>

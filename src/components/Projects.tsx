@@ -3,16 +3,13 @@ import { SectionTitle } from "../styled/shared";
 import ProjectCard from "./ProjectCard";
 import { styled } from "styled-components";
 import { useTranslation } from "react-i18next";
+import { ArrowRightIcon } from "lucide-react";
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   grid-gap: 1.5rem;
   justify-items: center;
-
-  @media (min-width: 768px) {
-    padding-top: 2rem;
-  }
 
   @media (min-width: 830px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -23,11 +20,16 @@ const GitHubCTA = styled.p`
   margin-top: 2rem;
   text-align: center;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 
   & a {
     color: inherit;
-    font-weight: 600;
+    font-weight: 700;
   }
 `;
 
@@ -57,6 +59,7 @@ const Projects = () => {
         ))}
       </Grid>
       <GitHubCTA>
+        <ArrowRightIcon />
         {t("projects.moreProjectsOn")}{" "}
         <a href="https://github.com/axeelz?tab=repositories" target="_blank" rel="noreferrer">
           GitHub

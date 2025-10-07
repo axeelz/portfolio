@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { SectionTitle } from "../styled/shared";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import MusicWidget from "./MusicWidget";
-import LocationWidget from "./LocationWidget";
 import { Tooltip } from "./Tooltip";
 import { GithubTooltip } from "./GithubTooltip";
-import { type GithubUser, GITHUB_USERNAME, useHasHover, fetchGithubData } from "../utils";
-import { CopyIcon, GithubIcon, LinkedinIcon } from "lucide-react";
+import { GITHUB_USERNAME, useHasHover } from "../utils";
+import { CopyIcon, ExternalLinkIcon, GithubIcon, LinkedinIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchGithubData, QUERY_KEYS, type GithubUser } from "../utils/fetch";
 
 /* Socials */
 
@@ -56,15 +55,19 @@ const SocialButtonWithIcon = styled(SocialButton)<{ $social?: "linkedin" | "gith
   }
 `;
 
-const Contact = () => {
+const Socials = () => {
   const { t } = useTranslation();
 
-  const [copied, setCopied] = useState<boolean>(false);
+  const [copied, setCopied] = useState(false);
   const copyText = copied ? `${t("contact.copied")} 🎉` : t("contact.copy");
 
-  const [githubData, setGithubData] = useState<GithubUser | null>(null);
-
   const hasHover = useHasHover();
+
+  const { data: githubData } = useQuery<GithubUser>({
+    queryKey: [QUERY_KEYS.githubUser, GITHUB_USERNAME],
+    queryFn: () => fetchGithubData(GITHUB_USERNAME),
+    retry: false,
+  });
 
   useEffect(() => {
     if (copied) {
@@ -73,12 +76,6 @@ const Contact = () => {
       }, 2000);
     }
   }, [copied]);
-
-  useEffect(() => {
-    fetchGithubData()
-      .then((data: GithubUser) => setGithubData(data))
-      .catch(() => console.warn("Error fetching Github data, fallback to username"));
-  }, []);
 
   const handleCopy = async () => {
     try {
@@ -90,29 +87,28 @@ const Contact = () => {
   };
 
   return (
-    <>
-      <SectionTitle>{t("contact.title")}</SectionTitle>
-      <LocationWidget />
-      <MusicWidget />
-      <SocialsContainer>
-        <Tooltip content={copyText} side="top" {...(!hasHover && { open: copied, forceAnimation: true })}>
-          <SocialButtonWithIcon onClick={handleCopy}>
-            <CopyIcon /> axelzareb&#64;gmail&#46;com
-          </SocialButtonWithIcon>
-        </Tooltip>
-        <SocialButtonWithIcon as="a" href="https://www.linkedin.com/in/axelzareb/" target="_blank" $social="linkedin">
-          <LinkedinIcon />
-          LinkedIn
+    <SocialsContainer>
+      <Tooltip content={copyText} side="top" {...(!hasHover && { open: copied, forceAnimation: true })}>
+        <SocialButtonWithIcon onClick={handleCopy}>
+          <CopyIcon /> axelzareb&#64;gmail&#46;com
         </SocialButtonWithIcon>
-        <Tooltip link content={<GithubTooltip user={githubData} />} side="top">
-          <SocialButtonWithIcon as="a" href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" $social="github">
-            <GithubIcon />
-            GitHub
-          </SocialButtonWithIcon>
-        </Tooltip>
-      </SocialsContainer>
-    </>
+      </Tooltip>
+      <SocialButtonWithIcon as="a" href="https://www.linkedin.com/in/axelzareb/" target="_blank" $social="linkedin">
+        <LinkedinIcon />
+        LinkedIn
+      </SocialButtonWithIcon>
+      <Tooltip link content={<GithubTooltip user={githubData ?? null} />} side="top">
+        <SocialButtonWithIcon as="a" href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" $social="github">
+          <GithubIcon />
+          GitHub
+        </SocialButtonWithIcon>
+      </Tooltip>
+      <SocialButtonWithIcon as="a" href="https://txt.axlz.me/" target="_blank">
+        <ExternalLinkIcon />
+        txt.axlz.me
+      </SocialButtonWithIcon>
+    </SocialsContainer>
   );
 };
 
-export default Contact;
+export default Socials;

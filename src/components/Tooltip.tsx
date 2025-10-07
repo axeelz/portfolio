@@ -55,6 +55,11 @@ export function Tooltip({
     <TooltipPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} delayDuration={0}>
       <TooltipPrimitive.Trigger
         asChild
+        onPointerDown={(event) => {
+          if (!link) {
+            event.preventDefault();
+          }
+        }}
         onClick={(event) => {
           if (!link) {
             event.preventDefault();

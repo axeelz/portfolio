@@ -1,7 +1,6 @@
 import Navbar from "./Navbar";
 import Projects from "./Projects";
 import Footer from "./Footer";
-import Contact from "./Contact";
 import Presentation from "./Presentation";
 import { useEffect } from "react";
 import styled from "styled-components";
@@ -9,6 +8,10 @@ import { useTranslation } from "react-i18next";
 import { fadeBgColor, fadeUp } from "../styled/animations";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Toaster } from "sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import About from "./About";
+
+const queryClient = new QueryClient();
 
 const Section = styled.section`
   padding: 2rem;
@@ -42,22 +45,24 @@ const App = () => {
   }, [i18n.language]);
 
   return (
-    <TooltipProvider>
-      <Navbar />
-      <main>
-        <Section id="presentation">
-          <Presentation />
-        </Section>
-        <Section id="projects">
-          <Projects />
-        </Section>
-        <Section id="contact">
-          <Contact />
-        </Section>
-      </main>
-      <Footer />
-      <Toaster />
-    </TooltipProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Navbar />
+        <main>
+          <Section id="presentation">
+            <Presentation />
+          </Section>
+          <Section id="projects">
+            <Projects />
+          </Section>
+          <Section id="about">
+            <About />
+          </Section>
+        </main>
+        <Footer />
+        <Toaster />
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 };
 

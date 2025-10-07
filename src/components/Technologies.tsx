@@ -36,14 +36,13 @@ const TechsContainer = styled.div`
   gap: 0.5rem;
 `;
 
-const Technologies = () => {
+const Technologies = ({ items }: { items?: string[] }) => {
   const [showAll, setShowAll] = useState<boolean>(false);
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const { t } = useTranslation();
 
-  const getTechs = () => {
+  const getTechsFromProjects = () => {
     const data = projects.projects;
-    // Get techs with how many times they appear
     const techsCount: { [key: string]: number } = data
       .map((project) => project.techs)
       .flat()
@@ -51,30 +50,31 @@ const Technologies = () => {
         acc[tech] = acc[tech] ? acc[tech] + 1 : 1;
         return acc;
       }, {});
-    // Sort techs by how many times they appear
     const techs = Object.entries(techsCount).sort((a, b) => b[1] - a[1]);
-    // Additional techs to add to the list
     const additionalTechs: string[] = projects.additionalTechs;
     const addedTechs: [string, number][] = additionalTechs.map((tech) => [tech, 1]);
     techs.push(...addedTechs);
     return techs.map((tech) => tech[0]);
   };
 
-  const techs = getTechs();
-  const maxTechs = isSmallScreen ? 7 : 15;
-  const displayedTechs = showAll ? techs : techs.slice(0, maxTechs);
-  const remainingTechsCount = techs.length - displayedTechs.length;
+  const techs = items ?? getTechsFromProjects();
+
+  const maxVisible = isSmallScreen ? 7 : 15;
+  const hasMore = techs.length > maxVisible;
+  const displayedTechs = showAll || !hasMore ? techs : techs.slice(0, maxVisible);
 
   return (
     <TechsContainer>
       {displayedTechs.map((tech, i) => (
-        <Chip key={tech} $index={i} $additional={i > maxTechs - 1}>
+        <Chip key={`${tech}-${i}`} $index={i} $additional={i > maxVisible - 1}>
           {tech}
         </Chip>
       ))}
-      <Chip $clickable onClick={() => setShowAll(!showAll)} $index={displayedTechs.length}>
-        {showAll ? t("presentation.less") : `+${remainingTechsCount} ${t("presentation.others")}`}
-      </Chip>
+      {hasMore && (
+        <Chip $clickable onClick={() => setShowAll(!showAll)} $index={displayedTechs.length}>
+          {showAll ? t("presentation.less") : `+${techs.length - displayedTechs.length} ${t("presentation.others")}`}
+        </Chip>
+      )}
     </TechsContainer>
   );
 };

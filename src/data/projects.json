@@ -1,6 +1,45 @@
 {
   "projects": [
     {
+      "name": "Canvas Downloader",
+      "image": "cdfs.jpg",
+      "date": "2022",
+      "desc_fr": "Un site qui permet de télécharger les vidéos de fond sur Spotify.",
+      "desc_en": "A tool to download background video loops on Spotify.",
+      "techs": ["Flask", "PostgreSQL", "HTML", "CSS", "JavaScript"],
+      "links": {
+        "url": "https://www.canvasdownloader.com/"
+      },
+      "stats": {
+        "endpoint": "https://www.canvasdownloader.com/api/stats",
+        "fields": [
+          {
+            "field": "visitors_count",
+            "label_fr": "users",
+            "label_en": "users",
+            "default": 100000
+          },
+          {
+            "field": "canvas_count",
+            "label_fr": "downloads",
+            "label_en": "downloads",
+            "default": 250000
+          }
+        ]
+      }
+    },
+    {
+      "name": "Link Manager",
+      "image": "link-manager.png",
+      "date": "2024",
+      "desc_fr": "Un gestionnaire et raccourcisseur de liens, avec dashboard pour les gérer.",
+      "desc_en": "A link redirection manager and shortener, with a dashboard to manage them.",
+      "techs": ["TypeScript", "Next.js", "ElysiaJS", "Docker", "Drizzle"],
+      "links": {
+        "url": "https://axlz.me/why"
+      }
+    },
+    {
       "name": "Café sans-fil",
       "image": "cafesansfil.png",
       "date": "2023",
@@ -18,48 +57,9 @@
             "field": "stargazers_count",
             "label_fr": "⭐️ GitHub",
             "label_en": "GitHub ⭐️",
-            "default": 6
+            "default": 9
           }
         ]
-      }
-    },
-    {
-      "name": "Canvas Downloader",
-      "image": "cdfs.jpg",
-      "date": "2022",
-      "desc_fr": "Un site qui permet de télécharger les vidéos de fond sur Spotify.",
-      "desc_en": "A tool to download background video loops on Spotify.",
-      "techs": ["Flask", "Jinja", "PostgreSQL", "HTML", "CSS", "JavaScript"],
-      "links": {
-        "url": "https://www.canvasdownloader.com/"
-      },
-      "stats": {
-        "endpoint": "https://www.canvasdownloader.com/api/stats",
-        "fields": [
-          {
-            "field": "visitors_count",
-            "label_fr": "users",
-            "label_en": "users",
-            "default": 40000
-          },
-          {
-            "field": "canvas_count",
-            "label_fr": "downloads",
-            "label_en": "downloads",
-            "default": 100000
-          }
-        ]
-      }
-    },
-    {
-      "name": "Link Manager",
-      "image": "link-manager.png",
-      "date": "2024",
-      "desc_fr": "Un gestionnaire et raccourcisseur de liens, avec dashboard pour les gérer.",
-      "desc_en": "A link redirection manager and shortener, with a dashboard to manage them.",
-      "techs": ["TypeScript", "Next.js", "ElysiaJS", "Docker", "Drizzle"],
-      "links": {
-        "url": "https://axlz.me/why"
       }
     },
     {
@@ -68,7 +68,7 @@
       "date": "2024",
       "desc_fr": "Mon site personnel, vous êtes dessus actuellement !",
       "desc_en": "My personal website, you're on it now!",
-      "techs": ["TypeScript", "React", "styled-components"],
+      "techs": ["TypeScript", "React", "Tanstack Query", "styled-components"],
       "links": {
         "source": "https://github.com/axeelz/portfolio"
       }
@@ -95,29 +95,7 @@
         "source": "https://github.com/axeelz/mealrush",
         "url": "https://mealrush.axeelz.com/"
       }
-    },
-    {
-      "name": "TrustMe",
-      "image": "trustme.png",
-      "date": "2023",
-      "desc_fr": "Refonte du site TrustMe pour l'entreprise A3BC.",
-      "desc_en": "TrustMe website revamp.",
-      "techs": ["Hugo", "HTML", "CSS", "JavaScript"],
-      "links": {
-        "url": "https://www.trustmeid.io/"
-      }
-    },
-    {
-      "name": "A3BC",
-      "image": "a3bc.webp",
-      "date": "2023",
-      "desc_fr": "Refonte du site de l'entreprise A3BC.",
-      "desc_en": "A3BC company website revamp.",
-      "techs": ["Hugo", "HTML", "CSS", "JavaScript"],
-      "links": {
-        "url": "https://www.a3bc.io/"
-      }
     }
   ],
-  "additionalTechs": ["Git", "Linux", "Cloudflare", "Nginx", "Java", "Astro", "Mapbox", "Ionic"]
+  "additionalTechs": ["Git", "Linux", "Cloudflare", "Nginx", "Java", "Astro", "Mapbox"]
 }

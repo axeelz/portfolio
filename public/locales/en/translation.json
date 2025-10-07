@@ -3,9 +3,10 @@
     "title": "student and developer",
     "about": "About me",
     "part1": "I'm 21 years old and I live in the Paris area.",
-    "part2": "Developer at <sct>SNCF\u00A0Connect\u00A0&\u00A0Tech</sct> and pursuing a Master's in Computer Engineering at <upc>Université\u00A0Paris\u00A0Cité</upc>",
+    "part2": "Currently working at <sct>SNCF\u00A0Connect\u00A0&\u00A0Tech</sct> and pursuing a Master's in Computer Engineering at <upc>Université\u00A0Paris\u00A0Cité</upc>",
     "others": "others",
     "less": "Show less",
+    "enjoyedRecently": "Tools I enjoyed using recently",
     "seeProjects": "See my projects",
     "contactMe": "Contact me"
   },
@@ -15,7 +16,7 @@
     "switchTheme": "Switch theme",
     "presentation": "Presentation",
     "projects": "Projects",
-    "contact": "Contact"
+    "about": "About me"
   },
   "projects": {
     "title": "Some projects",
@@ -25,8 +26,10 @@
     },
     "moreProjectsOn": "More projects on"
   },
+  "about": {
+    "title": "More about me"
+  },
   "contact": {
-    "title": "Let's keep in touch!",
     "currently": "it is",
     "forMe": "local time",
     "randomSong": "Random song from my\u00A0playlist",

@@ -3,6 +3,7 @@ import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig(
@@ -11,6 +12,7 @@ export default defineConfig(
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
   reactHooks.configs.recommended,
+  pluginQuery.configs["flat/recommended"],
   {
     settings: {
       react: {

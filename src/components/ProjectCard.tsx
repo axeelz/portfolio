@@ -9,7 +9,7 @@ const Card = styled.div`
   border-radius: var(--card-border-radius);
   border: 2px solid var(--border-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-  padding: 2rem;
+  padding: 1.5rem;
   max-width: 480px;
   word-break: break-word;
   display: flex;
@@ -19,6 +19,7 @@ const Card = styled.div`
 
   @media (min-width: 830px) {
     max-width: unset;
+    padding: 2rem;
   }
 `;
 

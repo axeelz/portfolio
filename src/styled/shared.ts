@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { showAfter } from "./animations";
 
 export const SectionTitle = styled.h2`
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   text-align: center;
   font-size: calc(1.325rem + 0.9vw);
-  margin: 2rem 0;
+  margin: 1rem 0 2rem 0;
 `;
 
 export const Button = styled.button`
@@ -67,4 +68,56 @@ export const WidgetContainer = styled.div`
   background-color: var(--card-background-color);
   border: 2px solid var(--border-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+`;
+
+export const BodyContainer = styled.div`
+  font-weight: 500;
+  font-size: 1.15rem;
+  animation: ${showAfter} 1s ease-in-out;
+
+  border: var(--border-color) 2px solid;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--card-border-radius);
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  & > span {
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    display: block;
+
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+  }
+
+  & a {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: var(--text-color);
+    margin: 0 0.1rem;
+    padding: 5px;
+    border-radius: 10px;
+    transition: all 0.2s;
+
+    @media (min-width: 768px) {
+      &:hover {
+        background-color: var(--card-background-color);
+        text-decoration: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      padding: 0;
+    }
+  }
 `;
