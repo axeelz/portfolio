@@ -138,7 +138,6 @@ const SecondaryCallToAction = styled(CallToAction)`
 
 const Presentation = () => {
   // React compiler auto memoization breaks rerender on language change
-  // eslint-disable-next-line react-hooks/react-compiler
   "use no memo";
   const { t } = useTranslation();
   const [playSound] = useSound("/sounds/pop.mp3", { volume: 0.2 });
