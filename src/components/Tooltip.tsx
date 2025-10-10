@@ -3,11 +3,14 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import styled, { css } from "styled-components";
 import { scaleInSubtle, scaleOutSubtle } from "../styled/animations";
 
+type TooltipContentProps = React.ComponentProps<typeof TooltipPrimitive.Content>;
+
 type TooltipProps = TooltipPrimitive.TooltipProps &
-  Pick<React.ComponentProps<typeof TooltipPrimitive.Content>, "side"> & {
+  Pick<TooltipContentProps, "side" | "sideOffset"> & {
     content: React.ReactNode;
     link?: boolean;
     forceAnimation?: boolean;
+    portal?: boolean;
   };
 
 const TOOLTIP_BG_COLOR = "#333";
@@ -47,10 +50,28 @@ export function Tooltip({
   defaultOpen,
   onOpenChange,
   side = "bottom",
+  sideOffset = 3,
   link = false,
   forceAnimation = false,
+  portal = false,
   ...props
 }: TooltipProps) {
+  const tooltipBody = (
+    <TooltipContentStyled
+      side={side}
+      align="center"
+      collisionPadding={5}
+      sideOffset={sideOffset}
+      $forceAnimation={forceAnimation}
+      onPointerDownOutside={(event) => {
+        event.preventDefault();
+      }}
+      {...props}>
+      {content}
+      <TooltipArrowStyled width={12} height={6} />
+    </TooltipContentStyled>
+  );
+
   return (
     <TooltipPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} delayDuration={0}>
       <TooltipPrimitive.Trigger
@@ -67,19 +88,7 @@ export function Tooltip({
         }}>
         <div>{children}</div>
       </TooltipPrimitive.Trigger>
-      <TooltipContentStyled
-        side={side}
-        align="center"
-        collisionPadding={5}
-        sideOffset={3}
-        $forceAnimation={forceAnimation}
-        onPointerDownOutside={(event) => {
-          event.preventDefault();
-        }}
-        {...props}>
-        {content}
-        <TooltipArrowStyled width={12} height={6} />
-      </TooltipContentStyled>
+      {portal ? <TooltipPrimitive.Portal>{tooltipBody}</TooltipPrimitive.Portal> : tooltipBody}
     </TooltipPrimitive.Root>
   );
 }

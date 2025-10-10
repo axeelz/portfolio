@@ -1,5 +1,5 @@
 export const QUERY_KEYS = {
-  portfolioTools: "portfolio-tools",
+  portfolioResponse: "portfolio-response",
   randomTrack: "random-track",
   projectStats: "project-stats",
   githubUser: "github-user",
@@ -49,23 +49,26 @@ export async function fetchProjectStats(endpoint: string): Promise<Record<string
   return (await response.json()) as Record<string, unknown>;
 }
 
-export interface PortfolioTool {
+interface PortfolioTool {
   name: string;
   link: string;
 }
 
-interface PortfolioResponse {
+export interface DockApp {
+  name: string;
+  image: string;
+}
+export interface PortfolioResponse {
   tools?: PortfolioTool[];
+  dock?: DockApp[];
 }
 
-export async function fetchPortfolioTools(): Promise<PortfolioTool[]> {
+export async function fetchPortfolioResponse(): Promise<PortfolioResponse> {
   const response = await fetch("https://static.axlz.me/api/portfolio");
 
   if (!response.ok) {
     throw new Error("Unable to fetch portfolio data");
   }
 
-  const data = (await response.json()) as PortfolioResponse;
-
-  return data.tools ?? [];
+  return (await response.json()) as PortfolioResponse;
 }
