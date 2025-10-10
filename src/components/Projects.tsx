@@ -11,7 +11,7 @@ const Grid = styled.div`
   grid-gap: 1.5rem;
   justify-items: center;
 
-  @media (min-width: 830px) {
+  @media (min-width: 768px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 `;
