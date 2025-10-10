@@ -21,11 +21,12 @@ const TitleContainer = styled.div`
 
 const Title = styled.h1`
   font-family: var(--font-title);
-  font-size: 2.25rem;
+  font-size: 2.5rem;
   font-weight: 700;
+  line-height: 1.1;
 
   @media (max-width: 768px) {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 `;
 

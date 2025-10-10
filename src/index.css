@@ -10,6 +10,14 @@
   -webkit-text-size-adjust: 100%;
 }
 
+@font-face {
+  font-family: "Britti Sans";
+  src: url("fonts/BrittiSansTrial-Bold.woff2") format("woff2"), url("fonts/BrittiSansTrial-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   --background-color: #e6e4e4;
   --text-color: #242424;
@@ -38,7 +46,7 @@ body {
   --cdfs-color: #4c53af;
 
   /* Font */
-  --font-title: "Unbounded", sans-serif;
+  --font-title: "Britti Sans", sans-serif;
   --font-body: "Plus Jakarta Sans", sans-serif;
   --font-secondary: "Geist", sans-serif;
 }
