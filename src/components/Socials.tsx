@@ -1,12 +1,13 @@
-import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { CopyIcon, ExternalLinkIcon, GithubIcon, LinkedinIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Tooltip } from "./Tooltip";
-import { GithubTooltip } from "./GithubTooltip";
+import styled from "styled-components";
+
 import { GITHUB_USERNAME, useHasHover } from "../utils";
-import { CopyIcon, ExternalLinkIcon, GithubIcon, LinkedinIcon } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
 import { fetchGithubData, QUERY_KEYS, type GithubUser } from "../utils/fetch";
+import { GithubTooltip } from "./GithubTooltip";
+import { Tooltip } from "./Tooltip";
 
 /* Socials */
 
@@ -21,22 +22,22 @@ const SocialButton = styled.button`
   background-color: var(--section-background-color);
   color: var(--text-color);
   padding: 12px 20px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   font-family: inherit;
   font-size: inherit;
   font-weight: 500;
   border: none;
   cursor: pointer;
-
+  
   /* As link */
   text-decoration: none;
-
+  
   @media (hover: hover) {
     &:hover {
       background-color: var(--card-background-color);
     }
   }
-
+  
   @media (hover: none) {
     &:active {
       background-color: var(--card-background-color);
@@ -88,17 +89,31 @@ const Socials = () => {
 
   return (
     <SocialsContainer>
-      <Tooltip content={copyText} side="top" {...(!hasHover && { open: copied, forceAnimation: true })}>
+      <Tooltip
+        content={copyText}
+        side="top"
+        {...(!hasHover && { open: copied, forceAnimation: true })}
+      >
         <SocialButtonWithIcon onClick={handleCopy}>
           <CopyIcon /> axelzareb&#64;gmail&#46;com
         </SocialButtonWithIcon>
       </Tooltip>
-      <SocialButtonWithIcon as="a" href="https://www.linkedin.com/in/axelzareb/" target="_blank" $social="linkedin">
+      <SocialButtonWithIcon
+        as="a"
+        href="https://www.linkedin.com/in/axelzareb/"
+        target="_blank"
+        $social="linkedin"
+      >
         <LinkedinIcon />
         LinkedIn
       </SocialButtonWithIcon>
       <Tooltip link content={<GithubTooltip user={githubData ?? null} />} side="top">
-        <SocialButtonWithIcon as="a" href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" $social="github">
+        <SocialButtonWithIcon
+          as="a"
+          href={`https://github.com/${GITHUB_USERNAME}`}
+          target="_blank"
+          $social="github"
+        >
           <GithubIcon />
           GitHub
         </SocialButtonWithIcon>

@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Button } from "../styled/shared";
+
 import type { Project } from "./Projects";
+
+import { Button } from "../styled/shared";
 
 const TwoButtonsContainer = styled.div`
   display: flex;

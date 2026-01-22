@@ -1,9 +1,10 @@
-import useSound from "use-sound";
-import useKeyPress from "../hooks/useKeyPress";
-import { IconBtn } from "../styled/shared";
 import { MoonIcon, SunIcon } from "lucide-react";
-import { useTheme } from "../hooks/useTheme";
 import { useTranslation } from "react-i18next";
+import useSound from "use-sound";
+
+import useKeyPress from "../hooks/useKeyPress";
+import { useTheme } from "../hooks/useTheme";
+import { IconBtn } from "../styled/shared";
 
 const ToggleDarkMode = () => {
   const { isDark, toggleTheme, resetTheme } = useTheme();

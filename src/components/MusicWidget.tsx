@@ -1,12 +1,13 @@
-import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
-import styled, { css } from "styled-components";
-import { IconBtn, WidgetContainer } from "../styled/shared";
-import { getIsFeatureEnabled } from "../utils";
-import { pulse } from "../styled/animations";
 import { ShuffleIcon } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import styled, { css } from "styled-components";
+
+import { pulse } from "../styled/animations";
+import { IconBtn, squircle, WidgetContainer } from "../styled/shared";
+import { getIsFeatureEnabled } from "../utils";
 import { fetchRandomTrack, QUERY_KEYS, type RandomTrack } from "../utils/fetch";
 
 const Container = styled(WidgetContainer)<{ $isLoading: boolean }>`
@@ -33,7 +34,7 @@ const TrackWrapper = styled.div`
 `;
 
 const CoverThumbnail = styled.div<{ $src: string }>`
-  border-radius: calc(var(--card-border-radius) - 1rem);
+  ${squircle("sm")}
   aspect-ratio: 1/1;
   width: 100px;
 
@@ -100,7 +101,7 @@ const TrackNameWrapper = styled.div<{ $isPlaying?: boolean }>`
 
 const TrackName = styled.p`
   line-height: 2;
-
+  
   @media (max-width: 480px) {
     line-height: unset;
   }
@@ -110,7 +111,7 @@ const ExplicitIcon = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   font-size: 10px;
   color: var(--background-color);
   background-color: var(--text-color);
@@ -118,8 +119,18 @@ const ExplicitIcon = styled.span`
   height: 16px;
   user-select: none;
   flex-shrink: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-    "Helvetica Neue", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
 `;
 
 const TrackDetails = styled.p`
@@ -189,7 +200,10 @@ const MusicWidget = () => {
 
   useEffect(() => {
     if (track) {
-      window.umami?.track("random-song", { track: track.title, artist: track.artist });
+      window.umami?.track("random-song", {
+        track: track.title,
+        artist: track.artist,
+      });
     }
   }, [track]);
 
@@ -236,7 +250,13 @@ const MusicWidget = () => {
   return (
     <Container $isLoading={isFetching}>
       <TrackWrapper>
-        <CoverThumbnail role="img" aria-label={track.title} $src={track.coverUrl} onClick={togglePlayPause} />
+        <CoverThumbnail
+          role="img"
+          aria-label={track.title}
+          $src={track.coverUrl}
+          onClick={togglePlayPause}
+          key={track.title}
+        />
         <TrackInfo $ellipsis>
           <TrackNameWrapper $isPlaying={isPreviewPlaying}>
             <TrackName>{track.title}</TrackName>

@@ -1,15 +1,17 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
-import { WidgetContainer } from "../styled/shared";
-import { Tooltip } from "./Tooltip";
+
 import type { DockApp } from "../utils/fetch";
+
+import { squircle, WidgetContainer } from "../styled/shared";
+import { Tooltip } from "./Tooltip";
 
 const DockGlass = styled.div<{ $isOverflowing: boolean }>`
   display: flex;
   justify-content: ${({ $isOverflowing }) => ($isOverflowing ? "flex-start" : "center")};
   gap: 0.5rem;
   padding: 0.5rem;
-  border-radius: 1.25rem;
+  ${squircle("lg")}
   max-width: 100%;
 
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
@@ -28,7 +30,6 @@ const DockGlass = styled.div<{ $isOverflowing: boolean }>`
 
   @media (max-width: 768px) {
     gap: 0.4rem;
-    border-radius: 1rem;
   }
 `;
 
@@ -40,16 +41,16 @@ const DockInfoItem = styled.div`
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
   user-select: none;
-
+  
   &:hover {
     transform: translateY(-4px) scale(1.08);
   }
-
+  
   &:active {
     transform: translateY(-2px) scale(1.04);
     transition: transform 0.1s ease;
   }
-
+  
   @media (max-width: 768px) {
     width: 48px;
     height: 48px;
@@ -108,7 +109,9 @@ const DockWidget = ({ items }: { items?: DockApp[] }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside, { passive: true });
+    document.addEventListener("touchstart", handleClickOutside, {
+      passive: true,
+    });
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -127,7 +130,8 @@ const DockWidget = ({ items }: { items?: DockApp[] }) => {
             side="top"
             sideOffset={12}
             open={openTooltip === app.name}
-            onOpenChange={(isOpen) => setOpenTooltip(isOpen ? app.name : null)}>
+            onOpenChange={(isOpen) => setOpenTooltip(isOpen ? app.name : null)}
+          >
             <DockInfoItem onTouchStart={() => handleToggleTooltip(app.name)}>
               <DockImage src={app.image} alt={app.name} loading="lazy" />
             </DockInfoItem>

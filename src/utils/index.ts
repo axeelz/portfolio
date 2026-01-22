@@ -1,9 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_PUBLIC_SUPABASE_KEY);
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_PUBLIC_SUPABASE_KEY,
+);
 
 export async function getIsFeatureEnabled(): Promise<boolean> {
-  const { data, error } = await supabase.from("features").select("enabled").eq("name", "music").single();
+  const { data, error } = await supabase
+    .from("features")
+    .select("enabled")
+    .eq("name", "music")
+    .single();
   if (error) {
     console.warn("Error fetching feature status:", error);
     return false;

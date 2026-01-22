@@ -1,9 +1,10 @@
-import styled from "styled-components";
-import { BodyContainer, Button } from "../styled/shared";
 import { Trans, useTranslation } from "react-i18next";
-import { showAfter, trackingInExpand } from "../styled/animations";
-import Technologies from "./Technologies";
+import styled from "styled-components";
 import useSound from "use-sound";
+
+import { showAfter, trackingInExpand } from "../styled/animations";
+import { BodyContainer, Button } from "../styled/shared";
+import Technologies from "./Technologies";
 
 const TitleContainer = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.1;
-
+  
   @media (max-width: 768px) {
     font-size: 2rem;
   }
@@ -36,7 +37,7 @@ const SecondaryTitle = styled.h2`
   color: var(--text-secondary);
   font-size: 1.75rem;
   font-weight: 500;
-
+  
   @media (max-width: 768px) {
     font-size: 1.25rem;
     margin-top: 0;
@@ -104,7 +105,14 @@ const Presentation = () => {
           <Trans
             i18nKey="presentation.part2"
             components={{
-              sct: <a key="sct" href="https://www.sncf-connect-tech.fr/" target="_blank" rel="noreferrer" />,
+              sct: (
+                <a
+                  key="sct"
+                  href="https://www.sncf-connect-tech.fr/"
+                  target="_blank"
+                  rel="noreferrer"
+                />
+              ),
               upc: <a key="upc" href="https://u-paris.fr/" target="_blank" rel="noreferrer" />,
             }}
           />
@@ -119,14 +127,16 @@ const Presentation = () => {
           onClick={() => {
             playSound();
             document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-          }}>
+          }}
+        >
           {t("presentation.seeProjects")}
         </CallToAction>
         <SecondaryCallToAction
           onClick={() => {
             playSound();
             document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-          }}>
+          }}
+        >
           {t("presentation.contactMe")}
         </SecondaryCallToAction>
       </CallToActionContainer>

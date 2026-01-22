@@ -1,14 +1,15 @@
-import styled from "styled-components";
-import ToggleDarkMode from "./ToggleDarkMode";
-import { useTranslation } from "react-i18next";
-import useKeyPress from "../hooks/useKeyPress";
-import CollapsableNav from "./CollapsableNav";
+import { LanguagesIcon, MenuIcon, XIcon } from "lucide-react";
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 import useSound from "use-sound";
+
+import useKeyPress from "../hooks/useKeyPress";
 import { fadeIn } from "../styled/animations";
 import { IconBtn } from "../styled/shared";
+import CollapsableNav from "./CollapsableNav";
+import ToggleDarkMode from "./ToggleDarkMode";
 import { Tooltip } from "./Tooltip";
-import { LanguagesIcon, MenuIcon, XIcon } from "lucide-react";
 
 const NavbarContainer = styled.nav`
   width: 100%;
@@ -24,7 +25,7 @@ const NavbarContainer = styled.nav`
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   margin-bottom: 1rem;
-
+  
   & .lucide {
     width: 32px;
     height: 32px;
@@ -44,14 +45,16 @@ const ButtonsContainer = styled.div`
 const Kbd = styled.kbd`
   font-family: system-ui;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   padding: 0.1em 0.5em;
   margin: 0 0.2em;
-  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
+  box-shadow:
+    0 1px 0px rgba(0, 0, 0, 0.2),
+    0 0 0 2px #fff inset;
   background-color: #f7f7f7;
   color: black;
   display: inline-block;
-
+  
   @media (hover: none) {
     display: none;
   }
@@ -106,9 +109,11 @@ const Navbar = () => {
           <Tooltip
             content={
               <span>
-                {`${t("navbar.switchTo")} ${i18n.languages[0] === "fr" ? "English" : "français"}`} <Kbd>L</Kbd>
+                {`${t("navbar.switchTo")} ${i18n.languages[0] === "fr" ? "English" : "français"}`}{" "}
+                <Kbd>L</Kbd>
               </span>
-            }>
+            }
+          >
             <IconBtn aria-label={t("navbar.switchLang") || ""} onClick={switchLanguage}>
               <LanguagesIcon />
             </IconBtn>
@@ -118,7 +123,8 @@ const Navbar = () => {
               <span>
                 {t("navbar.switchTheme")} <Kbd>M</Kbd>
               </span>
-            }>
+            }
+          >
             <ToggleDarkMode />
           </Tooltip>
         </ButtonsContainer>

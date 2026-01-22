@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { slideInBlurredLeft, slideOutBlurredLeft } from "../styled/animations";
 import useSound from "use-sound";
+
+import { slideInBlurredLeft, slideOutBlurredLeft } from "../styled/animations";
 
 const NavContainer = styled.nav`
   position: absolute;
@@ -13,7 +14,7 @@ const NavContainer = styled.nav`
   gap: 0.1rem;
   background-color: var(--card-background-color);
   padding: 1rem;
-  border-radius: var(--card-border-radius);
+  border-radius: var(--radius-lg);
   line-height: 2;
   z-index: 100;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
@@ -33,7 +34,7 @@ const ButtonItem = styled.button`
   text-align: left;
   color: var(--text-color);
   padding: 0.6rem;
-  border-radius: 15px;
+  border-radius: var(--radius-md);
   border: none;
   font-size: inherit;
   background: inherit;
@@ -41,12 +42,12 @@ const ButtonItem = styled.button`
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-
+  
   &:hover,
   &:focus {
     background-color: var(--section-background-color);
   }
-
+  
   &:active {
     transform: scale(0.98);
   }
@@ -65,7 +66,8 @@ const CollapsableNav = ({ ref }: { ref: React.RefObject<HTMLElement | null> }) =
           onClick={() => {
             playSound();
             document.getElementById(item)?.scrollIntoView({ behavior: "smooth" });
-          }}>
+          }}
+        >
           {t(`navbar.${item}`)}
         </ButtonItem>
       ))}

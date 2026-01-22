@@ -1,12 +1,15 @@
 import styled from "styled-components";
-import ProjectButtons from "./ProjectButtons";
-import ProjectThumbnail from "./ProjectThumbnail";
-import ProjectDescription from "./ProjectDescription";
+
 import type { Project } from "./Projects";
+
+import { squircle } from "../styled/shared";
+import ProjectButtons from "./ProjectButtons";
+import ProjectDescription from "./ProjectDescription";
+import ProjectThumbnail from "./ProjectThumbnail";
 
 const Card = styled.div`
   background-color: var(--card-background-color);
-  border-radius: var(--card-border-radius);
+  ${squircle("lg")}
   border: 2px solid var(--border-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   padding: 1.5rem;
@@ -16,7 +19,7 @@ const Card = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-
+  
   @media (min-width: 830px) {
     max-width: unset;
     padding: 2rem;

@@ -1,6 +1,7 @@
-import React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import React from "react";
 import styled, { css } from "styled-components";
+
 import { scaleInSubtle, scaleOutSubtle } from "../styled/animations";
 
 type TooltipContentProps = React.ComponentProps<typeof TooltipPrimitive.Content>;
@@ -19,7 +20,7 @@ const TooltipContentStyled = styled(TooltipPrimitive.Content)<{ $forceAnimation?
   padding: 4px 6px;
   background-color: ${TOOLTIP_BG_COLOR};
   color: #fff;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-size: 14px;
   line-height: 1.4;
   pointer-events: none;
@@ -66,14 +67,20 @@ export function Tooltip({
       onPointerDownOutside={(event) => {
         event.preventDefault();
       }}
-      {...props}>
+      {...props}
+    >
       {content}
       <TooltipArrowStyled width={12} height={6} />
     </TooltipContentStyled>
   );
 
   return (
-    <TooltipPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} delayDuration={0}>
+    <TooltipPrimitive.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      delayDuration={0}
+    >
       <TooltipPrimitive.Trigger
         asChild
         onPointerDown={(event) => {
@@ -85,7 +92,8 @@ export function Tooltip({
           if (!link) {
             event.preventDefault();
           }
-        }}>
+        }}
+      >
         <div>{children}</div>
       </TooltipPrimitive.Trigger>
       {portal ? <TooltipPrimitive.Portal>{tooltipBody}</TooltipPrimitive.Portal> : tooltipBody}

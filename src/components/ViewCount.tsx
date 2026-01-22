@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { updateCount } from "../utils";
+import styled from "styled-components";
 
-const CountContainer = styled.span``;
+import { updateCount } from "../utils";
 
 const Count = styled.code`
   font-size: 1rem;
@@ -22,10 +21,10 @@ const ViewCount = () => {
   }, []);
 
   return (
-    <CountContainer>
+    <span>
       <Count>{count}</Count>
       {t("footer.views")}
-    </CountContainer>
+    </span>
   );
 };
 

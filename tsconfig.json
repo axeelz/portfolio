@@ -19,13 +19,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    /* use-sound library */
-    // See https://github.com/joshwcomeau/use-sound/issues/135#issuecomment-1723305858
-    "paths": {
-      "use-sound": ["./generated-types/"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

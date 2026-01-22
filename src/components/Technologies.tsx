@@ -1,15 +1,16 @@
-import styled from "styled-components";
-import projects from "../data/projects.json";
-import { showAfter } from "../styled/animations";
 import { useState } from "react";
-import useMediaQuery from "../hooks/useMediaQuery";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
+import projects from "../data/projects.json";
+import useMediaQuery from "../hooks/useMediaQuery";
+import { showAfter } from "../styled/animations";
 
 const Chip = styled.div<{ $clickable?: boolean; $additional?: boolean; $index: number }>`
   background-color: var(--card-background-color);
   background-image: ${(props) => (props.$clickable ? "var(--gradient-techs)" : "none")};
   padding: ${(props) => (props.$clickable ? "5px 8px" : "5px")};
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: ${(props) => (props.$clickable ? "none" : "1px solid var(--border-color)")};
   display: inline-block;
   font-size: 0.9rem;
@@ -72,7 +73,9 @@ const Technologies = ({ items }: { items?: string[] }) => {
       ))}
       {hasMore && (
         <Chip $clickable onClick={() => setShowAll(!showAll)} $index={displayedTechs.length}>
-          {showAll ? t("presentation.less") : `+${techs.length - displayedTechs.length} ${t("presentation.others")}`}
+          {showAll
+            ? t("presentation.less")
+            : `+${techs.length - displayedTechs.length} ${t("presentation.others")}`}
         </Chip>
       )}
     </TechsContainer>

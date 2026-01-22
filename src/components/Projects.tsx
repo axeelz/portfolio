@@ -1,16 +1,17 @@
+import { ArrowRightIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { styled } from "styled-components";
+
 import data from "../data/projects.json";
 import { SectionTitle } from "../styled/shared";
 import ProjectCard from "./ProjectCard";
-import { styled } from "styled-components";
-import { useTranslation } from "react-i18next";
-import { ArrowRightIcon } from "lucide-react";
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   grid-gap: 1.5rem;
   justify-items: center;
-
+  
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -26,7 +27,7 @@ const GitHubCTA = styled.p`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-
+  
   & a {
     color: inherit;
     font-weight: 700;

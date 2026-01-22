@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import type { Project } from "./Projects";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
+import type { Project } from "./Projects";
 
 const StatsContainer = styled.div`
   display: flex;
@@ -16,10 +17,10 @@ const Badge = styled.span`
   background-color: var(--cdfs-color);
   background-image: linear-gradient(to top, transparent, hsl(0 0% 100% / 0.2));
   color: white;
-  border-radius: 5rem;
+  border-radius: var(--radius-full);
   font-weight: 600;
   white-space: nowrap;
-
+  
   @media (min-width: 768px) {
     padding: 0.35em 0.65em;
   }

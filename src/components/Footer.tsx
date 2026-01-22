@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import ViewCount from "./ViewCount";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
+import ViewCount from "./ViewCount";
 
 const FooterContainer = styled.footer`
   text-align: center;

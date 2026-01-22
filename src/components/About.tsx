@@ -1,12 +1,13 @@
-import { useTranslation } from "react-i18next";
-import Technologies from "./Technologies";
 import { useQuery } from "@tanstack/react-query";
-import { fetchPortfolioResponse, PortfolioResponse, QUERY_KEYS } from "../utils/fetch";
+import { useTranslation } from "react-i18next";
+
 import { BodyContainer, SectionTitle } from "../styled/shared";
-import MusicWidget from "./MusicWidget";
-import LocationWidget from "./LocationWidget";
-import Socials from "./Socials";
+import { fetchPortfolioResponse, PortfolioResponse, QUERY_KEYS } from "../utils/fetch";
 import DockWidget from "./DockWidget";
+import LocationWidget from "./LocationWidget";
+import MusicWidget from "./MusicWidget";
+import Socials from "./Socials";
+import Technologies from "./Technologies";
 
 const About = () => {
   const { t } = useTranslation();

@@ -7,7 +7,7 @@ export default function useKeyPress(key: string, callback: () => void) {
         callback();
       }
     },
-    [callback, key]
+    [callback, key],
   );
 
   useEffect(() => {

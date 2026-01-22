@@ -1,5 +1,14 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
 import { showAfter } from "./animations";
+
+export const squircle = (size: "sm" | "md" | "lg") => css`
+  border-radius: var(--radius-${size});
+  @supports (corner-shape: squircle) {
+    corner-shape: squircle;
+    border-radius: var(--squircle-${size});
+  }
+`;
 
 export const SectionTitle = styled.h2`
   font-family: var(--font-body);
@@ -12,24 +21,26 @@ export const Button = styled.button`
   font-family: var(--font-body);
   line-height: 1;
   border: none;
-  border-radius: 0.5rem;
+  ${squircle("md")}
   padding: 0.75rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
   user-select: none;
-
+  
   /* As a link */
   text-decoration: none;
   text-align: center;
   display: inline-block;
-
+  
   &:hover {
     transform: scale(1.05);
   }
-
+  
   &:active {
     transform: scale(1.01);
     transition: transform 0.1s ease-in-out;
@@ -42,20 +53,23 @@ export const IconBtn = styled.button`
   border: none;
   color: var(--text-color);
   cursor: pointer;
-  transition: transform 0.2s ease-in-out, font-size 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    font-size 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   font-size: 2rem;
   opacity: 0.65;
-
+  
   @media (hover: hover) {
     &:hover {
       opacity: 1;
     }
   }
-
+  
   &:active {
     transform: scale(0.9);
     transition: transform 0.1s ease-in-out;
@@ -64,7 +78,7 @@ export const IconBtn = styled.button`
 
 export const WidgetContainer = styled.div`
   font-weight: 500;
-  border-radius: var(--card-border-radius);
+  ${squircle("lg")}
   background-color: var(--card-background-color);
   border: 2px solid var(--border-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -78,7 +92,7 @@ export const BodyContainer = styled.div`
   border: var(--border-color) 2px solid;
   padding: 1rem;
   margin-bottom: 1rem;
-  border-radius: var(--card-border-radius);
+  ${squircle("lg")}
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
@@ -106,7 +120,7 @@ export const BodyContainer = styled.div`
     color: var(--text-color);
     margin: 0 0.1rem;
     padding: 5px;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     transition: all 0.2s;
 
     @media (min-width: 768px) {

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { GITHUB_USERNAME } from "../utils";
 import { type GithubUser } from "../utils/fetch";
 
@@ -6,7 +7,7 @@ const Container = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-
+  
   & img {
     width: 30px;
     height: 30px;

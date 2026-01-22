@@ -1,10 +1,10 @@
-import globals from "globals";
 import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
-import pluginQuery from "@tanstack/eslint-plugin-query";
 import { defineConfig } from "eslint/config";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 export default defineConfig(
   eslint.configs.recommended,
@@ -19,9 +19,6 @@ export default defineConfig(
         version: "detect",
       },
     },
-    rules: {
-      "react/react-in-jsx-scope": "off",
-    },
   },
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
@@ -30,5 +27,5 @@ export default defineConfig(
     languageOptions: {
       globals: globals.browser,
     },
-  }
+  },
 );

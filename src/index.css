@@ -12,7 +12,9 @@
 
 @font-face {
   font-family: "Britti Sans";
-  src: url("/fonts/BrittiSansTrial-Bold.woff2") format("woff2"), url("/fonts/BrittiSansTrial-Bold.woff") format("woff");
+  src:
+    url("/fonts/BrittiSansTrial-Bold.woff2") format("woff2"),
+    url("/fonts/BrittiSansTrial-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -40,8 +42,18 @@ body {
 
   /* Common */
   --navbar-opacity: 0.75;
-  --card-border-radius: 20px;
   --text-muted: #6c757d;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  --squircle-sm: 16px;
+  --squircle-md: 32px;
+  --squircle-lg: 48px;
+
   --linkedin-color: #0077b5;
   --cdfs-color: #4c53af;
 

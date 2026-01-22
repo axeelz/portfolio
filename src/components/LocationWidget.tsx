@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import { WidgetContainer } from "../styled/shared";
+import { MapPinIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { MapPinIcon } from "lucide-react";
+import styled from "styled-components";
+
+import { WidgetContainer } from "../styled/shared";
 
 const LocationContainer = styled(WidgetContainer)`
   display: flex;
@@ -10,7 +11,7 @@ const LocationContainer = styled(WidgetContainer)`
   align-items: center;
   padding: 1rem 2rem;
   margin-bottom: 2rem;
-
+  
   @media (max-width: 768px) {
     gap: 1rem;
     padding: 1rem;

@@ -1,18 +1,21 @@
 import styled from "styled-components";
+
 import type { Project } from "./Projects";
 
 const ImageLink = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease-in-out, filter 0.3s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    filter 0.3s ease-in-out;
   isolation: isolate;
-
+  
   &:hover {
     filter: brightness(0.9);
     transform: scale(1.02);
   }
-
+  
   &:active {
     transform: scale(0.98);
   }
@@ -24,7 +27,7 @@ const ProjectImage = styled.div<{ $src: string }>`
   background-image: url(${({ $src }) => $src});
   background-size: cover;
   background-position: center;
-  border-radius: 0.25rem;
+  border-radius: var(--radius-sm);
   position: relative;
 
   &::after {

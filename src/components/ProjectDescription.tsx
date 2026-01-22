@@ -1,9 +1,11 @@
-import styled from "styled-components";
-import { useTranslation } from "react-i18next";
-import type { Project } from "./Projects";
-import ProjectStats from "./ProjectStats";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
+import type { Project } from "./Projects";
+
 import { fetchProjectStats, QUERY_KEYS } from "../utils/fetch";
+import ProjectStats from "./ProjectStats";
 
 const ProjectDesc = styled.div`
   font-weight: 500;

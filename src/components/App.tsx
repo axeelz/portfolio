@@ -1,21 +1,23 @@
-import Navbar from "./Navbar";
-import Projects from "./Projects";
-import Footer from "./Footer";
-import Presentation from "./Presentation";
-import { useEffect } from "react";
-import styled from "styled-components";
-import { useTranslation } from "react-i18next";
-import { fadeBgColor, fadeUp } from "../styled/animations";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Toaster } from "sonner";
+import styled from "styled-components";
+
+import { fadeBgColor, fadeUp } from "../styled/animations";
+import { squircle } from "../styled/shared";
 import About from "./About";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
+import Presentation from "./Presentation";
+import Projects from "./Projects";
 
 const queryClient = new QueryClient();
 
 const Section = styled.section`
   padding: 2rem;
-  border-radius: var(--card-border-radius);
+  ${squircle("lg")}
   background-color: var(--section-background-color);
   margin-bottom: 2rem;
   scroll-margin-top: 5rem;
