@@ -42,7 +42,6 @@ const CoverThumbnail = styled.div<{ $src: string }>`
   background-size: cover;
   background-position: center;
   position: relative;
-  cursor: pointer;
 
   @media (min-width: 768px) {
     // disabled on mobile due to Safari iOS glitches
@@ -152,6 +151,7 @@ const MusicWidget = () => {
   const [isFeatureEnabled, setIsFeatureEnabled] = useState(false);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const wasPlayingRef = useRef(false);
 
   const {
     data: track,
@@ -166,24 +166,15 @@ const MusicWidget = () => {
   });
 
   const triggerRandomTrack = useCallback(() => {
+    wasPlayingRef.current = isPreviewPlaying;
+
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPreviewPlaying(false);
     }
 
     void refetch();
-  }, [refetch]);
-
-  const togglePlayPause = () => {
-    if (audioRef.current) {
-      if (isPreviewPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPreviewPlaying(!isPreviewPlaying);
-    }
-  };
+  }, [refetch, isPreviewPlaying]);
 
   useEffect(() => {
     getIsFeatureEnabled().then((enabled) => {
@@ -226,6 +217,13 @@ const MusicWidget = () => {
     }
   }, [audioRef, track]);
 
+  useEffect(() => {
+    if (track && wasPlayingRef.current && audioRef.current) {
+      void audioRef.current.play();
+      wasPlayingRef.current = false;
+    }
+  }, [track]);
+
   if (!isFeatureEnabled) {
     return null;
   }
@@ -254,7 +252,6 @@ const MusicWidget = () => {
           role="img"
           aria-label={track.title}
           $src={track.coverUrl}
-          onClick={togglePlayPause}
           key={track.title}
         />
         <TrackInfo $ellipsis>
