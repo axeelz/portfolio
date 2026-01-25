@@ -47,7 +47,7 @@ const SecondaryTitle = styled.h2`
 const CallToActionContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
   margin-top: 2rem;
 `;
