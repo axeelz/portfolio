@@ -2,20 +2,29 @@ import { useState, useEffect } from "react";
 
 const THEME_DARK = "dark";
 const THEME_LIGHT = "light";
+const THEME_SYSTEM = "system";
 const LOCAL_STORAGE_THEME_KEY = "theme";
 const META_COLOR_DARK = "#000000";
 const META_COLOR_LIGHT = "#e6e4e4";
 
-const saveTheme = (theme: typeof THEME_DARK | typeof THEME_LIGHT) => {
+type Theme = typeof THEME_DARK | typeof THEME_LIGHT | typeof THEME_SYSTEM;
+
+const saveTheme = (theme: Theme) => {
   localStorage.setItem(LOCAL_STORAGE_THEME_KEY, theme);
 };
 
-const getInitialTheme = (): boolean => {
-  const savedTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
-  if (savedTheme) {
-    return savedTheme === THEME_DARK;
-  }
+const getSystemTheme = (): boolean => {
   return window.matchMedia("(prefers-color-scheme: dark)").matches;
+};
+
+const getInitialTheme = (): { theme: Theme; isDark: boolean } => {
+  const savedTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme | null;
+
+  if (!savedTheme || savedTheme === THEME_SYSTEM) {
+    return { theme: THEME_SYSTEM, isDark: getSystemTheme() };
+  }
+
+  return { theme: savedTheme, isDark: savedTheme === THEME_DARK };
 };
 
 const updateMetaColor = (isDark: boolean) => {
@@ -33,7 +42,9 @@ const updateBodyClass = (isDark: boolean) => {
 };
 
 export const useTheme = () => {
-  const [isDark, setIsDark] = useState(getInitialTheme());
+  const initial = getInitialTheme();
+  const [theme, setTheme] = useState<Theme>(initial.theme);
+  const [isDark, setIsDark] = useState(initial.isDark);
 
   useEffect(() => {
     updateMetaColor(isDark);
@@ -43,25 +54,33 @@ export const useTheme = () => {
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleSystemThemeChange = () => {
-      if (localStorage.getItem(LOCAL_STORAGE_THEME_KEY)) return;
-      setIsDark(mediaQuery.matches);
+      if (theme === THEME_SYSTEM) {
+        setIsDark(mediaQuery.matches);
+      }
     };
     mediaQuery.addEventListener("change", handleSystemThemeChange);
-    return () => {
-      mediaQuery.removeEventListener("change", handleSystemThemeChange);
-    };
-  });
+    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+  }, [theme]);
 
-  const toggleTheme = () => {
-    const newIsDark = !isDark;
-    setIsDark(newIsDark);
-    saveTheme(newIsDark ? THEME_DARK : THEME_LIGHT);
+  const cycleTheme = () => {
+    const cycles: Record<Theme, { theme: Theme; isDark: boolean }> = {
+      light: { theme: THEME_DARK, isDark: true },
+      dark: { theme: THEME_SYSTEM, isDark: getSystemTheme() },
+      system: { theme: THEME_LIGHT, isDark: false },
+    };
+
+    const next = cycles[theme];
+    setTheme(next.theme);
+    setIsDark(next.isDark);
+    saveTheme(next.theme);
   };
 
   const resetTheme = () => {
     localStorage.removeItem(LOCAL_STORAGE_THEME_KEY);
-    setIsDark(getInitialTheme());
+    const initial = getInitialTheme();
+    setTheme(initial.theme);
+    setIsDark(initial.isDark);
   };
 
-  return { isDark, toggleTheme, resetTheme };
+  return { isDark, theme, cycleTheme, resetTheme };
 };

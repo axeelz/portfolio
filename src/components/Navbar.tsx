@@ -1,34 +1,25 @@
-import { LanguagesIcon, MenuIcon, XIcon } from "lucide-react";
-import { useState, useRef } from "react";
+import { LanguagesIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import useSound from "use-sound";
 
 import useKeyPress from "../hooks/useKeyPress";
 import { fadeIn } from "../styled/animations";
 import { IconBtn } from "../styled/shared";
-import CollapsableNav from "./CollapsableNav";
+import { playLanguageSwitch } from "../utils/sounds";
 import ToggleDarkMode from "./ToggleDarkMode";
 import { Tooltip } from "./Tooltip";
 
 const NavbarContainer = styled.nav`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  position: sticky;
-  height: 5rem;
-  top: 0;
-  z-index: 100;
   background-color: var(--navbar-color);
   padding: 1rem;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  margin-bottom: 1rem;
   
   & .lucide {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
   }
 `;
 
@@ -64,6 +55,7 @@ const Navbar = () => {
   const { t, i18n } = useTranslation();
 
   const switchLanguage = () => {
+    playLanguageSwitch();
     i18n.changeLanguage(i18n.languages[0] === "fr" ? "en" : "fr");
   };
 
@@ -71,65 +63,32 @@ const Navbar = () => {
     switchLanguage();
   });
 
-  const [collapsableOpen, setCollapsableOpen] = useState<boolean>(false);
-  const collapsableRef = useRef<HTMLElement | null>(null);
-  const [playOpen] = useSound("/sounds/whoosh-open.mp3", { volume: 0.1 });
-  const [playClose] = useSound("/sounds/whoosh-close.mp3", { volume: 0.1 });
-
-  const handleCollapsableClose = () => {
-    if (collapsableOpen) {
-      if (collapsableRef.current) collapsableRef.current.classList.add("exiting");
-      setTimeout(() => {
-        playClose();
-      }, 100);
-      setTimeout(() => {
-        if (collapsableRef.current) {
-          collapsableRef.current.classList.remove("exiting");
-        } else {
-          console.warn("Chill, stop spamming the button!");
-        }
-        setCollapsableOpen(false);
-      }, 500);
-    } else {
-      setCollapsableOpen(true);
-      playOpen();
-    }
-  };
-
   return (
-    <>
-      <NavbarContainer>
-        <ButtonsContainer>
-          <IconBtn aria-label="Collapsable menu" onClick={handleCollapsableClose}>
-            {collapsableOpen ? <XIcon /> : <MenuIcon />}
+    <NavbarContainer>
+      <ButtonsContainer>
+        <Tooltip
+          content={
+            <span>
+              {`${t("navbar.switchTo")} ${i18n.languages[0] === "fr" ? "English" : "français"}`}{" "}
+              <Kbd>L</Kbd>
+            </span>
+          }
+        >
+          <IconBtn aria-label={t("navbar.switchLang") || ""} onClick={switchLanguage}>
+            <LanguagesIcon />
           </IconBtn>
-          {collapsableOpen && <CollapsableNav ref={collapsableRef} />}
-        </ButtonsContainer>
-        <ButtonsContainer>
-          <Tooltip
-            content={
-              <span>
-                {`${t("navbar.switchTo")} ${i18n.languages[0] === "fr" ? "English" : "français"}`}{" "}
-                <Kbd>L</Kbd>
-              </span>
-            }
-          >
-            <IconBtn aria-label={t("navbar.switchLang") || ""} onClick={switchLanguage}>
-              <LanguagesIcon />
-            </IconBtn>
-          </Tooltip>
-          <Tooltip
-            content={
-              <span>
-                {t("navbar.switchTheme")} <Kbd>M</Kbd>
-              </span>
-            }
-          >
-            <ToggleDarkMode />
-          </Tooltip>
-        </ButtonsContainer>
-      </NavbarContainer>
-    </>
+        </Tooltip>
+        <Tooltip
+          content={
+            <span>
+              {t("navbar.switchTheme")} <Kbd>M</Kbd>
+            </span>
+          }
+        >
+          <ToggleDarkMode />
+        </Tooltip>
+      </ButtonsContainer>
+    </NavbarContainer>
   );
 };
 

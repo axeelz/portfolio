@@ -33,6 +33,7 @@ body {
 
   --card-background-color: #eeeeee;
   --section-background-color: #faf8ff;
+  --nav-indicator-color: var(--section-background-color);
 
   --border-color: rgba(59, 7, 100, 0.05);
   --secondary-border-color: rgba(0, 0, 0, 0.2);
@@ -76,6 +77,7 @@ body.dark {
 
   --card-background-color: #292929;
   --section-background-color: #101010;
+  --nav-indicator-color: #3a3a3a;
 
   --border-color: rgba(255, 255, 255, 0.05);
   --secondary-border-color: rgba(255, 255, 255, 0.2);

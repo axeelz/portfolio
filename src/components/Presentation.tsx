@@ -1,9 +1,9 @@
 import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
-import useSound from "use-sound";
 
 import { showAfter, trackingInExpand } from "../styled/animations";
 import { BodyContainer, Button } from "../styled/shared";
+import { playButtonClick } from "../utils/sounds";
 import Technologies from "./Technologies";
 
 const TitleContainer = styled.div`
@@ -87,10 +87,7 @@ const SecondaryCallToAction = styled(CallToAction)`
 `;
 
 const Presentation = () => {
-  // React compiler auto memoization breaks rerender on language change
-  "use no memo";
   const { t } = useTranslation();
-  const [playSound] = useSound("/sounds/pop.mp3", { volume: 0.2 });
 
   return (
     <div>
@@ -125,7 +122,7 @@ const Presentation = () => {
       <CallToActionContainer>
         <CallToAction
           onClick={() => {
-            playSound();
+            playButtonClick();
             document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
           }}
         >
@@ -133,7 +130,7 @@ const Presentation = () => {
         </CallToAction>
         <SecondaryCallToAction
           onClick={() => {
-            playSound();
+            playButtonClick();
             document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
           }}
         >

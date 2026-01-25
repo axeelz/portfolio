@@ -14,9 +14,9 @@
     "switchTo": "Passer en",
     "switchLang": "Switch language",
     "switchTheme": "Switch theme",
-    "presentation": "Presentation",
+    "presentation": "Home",
     "projects": "Projects",
-    "about": "About me"
+    "about": "About"
   },
   "projects": {
     "title": "Some projects",

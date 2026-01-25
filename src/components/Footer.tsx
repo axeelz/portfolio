@@ -7,7 +7,7 @@ const FooterContainer = styled.footer`
   text-align: center;
   color: var(--text-muted);
   padding-top: 1rem;
-  padding-bottom: 2rem;
+  padding-bottom: 8rem;
   font-weight: 600;
 `;
 
