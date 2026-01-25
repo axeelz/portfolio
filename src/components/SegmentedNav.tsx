@@ -116,7 +116,7 @@ const NavButton = styled.button<{ $isActive: boolean }>`
 `;
 
 const SegmentedNav = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeSection, setActiveSection] = useState<string>("presentation");
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const [indicatorLeft, setIndicatorLeft] = useState(0);
@@ -144,7 +144,7 @@ const SegmentedNav = () => {
 
   useEffect(() => {
     updateIndicatorPosition();
-  }, [updateIndicatorPosition]);
+  }, [updateIndicatorPosition, i18n.language]);
 
   // Show/hide nav based on scroll position
   useEffect(() => {
