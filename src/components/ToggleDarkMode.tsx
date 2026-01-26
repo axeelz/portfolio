@@ -21,9 +21,12 @@ const ToggleDarkMode = () => {
   const icon = theme === "system" ? <MonitorIcon /> : isDark ? <SunIcon /> : <MoonIcon />;
 
   return (
-    <IconBtn aria-label={t("navbar.switchTheme")} onClick={handleToggle}>
-      {icon}
-    </IconBtn>
+    <>
+      <meta name="theme-color" content={isDark ? "#000000" : "#e6e4e4"} />
+      <IconBtn aria-label={t("navbar.switchTheme")} onClick={handleToggle}>
+        {icon}
+      </IconBtn>
+    </>
   );
 };
 

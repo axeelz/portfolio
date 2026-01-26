@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const THEME_DARK = "dark";
 const THEME_LIGHT = "light";
 const THEME_SYSTEM = "system";
 const LOCAL_STORAGE_THEME_KEY = "theme";
-const META_COLOR_DARK = "#000000";
-const META_COLOR_LIGHT = "#e6e4e4";
 
 type Theme = typeof THEME_DARK | typeof THEME_LIGHT | typeof THEME_SYSTEM;
 
@@ -27,12 +25,6 @@ const getInitialTheme = (): { theme: Theme; isDark: boolean } => {
   return { theme: savedTheme, isDark: savedTheme === THEME_DARK };
 };
 
-const updateMetaColor = (isDark: boolean) => {
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-  if (!metaThemeColor) return;
-  metaThemeColor.setAttribute("content", isDark ? META_COLOR_DARK : META_COLOR_LIGHT);
-};
-
 const updateBodyClass = (isDark: boolean) => {
   if (isDark) {
     document.body.classList.add(THEME_DARK);
@@ -42,7 +34,6 @@ const updateBodyClass = (isDark: boolean) => {
 };
 
 const applyTheme = (isDark: boolean) => {
-  updateMetaColor(isDark);
   updateBodyClass(isDark);
 };
 
@@ -59,9 +50,16 @@ export const useTheme = () => {
   const initial = getInitialTheme();
   const [theme, setTheme] = useState<Theme>(initial.theme);
   const [isDark, setIsDark] = useState(initial.isDark);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    applyThemeWithTransition(isDark);
+    // Skip transition on first render to avoid animation on page load
+    if (isFirstRender.current) {
+      applyTheme(isDark);
+      isFirstRender.current = false;
+    } else {
+      applyThemeWithTransition(isDark);
+    }
   }, [isDark]);
 
   useEffect(() => {
