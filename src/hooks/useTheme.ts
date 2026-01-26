@@ -41,14 +41,27 @@ const updateBodyClass = (isDark: boolean) => {
   }
 };
 
+const applyTheme = (isDark: boolean) => {
+  updateMetaColor(isDark);
+  updateBodyClass(isDark);
+};
+
+const applyThemeWithTransition = (isDark: boolean) => {
+  if (!document.startViewTransition) {
+    applyTheme(isDark);
+    return;
+  }
+
+  document.startViewTransition(() => applyTheme(isDark));
+};
+
 export const useTheme = () => {
   const initial = getInitialTheme();
   const [theme, setTheme] = useState<Theme>(initial.theme);
   const [isDark, setIsDark] = useState(initial.isDark);
 
   useEffect(() => {
-    updateMetaColor(isDark);
-    updateBodyClass(isDark);
+    applyThemeWithTransition(isDark);
   }, [isDark]);
 
   useEffect(() => {

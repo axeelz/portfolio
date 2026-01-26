@@ -64,6 +64,30 @@ body {
   --font-secondary: "Geist", sans-serif;
 }
 
+::view-transition-group(root) {
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::view-transition-new(root) {
+  animation-name: reveal;
+  animation-fill-mode: both;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
+}
+
+@keyframes reveal {
+  from {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  }
+  to {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
 body.dark {
   --background-color: black;
   --text-color: rgba(255, 255, 255, 0.95);
