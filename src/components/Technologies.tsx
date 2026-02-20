@@ -42,23 +42,7 @@ const Technologies = ({ items }: { items?: string[] }) => {
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const { t } = useTranslation();
 
-  const getTechsFromProjects = () => {
-    const data = projects.projects;
-    const techsCount: { [key: string]: number } = data
-      .map((project) => project.techs)
-      .flat()
-      .reduce((acc: { [key: string]: number }, tech: string) => {
-        acc[tech] = acc[tech] ? acc[tech] + 1 : 1;
-        return acc;
-      }, {});
-    const techs = Object.entries(techsCount).sort((a, b) => b[1] - a[1]);
-    const additionalTechs: string[] = projects.additionalTechs;
-    const addedTechs: [string, number][] = additionalTechs.map((tech) => [tech, 1]);
-    techs.push(...addedTechs);
-    return techs.map((tech) => tech[0]);
-  };
-
-  const techs = items ?? getTechsFromProjects();
+  const techs = items ?? projects.technologies;
 
   const maxVisible = isSmallScreen ? 7 : 15;
   const hasMore = techs.length > maxVisible;

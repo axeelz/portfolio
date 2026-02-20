@@ -3,10 +3,10 @@
     {
       "name": "Canvas Downloader",
       "image": "cdfs.jpg",
-      "date": "2022",
+      "date": null,
       "desc_fr": "Un site qui permet de télécharger les vidéos de fond sur Spotify.",
       "desc_en": "A tool to download background video loops on Spotify.",
-      "techs": ["Flask", "PostgreSQL", "HTML", "CSS", "JavaScript"],
+      "techs": ["Flask", "PostgreSQL", "HTML", "CSS", "JavaScript", "Docker"],
       "links": {
         "url": "https://www.canvasdownloader.com/"
       },
@@ -29,9 +29,20 @@
       }
     },
     {
+      "name": "Marked",
+      "image": "marked.png",
+      "date": null,
+      "desc_fr": "Une application iOS simple pour enregistrer facilement vos jours d'entraînement.",
+      "desc_en": "A simple iOS app to easily log your workout days.",
+      "techs": ["TypeScript", "React Native", "Expo"],
+      "links": {
+        "url": "https://axlz.me/markedapp"
+      }
+    },
+    {
       "name": "Link Manager",
       "image": "link-manager.png",
-      "date": "2024",
+      "date": null,
       "desc_fr": "Un gestionnaire et raccourcisseur de liens, avec dashboard pour les gérer.",
       "desc_en": "A link redirection manager and shortener, with a dashboard to manage them.",
       "techs": ["TypeScript", "Next.js", "ElysiaJS", "Docker", "Drizzle"],
@@ -45,7 +56,7 @@
       "date": "2023",
       "desc_fr": "Projet pour améliorer le service des cafés de l'Université de Montréal.",
       "desc_en": "Project to improve service at Université de Montréal student cafés.",
-      "techs": ["React", "FastAPI", "MongoDB", "TailwindCSS"],
+      "techs": ["React", "FastAPI", "MongoDB", "Tailwind CSS"],
       "links": {
         "source": "https://github.com/ceduni/cafe-sans-fil",
         "url": "https://ceduni.github.io/cafe-sans-fil/"
@@ -60,17 +71,6 @@
             "default": 9
           }
         ]
-      }
-    },
-    {
-      "name": "axeelz.com",
-      "image": "portfolio.jpg",
-      "date": "2024",
-      "desc_fr": "Mon site personnel, vous êtes dessus actuellement !",
-      "desc_en": "My personal website, you're on it now!",
-      "techs": ["TypeScript", "React", "Tanstack Query", "styled-components"],
-      "links": {
-        "source": "https://github.com/axeelz/portfolio"
       }
     },
     {
@@ -90,12 +90,26 @@
       "date": "2022",
       "desc_fr": "Un site de commande de plats à domicile type Uber Eats.",
       "desc_en": "An Uber Eats-type food ordering site.",
-      "techs": ["PHP", "MariaDB", "HTML", "TailwindCSS", "JavaScript"],
+      "techs": ["PHP", "MariaDB", "HTML", "Tailwind CSS", "JavaScript"],
       "links": {
         "source": "https://github.com/axeelz/mealrush",
         "url": "https://mealrush.axeelz.com/"
       }
     }
   ],
-  "additionalTechs": ["Git", "Linux", "Cloudflare", "Nginx", "Java", "Astro", "Mapbox"]
+  "technologies": [
+    "TypeScript",
+    "React",
+    "Next.js",
+    "React Native",
+    "Astro",
+    "Node.js",
+    "Python",
+    "Flask",
+    "PostgreSQL",
+    "MongoDB",
+    "Tailwind CSS",
+    "Docker",
+    "Cloudflare Workers"
+  ]
 }
