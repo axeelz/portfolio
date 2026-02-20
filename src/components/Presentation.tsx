@@ -87,6 +87,7 @@ const SecondaryCallToAction = styled(CallToAction)`
 `;
 
 const Presentation = () => {
+  "use no memo";
   const { t } = useTranslation();
 
   return (
