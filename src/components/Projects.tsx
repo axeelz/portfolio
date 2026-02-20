@@ -37,7 +37,7 @@ const GitHubCTA = styled.p`
 export interface Project {
   name: string; // Project name
   image: string; // Image URL
-  date: string; // YYYY
+  date: string | null; // YYYY
   desc_fr: string; // Description in French
   desc_en: string; // Description in English
   techs: string[]; // List of technologies used
