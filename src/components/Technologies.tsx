@@ -51,7 +51,7 @@ const Technologies = ({ items }: { items?: string[] }) => {
   return (
     <TechsContainer>
       {displayedTechs.map((tech, i) => (
-        <Chip key={`${tech}-${i}`} $index={i} $additional={i > maxVisible - 1}>
+        <Chip key={tech} $index={i} $additional={i > maxVisible - 1}>
           {tech}
         </Chip>
       ))}

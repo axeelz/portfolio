@@ -25,7 +25,7 @@ const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.1;
-  
+
   @media (max-width: 768px) {
     font-size: 2rem;
   }
@@ -37,7 +37,7 @@ const SecondaryTitle = styled.h2`
   color: var(--text-secondary);
   font-size: 1.75rem;
   font-weight: 500;
-  
+
   @media (max-width: 768px) {
     font-size: 1.25rem;
     margin-top: 0;

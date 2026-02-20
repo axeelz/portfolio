@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { CopyIcon, ExternalLinkIcon, GithubIcon, LinkedinIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -28,16 +28,16 @@ const SocialButton = styled.button`
   font-weight: 500;
   border: none;
   cursor: pointer;
-  
+
   /* As link */
   text-decoration: none;
-  
+
   @media (hover: hover) {
     &:hover {
       background-color: var(--card-background-color);
     }
   }
-  
+
   @media (hover: none) {
     &:active {
       background-color: var(--card-background-color);
@@ -70,14 +70,6 @@ const Socials = () => {
     retry: false,
   });
 
-  useEffect(() => {
-    if (copied) {
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-    }
-  }, [copied]);
-
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText("axelzareb@gmail.com");
@@ -85,6 +77,7 @@ const Socials = () => {
       console.error("Failed to copy text: ", err);
     }
     setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (

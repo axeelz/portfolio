@@ -41,16 +41,16 @@ const DockInfoItem = styled.div`
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
   user-select: none;
-  
+
   &:hover {
     transform: translateY(-4px) scale(1.08);
   }
-  
+
   &:active {
     transform: translateY(-2px) scale(1.04);
     transition: transform 0.1s ease;
   }
-  
+
   @media (max-width: 768px) {
     width: 48px;
     height: 48px;

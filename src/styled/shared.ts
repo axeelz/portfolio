@@ -63,13 +63,13 @@ export const IconBtn = styled.button`
   border-radius: var(--radius-sm);
   font-size: 2rem;
   opacity: 0.65;
-  
+
   @media (hover: hover) {
     &:hover {
       opacity: 1;
     }
   }
-  
+
   &:active {
     transform: scale(0.9);
     transition: transform 0.1s ease-in-out;

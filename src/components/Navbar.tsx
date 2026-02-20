@@ -16,7 +16,7 @@ const NavbarContainer = styled.nav`
   align-items: center;
   background-color: var(--navbar-color);
   padding: 1rem;
-  
+
   & .lucide {
     width: 24px;
     height: 24px;
@@ -45,7 +45,7 @@ const Kbd = styled.kbd`
   background-color: #f7f7f7;
   color: black;
   display: inline-block;
-  
+
   @media (hover: none) {
     display: none;
   }

@@ -10,12 +10,12 @@ const ImageLink = styled.a`
     transform 0.2s ease-in-out,
     filter 0.3s ease-in-out;
   isolation: isolate;
-  
+
   &:hover {
     filter: brightness(0.9);
     transform: scale(1.02);
   }
-  
+
   &:active {
     transform: scale(0.98);
   }

@@ -100,7 +100,7 @@ const TrackNameWrapper = styled.div<{ $isPlaying?: boolean }>`
 
 const TrackName = styled.p`
   line-height: 2;
-  
+
   @media (max-width: 480px) {
     line-height: unset;
   }

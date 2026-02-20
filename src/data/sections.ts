@@ -11,5 +11,3 @@ export const SECTIONS = [
   { id: SECTION_IDS.PROJECTS, Icon: FolderIcon },
   { id: SECTION_IDS.ABOUT, Icon: UserIcon },
 ] as const;
-
-export type SectionId = (typeof SECTIONS)[number]["id"];

@@ -7,7 +7,7 @@ const Container = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  
+
   & img {
     width: 30px;
     height: 30px;

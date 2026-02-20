@@ -11,7 +11,7 @@ const Grid = styled.div`
   grid-template-columns: repeat(1, minmax(0, 1fr));
   grid-gap: 1.5rem;
   justify-items: center;
-  
+
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -27,7 +27,7 @@ const GitHubCTA = styled.p`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  
+
   & a {
     color: inherit;
     font-weight: 700;
@@ -55,8 +55,8 @@ const Projects = () => {
     <>
       <SectionTitle>{t("projects.title")}</SectionTitle>
       <Grid>
-        {data.projects.map((project: Project, i: number) => (
-          <ProjectCard key={i} project={project} />
+        {data.projects.map((project: Project) => (
+          <ProjectCard key={project.name} project={project} />
         ))}
       </Grid>
       <GitHubCTA>
