@@ -4,11 +4,13 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import styled, { css } from "styled-components";
+import { useWebHaptics } from "web-haptics/react";
 
 import { pulse } from "../styled/animations";
 import { IconBtn, squircle, WidgetContainer } from "../styled/shared";
 import { getIsFeatureEnabled } from "../utils";
 import { fetchRandomTrack, QUERY_KEYS, type RandomTrack } from "../utils/fetch";
+import { HAPTICS } from "../utils/haptics";
 
 const Container = styled(WidgetContainer)<{ $isLoading: boolean }>`
   display: flex;
@@ -148,6 +150,7 @@ const ShuffleBtn = styled(IconBtn)`
 
 const MusicWidget = () => {
   const { t } = useTranslation();
+  const { trigger } = useWebHaptics();
   const [isFeatureEnabled, setIsFeatureEnabled] = useState(false);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -166,6 +169,7 @@ const MusicWidget = () => {
   });
 
   const triggerRandomTrack = useCallback(() => {
+    trigger(HAPTICS.selection);
     wasPlayingRef.current = isPreviewPlaying;
 
     if (audioRef.current) {
@@ -174,7 +178,7 @@ const MusicWidget = () => {
     }
 
     void refetch();
-  }, [refetch, isPreviewPlaying]);
+  }, [refetch, isPreviewPlaying, trigger]);
 
   useEffect(() => {
     getIsFeatureEnabled().then((enabled) => {

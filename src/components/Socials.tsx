@@ -3,9 +3,11 @@ import { CopyIcon, ExternalLinkIcon, GithubIcon, LinkedinIcon } from "lucide-rea
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useWebHaptics } from "web-haptics/react";
 
 import { GITHUB_USERNAME, useHasHover } from "../utils";
 import { fetchGithubData, QUERY_KEYS, type GithubUser } from "../utils/fetch";
+import { HAPTICS } from "../utils/haptics";
 import { GithubTooltip } from "./GithubTooltip";
 import { Tooltip } from "./Tooltip";
 
@@ -58,6 +60,7 @@ const SocialButtonWithIcon = styled(SocialButton)<{ $social?: "linkedin" | "gith
 
 const Socials = () => {
   const { t } = useTranslation();
+  const { trigger } = useWebHaptics();
 
   const [copied, setCopied] = useState(false);
   const copyText = copied ? `${t("contact.copied")} 🎉` : t("contact.copy");
@@ -72,6 +75,7 @@ const Socials = () => {
 
   const handleCopy = async () => {
     try {
+      trigger(HAPTICS.success);
       await navigator.clipboard.writeText("axelzareb@gmail.com");
     } catch (err) {
       console.error("Failed to copy text: ", err);

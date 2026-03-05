@@ -1,10 +1,12 @@
 import { LanguagesIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useWebHaptics } from "web-haptics/react";
 
 import useKeyPress from "../hooks/useKeyPress";
 import { fadeIn } from "../styled/animations";
 import { IconBtn } from "../styled/shared";
+import { HAPTICS } from "../utils/haptics";
 import { playLanguageSwitch } from "../utils/sounds";
 import ToggleDarkMode from "./ToggleDarkMode";
 import { Tooltip } from "./Tooltip";
@@ -53,9 +55,11 @@ const Kbd = styled.kbd`
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
+  const { trigger } = useWebHaptics();
 
   const switchLanguage = () => {
     playLanguageSwitch();
+    trigger(HAPTICS.selection);
     i18n.changeLanguage(i18n.languages[0] === "fr" ? "en" : "fr");
   };
 

@@ -1,17 +1,21 @@
 import { MoonIcon, SunIcon, MonitorIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useWebHaptics } from "web-haptics/react";
 
 import useKeyPress from "../hooks/useKeyPress";
 import { useTheme } from "../hooks/useTheme";
 import { IconBtn } from "../styled/shared";
+import { HAPTICS } from "../utils/haptics";
 import { playThemeSwitch } from "../utils/sounds";
 
 const ToggleDarkMode = () => {
   const { isDark, theme, cycleTheme, resetTheme } = useTheme();
   const { t } = useTranslation();
+  const { trigger } = useWebHaptics();
 
   const handleToggle = () => {
     playThemeSwitch();
+    trigger(HAPTICS.selection);
     cycleTheme();
   };
 

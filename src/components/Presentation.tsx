@@ -1,8 +1,10 @@
 import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useWebHaptics } from "web-haptics/react";
 
 import { showAfter, trackingInExpand } from "../styled/animations";
 import { BodyContainer, Button } from "../styled/shared";
+import { HAPTICS } from "../utils/haptics";
 import { playButtonClick } from "../utils/sounds";
 import Technologies from "./Technologies";
 
@@ -89,6 +91,7 @@ const SecondaryCallToAction = styled(CallToAction)`
 const Presentation = () => {
   "use no memo";
   const { t } = useTranslation();
+  const { trigger } = useWebHaptics();
 
   return (
     <div>
@@ -124,6 +127,7 @@ const Presentation = () => {
         <CallToAction
           onClick={() => {
             playButtonClick();
+            trigger(HAPTICS.medium);
             document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
           }}
         >
@@ -132,6 +136,7 @@ const Presentation = () => {
         <SecondaryCallToAction
           onClick={() => {
             playButtonClick();
+            trigger(HAPTICS.medium);
             document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
           }}
         >

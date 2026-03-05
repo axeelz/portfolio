@@ -13,20 +13,21 @@
   },
   "dependencies": {
     "@radix-ui/react-tooltip": "^1.2.8",
-    "@supabase/supabase-js": "^2.97.0",
+    "@supabase/supabase-js": "^2.98.0",
     "@tanstack/react-query": "^5.90.21",
     "@types/styled-components": "^5.1.36",
     "@types/umami": "^2.10.1",
-    "i18next": "^25.8.11",
+    "i18next": "^25.8.14",
     "i18next-browser-languagedetector": "^8.2.1",
     "i18next-http-backend": "^3.0.2",
-    "lucide-react": "^0.575.0",
+    "lucide-react": "^0.577.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-i18next": "^16.5.4",
     "sonner": "^2.0.7",
     "styled-components": "^6.3.11",
-    "tone": "^15.1.22"
+    "tone": "^15.1.22",
+    "web-haptics": "^0.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -38,10 +39,10 @@
     "eslint": "^9.39.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "globals": "^17.3.0",
-    "oxfmt": "^0.34.0",
+    "globals": "^17.4.0",
+    "oxfmt": "^0.36.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.0",
+    "typescript-eslint": "^8.56.1",
     "vite": "^7.3.1"
   }
 }

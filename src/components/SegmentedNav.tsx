@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useWebHaptics } from "web-haptics/react";
 
 import { SECTIONS } from "../data/sections";
 import useMediaQuery from "../hooks/useMediaQuery";
+import { HAPTICS } from "../utils/haptics";
 import { playNavClick } from "../utils/sounds";
 
 const NavContainer = styled.nav<{ $isVisible: boolean }>`
@@ -117,6 +119,7 @@ const NavButton = styled.button<{ $isActive: boolean }>`
 
 const SegmentedNav = () => {
   const { t, i18n } = useTranslation();
+  const { trigger } = useWebHaptics();
   const [activeSection, setActiveSection] = useState<string>("presentation");
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const [indicatorLeft, setIndicatorLeft] = useState(0);
@@ -197,6 +200,7 @@ const SegmentedNav = () => {
 
   const handleNavClick = (sectionId: string) => {
     playNavClick();
+    trigger(HAPTICS.selection);
     setActiveSection(sectionId);
 
     isScrollingRef.current = true;
