@@ -28,6 +28,7 @@ const ProjectImage = styled.div<{ $src: string }>`
   background-size: cover;
   background-position: center;
   border-radius: var(--radius-sm);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   position: relative;
 
   &::after {

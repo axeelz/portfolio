@@ -61,7 +61,6 @@ body {
   /* Font */
   --font-title: "Britti Sans", sans-serif;
   --font-body: "Plus Jakarta Sans", sans-serif;
-  --font-secondary: "Geist", sans-serif;
 }
 
 ::view-transition-group(root) {

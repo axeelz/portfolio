@@ -36,7 +36,7 @@ const NameDateContainer = styled.div`
 `;
 
 const ProjectName = styled.h3`
-  font-family: var(--font-secondary);
+  font-family: var(--font-title);
   font-weight: 700;
   font-size: 1.25rem;
   margin: 0;
