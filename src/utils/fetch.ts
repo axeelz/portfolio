@@ -88,7 +88,7 @@ export async function fetchPortfolioResponse(): Promise<PortfolioResponse> {
   const response = await fetch("https://static.axlz.me/api/portfolio");
 
   if (!response.ok) {
-    throw new Error("Unable to fetch portfolio data");
+    throw new Error(`Unable to fetch portfolio data: ${response.status} ${response.statusText}`);
   }
 
   return (await response.json()) as PortfolioResponse;
