@@ -54,9 +54,10 @@ const Time = styled("span", {
 });
 
 const CurrentTime = () => {
-  const [currentTime, setCurrentTime] = useState<Date>(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
   useEffect(() => {
+    setCurrentTime(new Date());
     const interval = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
@@ -65,12 +66,12 @@ const CurrentTime = () => {
   }, []);
 
   return (
-    <Time suppressHydrationWarning>
-      {currentTime.toLocaleString("fr", {
+    <Time>
+      {currentTime?.toLocaleString("fr", {
         timeZone: "Europe/Paris",
         hour: "numeric",
         minute: "numeric",
-      })}
+      }) ?? "—"}
     </Time>
   );
 };
