@@ -1,23 +1,26 @@
-import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import { styled } from "styled-system/jsx";
 
+import { copy } from "../data/copy";
 import ViewCount from "./ViewCount";
 
-const FooterContainer = styled.footer`
-  text-align: center;
-  color: var(--text-muted);
-  padding-top: 1rem;
-  padding-bottom: 8rem;
-  font-weight: 600;
-`;
+const FooterContainer = styled("footer", {
+  base: {
+    textAlign: "center",
+    color: "var(--text-muted)",
+    paddingTop: "1rem",
+    paddingBottom: "8rem",
+    fontWeight: 600,
+  },
+});
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const currentYear = new Date().getFullYear();
 
   return (
     <FooterContainer>
       <p>
-        {t("footer.createdBy")} Axel ✨ · {new Date().getFullYear()} · <ViewCount />
+        {copy.footer.createdBy} Axel ✨ · <span suppressHydrationWarning>{currentYear}</span> ·{" "}
+        <ViewCount />
       </p>
     </FooterContainer>
   );

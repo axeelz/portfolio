@@ -1,36 +1,27 @@
 import { MoonIcon, SunIcon, MonitorIcon } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { useWebHaptics } from "web-haptics/react";
 
+import { IconBtn } from "../components/ui/shared";
+import { copy } from "../data/copy";
 import useKeyPress from "../hooks/useKeyPress";
 import { useTheme } from "../hooks/useTheme";
-import { IconBtn } from "../styled/shared";
-import { HAPTICS } from "../utils/haptics";
 import { playThemeSwitch } from "../utils/sounds";
 
 const ToggleDarkMode = () => {
-  const { isDark, theme, cycleTheme, resetTheme } = useTheme();
-  const { t } = useTranslation();
-  const { trigger } = useWebHaptics();
+  const { isDark, isOverriding, toggle } = useTheme();
 
   const handleToggle = () => {
-    playThemeSwitch();
-    trigger(HAPTICS.selection);
-    cycleTheme();
+    void playThemeSwitch();
+    toggle();
   };
 
   useKeyPress("m", handleToggle);
-  useKeyPress("p", resetTheme);
 
-  const icon = theme === "system" ? <MonitorIcon /> : isDark ? <SunIcon /> : <MoonIcon />;
+  const icon = isOverriding ? isDark ? <MoonIcon /> : <SunIcon /> : <MonitorIcon />;
 
   return (
-    <>
-      <meta name="theme-color" content={isDark ? "#000000" : "#e6e4e4"} />
-      <IconBtn aria-label={t("navbar.switchTheme")} onClick={handleToggle}>
-        {icon}
-      </IconBtn>
-    </>
+    <IconBtn aria-label={copy.navbar.switchTheme} onClick={handleToggle}>
+      {icon}
+    </IconBtn>
   );
 };
 

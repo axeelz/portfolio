@@ -12,8 +12,18 @@ dist
 dist-ssr
 *.local
 
+# TanStack Start / build output
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+__unconfig*
+todos.json
+
 # Editor directories and files
 .vscode/*
+!.vscode/settings.json
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -25,3 +35,7 @@ dist-ssr
 
 archive/
 .env
+
+## Panda
+styled-system
+styled-system-studio

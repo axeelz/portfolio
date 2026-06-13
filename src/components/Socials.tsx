@@ -1,92 +1,105 @@
 import { useQuery } from "@tanstack/react-query";
-import { CopyIcon, ExternalLinkIcon, GithubIcon, LinkedinIcon } from "lucide-react";
+import { CopyIcon, GithubIcon, LinkedinIcon } from "lucide-react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import { useWebHaptics } from "web-haptics/react";
+import { styled } from "styled-system/jsx";
 
-import { GITHUB_USERNAME, useHasHover } from "../utils";
-import { fetchGithubData, QUERY_KEYS, type GithubUser } from "../utils/fetch";
-import { HAPTICS } from "../utils/haptics";
-import { GithubTooltip } from "./GithubTooltip";
-import { Tooltip } from "./Tooltip";
+import { copy } from "../data/copy";
+import useMediaQuery from "../hooks/useMediaQuery";
+import { GITHUB_USERNAME, fetchGithubData, QUERY_KEYS, type GithubUser } from "../utils/fetch";
+import { GithubTooltip } from "./ui/GithubTooltip";
+import { Tooltip } from "./ui/Tooltip";
 
-/* Socials */
+const socialBase = {
+  backgroundColor: "var(--section-background-color)",
+  color: "var(--text-color)",
+  padding: "12px 20px",
+  borderRadius: "var(--radius-lg)",
+  fontFamily: "inherit",
+  fontSize: "inherit",
+  fontWeight: 500,
+  border: "none",
+  cursor: "pointer",
+  textDecoration: "none",
+  "@media (hover: hover)": {
+    _hover: { backgroundColor: "var(--card-background-color)" },
+  },
+  "@media (hover: none)": {
+    _active: { backgroundColor: "var(--card-background-color)" },
+  },
+} as const;
 
-const SocialsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-`;
+const SocialsContainer = styled("div", {
+  base: {
+    display: "flex",
+    justifyContent: "center",
+    gap: "1rem",
+    flexWrap: "wrap",
+    marginTop: "2rem",
+  },
+});
 
-const SocialButton = styled.button`
-  background-color: var(--section-background-color);
-  color: var(--text-color);
-  padding: 12px 20px;
-  border-radius: var(--radius-lg);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
+const SocialButton = styled("button", {
+  base: socialBase,
+});
 
-  /* As link */
-  text-decoration: none;
+const SocialLink = styled("a", {
+  base: socialBase,
+});
 
-  @media (hover: hover) {
-    &:hover {
-      background-color: var(--card-background-color);
-    }
-  }
+const iconLayout = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "0.5rem",
+} as const;
 
-  @media (hover: none) {
-    &:active {
-      background-color: var(--card-background-color);
-    }
-  }
-`;
+const SocialButtonWithIcon = styled(SocialButton, {
+  base: iconLayout,
+});
 
-const SocialButtonWithIcon = styled(SocialButton)<{ $social?: "linkedin" | "github" }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-
-  &:hover svg {
-    color: ${(props) => `var(--${props.$social}-color)`};
-  }
-`;
+const SocialLinkWithIcon = styled(SocialLink, {
+  base: iconLayout,
+  variants: {
+    social: {
+      linkedin: {
+        _hover: { "& svg": { color: "var(--linkedin-color)" } },
+      },
+      github: {
+        _hover: { "& svg": { color: "var(--github-color)" } },
+      },
+    },
+  },
+});
 
 const Socials = () => {
-  const { t } = useTranslation();
-  const { trigger } = useWebHaptics();
-
   const [copied, setCopied] = useState(false);
-  const copyText = copied ? `${t("contact.copied")} 🎉` : t("contact.copy");
+  const copyText = copied ? `${copy.contact.copied} 🎉` : copy.contact.copyEmail;
 
-  const hasHover = useHasHover();
+  const hasHover = useMediaQuery("(hover: hover)", true);
 
   const { data: githubData } = useQuery<GithubUser>({
     queryKey: [QUERY_KEYS.githubUser, GITHUB_USERNAME],
     queryFn: () => fetchGithubData(GITHUB_USERNAME),
     retry: false,
+    staleTime: 3_600_000,
   });
 
   const handleCopy = async () => {
     try {
-      trigger(HAPTICS.success);
       await navigator.clipboard.writeText("axelzareb@gmail.com");
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
+    } catch (error) {
+      console.error("Failed to copy text:", error);
+      return;
     }
+
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    window.setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <SocialsContainer>
       <Tooltip
+        key={hasHover ? "copy-hover-tooltip" : "copy-touch-tooltip"}
         content={copyText}
         side="top"
         {...(!hasHover && { open: copied, forceAnimation: true })}
@@ -95,30 +108,24 @@ const Socials = () => {
           <CopyIcon /> axelzareb&#64;gmail&#46;com
         </SocialButtonWithIcon>
       </Tooltip>
-      <SocialButtonWithIcon
-        as="a"
+      <SocialLinkWithIcon
         href="https://www.linkedin.com/in/axelzareb/"
         target="_blank"
-        $social="linkedin"
+        social="linkedin"
       >
         <LinkedinIcon />
         LinkedIn
-      </SocialButtonWithIcon>
+      </SocialLinkWithIcon>
       <Tooltip link content={<GithubTooltip user={githubData ?? null} />} side="top">
-        <SocialButtonWithIcon
-          as="a"
+        <SocialLinkWithIcon
           href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
-          $social="github"
+          social="github"
         >
           <GithubIcon />
           GitHub
-        </SocialButtonWithIcon>
+        </SocialLinkWithIcon>
       </Tooltip>
-      <SocialButtonWithIcon as="a" href="https://txt.axlz.me/" target="_blank">
-        <ExternalLinkIcon />
-        txt.axlz.me
-      </SocialButtonWithIcon>
     </SocialsContainer>
   );
 };

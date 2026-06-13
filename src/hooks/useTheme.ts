@@ -1,40 +1,34 @@
-import { useState, useEffect, useRef } from "react";
+import { useSyncExternalStore } from "react";
 
-const THEME_DARK = "dark";
-const THEME_LIGHT = "light";
-const THEME_SYSTEM = "system";
-const LOCAL_STORAGE_THEME_KEY = "theme";
+import { DARK_THEME_COLOR, LIGHT_THEME_COLOR } from "../theme/colors";
+import { THEME_OVERRIDE_VALUE, THEME_STORAGE_KEY } from "../theme/storage";
 
-type Theme = typeof THEME_DARK | typeof THEME_LIGHT | typeof THEME_SYSTEM;
+const getSystemDark = () => window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-const saveTheme = (theme: Theme) => {
-  localStorage.setItem(LOCAL_STORAGE_THEME_KEY, theme);
+const getStoredTheme = () => localStorage.getItem(THEME_STORAGE_KEY);
+
+const getThemeState = () => {
+  const isOverriding = getStoredTheme() === THEME_OVERRIDE_VALUE;
+  const isDark = isOverriding ? !getSystemDark() : getSystemDark();
+
+  return { isDark, isOverriding };
 };
 
-const getSystemTheme = (): boolean => {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+const getThemeSnapshot = () => {
+  const { isDark, isOverriding } = getThemeState();
+  return `${isDark ? "dark" : "light"}:${isOverriding ? "override" : "system"}`;
 };
 
-const getInitialTheme = (): { theme: Theme; isDark: boolean } => {
-  const savedTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme | null;
+const getServerThemeSnapshot = () => "light:system";
 
-  if (!savedTheme || savedTheme === THEME_SYSTEM) {
-    return { theme: THEME_SYSTEM, isDark: getSystemTheme() };
-  }
-
-  return { theme: savedTheme, isDark: savedTheme === THEME_DARK };
-};
-
-const updateBodyClass = (isDark: boolean) => {
-  if (isDark) {
-    document.body.classList.add(THEME_DARK);
-  } else {
-    document.body.classList.remove(THEME_DARK);
-  }
-};
+const notifyThemeChange = () => window.dispatchEvent(new Event("themechange"));
 
 const applyTheme = (isDark: boolean) => {
-  updateBodyClass(isDark);
+  document.documentElement.classList.toggle("dark", isDark);
+  document.documentElement.style.colorScheme = isDark ? "dark" : "light";
+  document
+    .querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+    ?.setAttribute("content", isDark ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
 };
 
 const applyThemeWithTransition = (isDark: boolean) => {
@@ -42,56 +36,46 @@ const applyThemeWithTransition = (isDark: boolean) => {
     applyTheme(isDark);
     return;
   }
-
   document.startViewTransition(() => applyTheme(isDark));
 };
 
-export const useTheme = () => {
-  const initial = getInitialTheme();
-  const [theme, setTheme] = useState<Theme>(initial.theme);
-  const [isDark, setIsDark] = useState(initial.isDark);
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    // Skip transition on first render to avoid animation on page load
-    if (isFirstRender.current) {
+const subscribeTheme = (callback: () => void) => {
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  const syncTheme = () => {
+    const { isDark, isOverriding } = getThemeState();
+    if (!isOverriding) {
       applyTheme(isDark);
-      isFirstRender.current = false;
-    } else {
-      applyThemeWithTransition(isDark);
     }
-  }, [isDark]);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleSystemThemeChange = () => {
-      if (theme === THEME_SYSTEM) {
-        setIsDark(mediaQuery.matches);
-      }
-    };
-    mediaQuery.addEventListener("change", handleSystemThemeChange);
-    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
-  }, [theme]);
-
-  const cycleTheme = () => {
-    const cycles: Record<Theme, { theme: Theme; isDark: boolean }> = {
-      light: { theme: THEME_DARK, isDark: true },
-      dark: { theme: THEME_SYSTEM, isDark: getSystemTheme() },
-      system: { theme: THEME_LIGHT, isDark: false },
-    };
-
-    const next = cycles[theme];
-    setTheme(next.theme);
-    setIsDark(next.isDark);
-    saveTheme(next.theme);
+    callback();
   };
 
-  const resetTheme = () => {
-    localStorage.removeItem(LOCAL_STORAGE_THEME_KEY);
-    const initial = getInitialTheme();
-    setTheme(initial.theme);
-    setIsDark(initial.isDark);
+  mq.addEventListener("change", syncTheme);
+  window.addEventListener("themechange", callback);
+
+  return () => {
+    mq.removeEventListener("change", syncTheme);
+    window.removeEventListener("themechange", callback);
+  };
+};
+
+export const useTheme = () => {
+  "use no memo";
+  const snapshot = useSyncExternalStore(subscribeTheme, getThemeSnapshot, getServerThemeSnapshot);
+  const [theme, source] = snapshot.split(":");
+  const isDark = theme === "dark";
+  const isOverriding = source === "override";
+
+  const toggle = () => {
+    const nextOverriding = !isOverriding;
+    const nextDark = nextOverriding ? !getSystemDark() : getSystemDark();
+    if (nextOverriding) {
+      localStorage.setItem(THEME_STORAGE_KEY, THEME_OVERRIDE_VALUE);
+    } else {
+      localStorage.removeItem(THEME_STORAGE_KEY);
+    }
+    applyThemeWithTransition(nextDark);
+    notifyThemeChange();
   };
 
-  return { isDark, theme, cycleTheme, resetTheme };
+  return { isDark, isOverriding, toggle };
 };

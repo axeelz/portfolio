@@ -1,66 +1,165 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import { styled } from "styled-system/jsx";
 
-import projects from "../data/projects.json";
-import useMediaQuery from "../hooks/useMediaQuery";
-import { showAfter } from "../styled/animations";
+import { copy } from "../data/copy";
+import {
+  featuredTechnologies,
+  getTechnology,
+  getTechnologyIconSrc,
+  type Technology,
+} from "../data/portfolio";
 
-const Chip = styled.div<{ $clickable?: boolean; $additional?: boolean; $index: number }>`
-  background-color: var(--card-background-color);
-  background-image: ${(props) => (props.$clickable ? "var(--gradient-techs)" : "none")};
-  padding: ${(props) => (props.$clickable ? "5px 8px" : "5px")};
-  border-radius: var(--radius-sm);
-  border: ${(props) => (props.$clickable ? "none" : "1px solid var(--border-color)")};
-  display: inline-block;
-  font-size: 0.9rem;
-  cursor: ${(props) => (props.$clickable ? "pointer" : "auto")};
-  animation: ${showAfter} ${(props) => (props.$additional ? 0 : props.$index * 0.15 + 0.5)}s ease-in-out;
+const MAX_VISIBLE_SMALL = 7;
+const MAX_VISIBLE_LARGE = 15;
 
-  &:hover {
-    scale: ${(props) => (props.$clickable ? 1.03 : 1)};
-    transition: all 0.2s;
+const chipBase = {
+  backgroundColor: "var(--card-background-color)",
+  borderRadius: "var(--radius-sm)",
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "0.45rem",
+  fontSize: "0.9rem",
+  animation: "fadeUp 0.35s ease-out both",
+  mdDown: { fontSize: "0.8rem" },
+  "@media (prefers-reduced-motion: reduce)": {
+    animation: "none",
+  },
+};
+
+const Chip = styled("div", {
+  base: {
+    ...chipBase,
+    padding: "5px",
+    border: "1px solid var(--border-color)",
+    cursor: "auto",
+  },
+});
+
+const ToggleChip = styled("button", {
+  base: {
+    ...chipBase,
+    backgroundImage: "var(--gradient-techs)",
+    padding: "5px 8px",
+    border: "none",
+    cursor: "pointer",
+    appearance: "none",
+    fontFamily: "inherit",
+    lineHeight: "inherit",
+    animationDelay: "var(--toggle-delay-lg)",
+    mdDown: { fontSize: "0.8rem", animationDelay: "var(--toggle-delay-sm)" },
+    transition: "transform 0.16s cubic-bezier(0.23, 1, 0.32, 1)",
+    "@media (hover: hover) and (pointer: fine)": {
+      _hover: {
+        transform: "translateY(-1px) scale(1.03)",
+      },
+    },
+    _active: {
+      transform: "scale(0.96)",
+    },
+  },
+  variants: {
+    largeHidden: {
+      true: { md: { display: "none" } },
+    },
+  },
+});
+
+const SmallOnly = styled("span", { base: { hideFrom: "md" } });
+const LargeOnly = styled("span", { base: { hideBelow: "md" } });
+
+const ChipIcon = styled("img", {
+  base: {
+    width: "1rem",
+    height: "1rem",
+    objectFit: "contain",
+    flexShrink: 0,
+  },
+  variants: {
+    mode: {
+      light: { _dark: { display: "none" } },
+      dark: { display: "none", _dark: { display: "block" } },
+    },
+  },
+});
+
+const TechsContainer = styled("div", {
+  base: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "0.5rem",
+    "&[data-collapsed] > [data-overflow=lg]": {
+      display: "none",
+    },
+    mdDown: {
+      "&[data-collapsed] > [data-overflow]": {
+        display: "none",
+      },
+    },
+  },
+});
+
+const resolveTechnology = (value: string): Technology =>
+  getTechnology(value) ?? { id: value, label: value };
+
+const TechChipIcon = ({ icon }: { icon: NonNullable<Technology["icon"]> }) => {
+  const lightSrc = getTechnologyIconSrc(icon, false);
+  const darkSrc = getTechnologyIconSrc(icon, true);
+  if (lightSrc === darkSrc) {
+    return <ChipIcon src={lightSrc} alt="" aria-hidden="true" />;
   }
+  return (
+    <>
+      <ChipIcon mode="light" src={lightSrc} alt="" aria-hidden="true" />
+      <ChipIcon mode="dark" src={darkSrc} alt="" aria-hidden="true" />
+    </>
+  );
+};
 
-  @media (max-width: 768px) {
-    font-size: 0.8rem;
-  }
+const Technologies = ({ items, showIcons = false }: { items?: string[]; showIcons?: boolean }) => {
+  const [showAll, setShowAll] = useState(false);
 
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
-`;
+  const techs = items ? items.map(resolveTechnology) : featuredTechnologies;
 
-const TechsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-`;
-
-const Technologies = ({ items }: { items?: string[] }) => {
-  const [showAll, setShowAll] = useState<boolean>(false);
-  const isSmallScreen = useMediaQuery("(max-width: 768px)");
-  const { t } = useTranslation();
-
-  const techs = items ?? projects.technologies;
-
-  const maxVisible = isSmallScreen ? 7 : 15;
-  const hasMore = techs.length > maxVisible;
-  const displayedTechs = showAll || !hasMore ? techs : techs.slice(0, maxVisible);
+  const hasMoreSmall = techs.length > MAX_VISIBLE_SMALL;
+  const hasMoreLarge = techs.length > MAX_VISIBLE_LARGE;
 
   return (
-    <TechsContainer>
-      {displayedTechs.map((tech, i) => (
-        <Chip key={tech} $index={i} $additional={i > maxVisible - 1}>
-          {tech}
+    <TechsContainer data-collapsed={showAll ? undefined : ""}>
+      {techs.map((tech, i) => (
+        <Chip
+          key={tech.id}
+          data-overflow={i >= MAX_VISIBLE_LARGE ? "lg" : i >= MAX_VISIBLE_SMALL ? "sm" : undefined}
+          style={{
+            animationDelay: `${Math.min(i, MAX_VISIBLE_LARGE - 1) * 0.03}s`,
+          }}
+        >
+          {showIcons && tech.icon && <TechChipIcon icon={tech.icon} />}
+          {tech.label}
         </Chip>
       ))}
-      {hasMore && (
-        <Chip $clickable onClick={() => setShowAll(!showAll)} $index={displayedTechs.length}>
-          {showAll
-            ? t("presentation.less")
-            : `+${techs.length - displayedTechs.length} ${t("presentation.others")}`}
-        </Chip>
+      {hasMoreSmall && (
+        <ToggleChip
+          type="button"
+          largeHidden={!hasMoreLarge}
+          onClick={() => setShowAll(!showAll)}
+          style={
+            {
+              "--toggle-delay-sm": `${Math.min(techs.length, MAX_VISIBLE_SMALL) * 0.03}s`,
+              "--toggle-delay-lg": `${Math.min(techs.length, MAX_VISIBLE_LARGE - 1) * 0.03}s`,
+            } as React.CSSProperties
+          }
+        >
+          {showAll ? (
+            copy.presentation.less
+          ) : (
+            <>
+              <SmallOnly>{`+${techs.length - MAX_VISIBLE_SMALL} ${copy.presentation.others}`}</SmallOnly>
+              {hasMoreLarge && (
+                <LargeOnly>{`+${techs.length - MAX_VISIBLE_LARGE} ${copy.presentation.others}`}</LargeOnly>
+              )}
+            </>
+          )}
+        </ToggleChip>
       )}
     </TechsContainer>
   );
