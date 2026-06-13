@@ -108,47 +108,11 @@ export const WidgetContainer = styled("div", {
   },
 });
 
-export const glowAfter = {
-  content: '""',
-  width: "100%",
-  height: "100%",
-  top: 0,
-  position: "absolute",
-  background: "inherit",
-  willChange: "filter, transform",
-  filter: "blur(20px) saturate(1.5)",
-  transform: "scale(1.03)",
-  zIndex: -1,
-} as const;
-
 export const createImageGlowStyle = (imageUrl: string, opacity = 0.5) =>
   ({
     backgroundImage: `url(${imageUrl})`,
     opacity,
   }) as CSSProperties;
-
-export const ImageGlowBlob = styled("div", {
-  base: {
-    position: "absolute",
-    top: "1rem",
-    left: "1rem",
-    width: "7rem",
-    height: "7rem",
-    borderRadius: "9999px",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "blur(36px) saturate(1.35)",
-    transform: "scale(1.15)",
-    transformOrigin: "center",
-    pointerEvents: "none",
-    zIndex: 0,
-    transition: "opacity 180ms ease-out",
-    mdDown: {
-      width: "5.5rem",
-      height: "5.5rem",
-    },
-  },
-});
 
 export const ImageGlowFrame = styled("div", {
   base: {

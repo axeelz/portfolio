@@ -7,13 +7,7 @@ import { styled } from "styled-system/jsx";
 import { copy } from "../../data/copy";
 import usePortfolioResponse from "../../hooks/usePortfolioResponse";
 import { fetchRandomTrack, QUERY_KEYS, type RandomTrack } from "../../utils/fetch";
-import {
-  createImageGlowStyle,
-  glowAfter,
-  IconBtn,
-  ImageGlowBlob,
-  WidgetContainer,
-} from "../ui/shared";
+import { createImageGlowStyle, IconBtn, ImageGlowFrame, WidgetContainer } from "../ui/shared";
 
 const Container = styled(WidgetContainer, {
   base: {
@@ -23,12 +17,13 @@ const Container = styled(WidgetContainer, {
     padding: "1rem",
     position: "relative",
     isolation: "isolate",
-    transition: "filter 0.3s ease",
+    overflow: "hidden",
+    transition: "opacity 0.3s ease",
   },
   variants: {
     loading: {
       true: {
-        filter: "blur(5px)",
+        opacity: 0.72,
         pointerEvents: "none",
       },
     },
@@ -57,12 +52,8 @@ const CoverThumbnail = styled("div", {
     width: "100px",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    position: "relative",
-    isolation: "isolate",
-    zIndex: 0,
     mdDown: { width: "75px" },
     smDown: { width: "50px" },
-    _after: glowAfter,
   },
 });
 
@@ -90,13 +81,6 @@ const TrackNameWrapper = styled("div", {
     alignItems: "center",
     gap: "0.25rem",
     fontWeight: "bold",
-  },
-  variants: {
-    playing: {
-      true: {
-        animation: "pulse 2s infinite",
-      },
-    },
   },
 });
 
@@ -240,11 +224,16 @@ const MusicWidget = () => {
     );
   }
 
-  const glowStyle = createImageGlowStyle(track.coverUrl, 0.35);
+  const ambientStyle = {
+    ...createImageGlowStyle(track.coverUrl, 0.28),
+    filter: "blur(64px) saturate(1.15)",
+    inset: "-22%",
+    transform: "scale(1.32)",
+  };
 
   return (
     <Container loading={isFetching}>
-      <ImageGlowBlob aria-hidden="true" style={glowStyle} />
+      <ImageGlowFrame aria-hidden="true" style={ambientStyle} />
       <TrackWrapper>
         <CoverThumbnail
           role="img"
@@ -252,7 +241,7 @@ const MusicWidget = () => {
           style={{ backgroundImage: `url(${track.coverUrl})` }}
         />
         <TrackInfo ellipsis>
-          <TrackNameWrapper playing={isPreviewPlaying}>
+          <TrackNameWrapper>
             <TrackName>{track.title}</TrackName>
             {track.isExplicit && <ExplicitIcon>E</ExplicitIcon>}
           </TrackNameWrapper>
