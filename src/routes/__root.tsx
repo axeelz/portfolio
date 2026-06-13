@@ -5,10 +5,7 @@ import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/reac
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 import appCss from "../index.css?url";
-import { DARK_THEME_COLOR, LIGHT_THEME_COLOR } from "../theme/colors";
-import { THEME_OVERRIDE_VALUE, THEME_STORAGE_KEY } from "../theme/storage";
-
-const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem('${THEME_STORAGE_KEY}');var d=matchMedia('(prefers-color-scheme: dark)').matches;var dark=s==='${THEME_OVERRIDE_VALUE}'?!d:d;var r=document.documentElement;var m=document.querySelector('meta[name="theme-color"]');r.classList.toggle('dark',dark);r.style.colorScheme=dark?'dark':'light';if(m)m.setAttribute('content',dark?'${DARK_THEME_COLOR}':'${LIGHT_THEME_COLOR}');}catch(e){}})();history.scrollRestoration='manual';`;
+import { CRITICAL_THEME_CSS, THEME_INIT_SCRIPT, getThemeColor } from "../theme/dom";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -20,7 +17,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "description",
         content: "Axel Zareb, software engineer based in the Paris area.",
       },
-      { name: "theme-color", content: LIGHT_THEME_COLOR },
+      { name: "theme-color", content: getThemeColor(false) },
     ],
     links: [
       {
@@ -48,6 +45,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <style dangerouslySetInnerHTML={{ __html: CRITICAL_THEME_CSS }} />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>

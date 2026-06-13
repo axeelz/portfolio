@@ -1,18 +1,13 @@
 import { useSyncExternalStore } from "react";
 
-import { DARK_THEME_COLOR, LIGHT_THEME_COLOR } from "../theme/colors";
+import { applyThemeToDocument, resolveThemeState } from "../theme/dom";
 import { THEME_OVERRIDE_VALUE, THEME_STORAGE_KEY } from "../theme/storage";
 
 const getSystemDark = () => window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 const getStoredTheme = () => localStorage.getItem(THEME_STORAGE_KEY);
 
-const getThemeState = () => {
-  const isOverriding = getStoredTheme() === THEME_OVERRIDE_VALUE;
-  const isDark = isOverriding ? !getSystemDark() : getSystemDark();
-
-  return { isDark, isOverriding };
-};
+const getThemeState = () => resolveThemeState(getStoredTheme(), getSystemDark());
 
 const getThemeSnapshot = () => {
   const { isDark, isOverriding } = getThemeState();
@@ -23,13 +18,7 @@ const getServerThemeSnapshot = () => "light:system";
 
 const notifyThemeChange = () => window.dispatchEvent(new Event("themechange"));
 
-const applyTheme = (isDark: boolean) => {
-  document.documentElement.classList.toggle("dark", isDark);
-  document.documentElement.style.colorScheme = isDark ? "dark" : "light";
-  document
-    .querySelector<HTMLMetaElement>('meta[name="theme-color"]')
-    ?.setAttribute("content", isDark ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
-};
+const applyTheme = (isDark: boolean) => applyThemeToDocument(document, isDark);
 
 const applyThemeWithTransition = (isDark: boolean) => {
   if (!document.startViewTransition) {
