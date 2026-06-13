@@ -34,10 +34,11 @@ const Section = styled("section", {
 });
 
 export const Route = createFileRoute("/")({
-  // prefetch at prerender so the static HTML ships real data
-  // a build-time failure must not fail the build, the client query just fetches as before
   loader: ({ context }) =>
-    context.queryClient.ensureQueryData(portfolioQueryOptions).catch(() => undefined),
+    context.queryClient.ensureQueryData(portfolioQueryOptions).catch((e: unknown) => {
+      console.error("[prerender] portfolio fetch failed:", e);
+      return undefined;
+    }),
   component: Home,
 });
 
