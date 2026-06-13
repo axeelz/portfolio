@@ -6,7 +6,7 @@ import ViewCount from "./ViewCount";
 const FooterContainer = styled("footer", {
   base: {
     textAlign: "center",
-    color: "var(--text-muted)",
+    color: "var(--text-secondary)",
     paddingTop: "1rem",
     paddingBottom: "8rem",
     fontWeight: 600,

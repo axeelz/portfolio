@@ -43,6 +43,7 @@ const ToggleChip = styled("button", {
     border: "none",
     cursor: "pointer",
     appearance: "none",
+    color: "inherit",
     fontFamily: "inherit",
     lineHeight: "inherit",
     animationDelay: "var(--toggle-delay-lg)",
