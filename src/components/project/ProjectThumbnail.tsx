@@ -2,7 +2,7 @@ import { styled } from "styled-system/jsx";
 
 import type { Project } from "../../data/portfolio";
 
-import { createImageGlowStyle, ImageGlowFrame, squircle } from "../ui/shared";
+import { ImageGlowFrame, squircle } from "../ui/shared";
 
 const ImageLink = styled("a", {
   base: {
@@ -55,10 +55,12 @@ const ProjectThumbnail = ({ image, name, links }: ProjectThumbnailProps) => {
   const { url, source } = links;
   const href = url ?? source;
   const imageSrc = image.startsWith("http") ? image : "/img/" + image;
-  const glowStyle = createImageGlowStyle(imageSrc, 0.7);
   const img = (
     <ProjectImageFrame>
-      <ImageGlowFrame aria-hidden="true" style={glowStyle} />
+      <ImageGlowFrame
+        aria-hidden="true"
+        style={{ backgroundImage: `url(${imageSrc})`, opacity: 0.7 }}
+      />
       <ProjectImage role="img" aria-label={name} style={{ backgroundImage: `url(${imageSrc})` }} />
     </ProjectImageFrame>
   );

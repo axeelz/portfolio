@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { ShuffleIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { toast } from "sonner";
 import { styled } from "styled-system/jsx";
 
 import { copy } from "../../data/copy";
 import usePortfolioResponse from "../../hooks/usePortfolioResponse";
 import { fetchRandomTrack, QUERY_KEYS, type RandomTrack } from "../../utils/fetch";
-import { createImageGlowStyle, IconBtn, ImageGlowFrame, WidgetContainer } from "../ui/shared";
+import { IconBtn, ImageGlowFrame, WidgetContainer } from "../ui/shared";
 
 const Container = styled(WidgetContainer, {
   base: {
@@ -131,6 +131,41 @@ const ShuffleBtn = styled(IconBtn, {
   },
 });
 
+const AMBIENT_STYLE = {
+  filter: "blur(64px) saturate(1.15)",
+  inset: "-22%",
+  transform: "scale(1.32)",
+} as const;
+
+const AmbientGlow = ({ src }: { src: string }) => {
+  const slots = useRef<[string | null, string | null]>([null, null]);
+  const active = useRef<0 | 1>(0);
+  const [, rerender] = useReducer((n: number) => n + 1, 0);
+
+  useEffect(() => {
+    const next: 0 | 1 = active.current === 0 ? 1 : 0;
+    active.current = next;
+    slots.current[next] = src;
+    rerender();
+  }, [src]);
+
+  return (
+    <>
+      {([0, 1] as const).map((i) => (
+        <ImageGlowFrame
+          key={i}
+          aria-hidden="true"
+          style={{
+            backgroundImage: slots.current[i] ? `url(${slots.current[i]})` : "none",
+            opacity: active.current === i && slots.current[i] ? 0.28 : 0,
+            ...AMBIENT_STYLE,
+          }}
+        />
+      ))}
+    </>
+  );
+};
+
 const MusicWidget = () => {
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -178,25 +213,6 @@ const MusicWidget = () => {
   }, [track]);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      const handlePause = () => setIsPreviewPlaying(false);
-      const handlePlay = () => setIsPreviewPlaying(true);
-      const handleEnded = () => setIsPreviewPlaying(false);
-
-      audio.addEventListener("pause", handlePause);
-      audio.addEventListener("play", handlePlay);
-      audio.addEventListener("ended", handleEnded);
-
-      return () => {
-        audio.removeEventListener("pause", handlePause);
-        audio.removeEventListener("play", handlePlay);
-        audio.removeEventListener("ended", handleEnded);
-      };
-    }
-  }, [track]);
-
-  useEffect(() => {
     if (track && wasPlayingRef.current && audioRef.current) {
       void audioRef.current.play();
       wasPlayingRef.current = false;
@@ -224,16 +240,9 @@ const MusicWidget = () => {
     );
   }
 
-  const ambientStyle = {
-    ...createImageGlowStyle(track.coverUrl, 0.28),
-    filter: "blur(64px) saturate(1.15)",
-    inset: "-22%",
-    transform: "scale(1.32)",
-  };
-
   return (
     <Container loading={isFetching}>
-      <ImageGlowFrame aria-hidden="true" style={ambientStyle} />
+      <AmbientGlow src={track.coverUrl} />
       <TrackWrapper>
         <CoverThumbnail
           role="img"
@@ -251,23 +260,18 @@ const MusicWidget = () => {
           <ShuffleIcon />
         </ShuffleBtn>
       </TrackWrapper>
-      <Player audioPreviewUrl={track.previewUrl} audioRef={audioRef} />
+      {track.previewUrl && (
+        <AudioPreview
+          controls
+          src={track.previewUrl}
+          ref={audioRef}
+          onPlay={() => setIsPreviewPlaying(true)}
+          onPause={() => setIsPreviewPlaying(false)}
+          onEnded={() => setIsPreviewPlaying(false)}
+        />
+      )}
     </Container>
   );
-};
-
-const Player = ({
-  audioPreviewUrl,
-  audioRef,
-}: {
-  audioPreviewUrl: string | null;
-  audioRef: React.RefObject<HTMLAudioElement | null>;
-}) => {
-  if (!audioPreviewUrl) {
-    return null;
-  }
-
-  return <AudioPreview controls src={audioPreviewUrl} ref={audioRef} />;
 };
 
 export default MusicWidget;

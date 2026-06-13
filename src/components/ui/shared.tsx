@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
@@ -107,12 +105,6 @@ export const WidgetContainer = styled("div", {
     boxShadow: "var(--surface-shadow)",
   },
 });
-
-export const createImageGlowStyle = (imageUrl: string, opacity = 0.5) =>
-  ({
-    backgroundImage: `url(${imageUrl})`,
-    opacity,
-  }) as CSSProperties;
 
 export const ImageGlowFrame = styled("div", {
   base: {
