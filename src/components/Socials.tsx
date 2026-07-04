@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { CopyIcon, GithubIcon, LinkedinIcon } from "lucide-react";
+import { CopyIcon } from "lucide-react";
 import { useState } from "react";
 import { styled } from "styled-system/jsx";
 
 import { copy } from "../data/copy";
 import useMediaQuery from "../hooks/useMediaQuery";
 import { GITHUB_USERNAME, fetchGithubData, QUERY_KEYS, type GithubUser } from "../utils/fetch";
+import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { GithubTooltip } from "./ui/GithubTooltip";
 import { Tooltip } from "./ui/Tooltip";
 

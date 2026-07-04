@@ -1,7 +1,8 @@
-import { GithubIcon } from "lucide-react";
 import { styled } from "styled-system/jsx";
 
 import type { PortfolioHost } from "../../utils/fetch";
+
+import { GithubIcon } from "../icons/BrandIcons";
 
 const Tree = styled("div", {
   base: {
@@ -113,7 +114,6 @@ const SourceLink = styled("a", {
     "& svg": {
       width: "1.18rem",
       height: "1.18rem",
-      strokeWidth: 2,
     },
     "@media (hover: hover) and (pointer: fine)": {
       _hover: {
