@@ -45,8 +45,7 @@ export const copy = {
 type Segment = { text: string } | { label: string; href: string };
 
 export const bioParagraph: Segment[] = [
-  { text: "Currently working at " },
+  { text: "Software engineer at " },
   { label: "SNCF Connect & Tech", href: "https://www.sncf-connect-tech.fr/" },
-  { text: " and pursuing a Master's in Computer Engineering at " },
-  { label: "Université Paris Cité", href: "https://u-paris.fr/" },
+  { text: ". I also build my own web and mobile apps, and take on freelance projects." },
 ];
