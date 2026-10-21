@@ -1,13 +1,23 @@
 import { defineConfig } from "@pandacss/dev";
 
 export default defineConfig({
+  presets: ["@pandacss/preset-base", "@pandacss/preset-panda"],
   include: ["./src/**/*.{js,jsx,ts,tsx}"],
   jsxFramework: "react",
+  utilities: {
+    extend: {
+      // shortcut: Panda 2.2 omits cornerShape from generated types; remove when codegen supports it.
+      cornerShape: {
+        values: ["squircle"],
+        transform: (value) => ({ cornerShape: value }),
+      },
+    },
+  },
   theme: {
     extend: {
       breakpoints: {
-        sm: "480px",
-        lg: "830px",
+        sm: "30rem",
+        lg: "51.875rem",
       },
       keyframes: {
         fadeUp: {
