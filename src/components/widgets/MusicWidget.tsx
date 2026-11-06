@@ -7,14 +7,16 @@ import { styled } from "styled-system/jsx";
 import { copy } from "../../data/copy";
 import usePortfolioResponse from "../../hooks/usePortfolioResponse";
 import { fetchRandomTrack, QUERY_KEYS, type RandomTrack } from "../../utils/fetch";
-import { IconBtn, ImageGlowFrame, WidgetContainer } from "../ui/shared";
+import { IconBtn, ImageGlowFrame, Surface } from "../ui/shared";
 
-const Container = styled(WidgetContainer, {
+const Container = styled(Surface, {
   base: {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    padding: "1rem",
+    fontWeight: 500,
+    padding: "1.25rem",
+    mdDown: { padding: "1rem" },
     position: "relative",
     isolation: "isolate",
     overflow: "hidden",
@@ -86,8 +88,7 @@ const TrackNameWrapper = styled("div", {
 
 const TrackName = styled("p", {
   base: {
-    lineHeight: 2,
-    smDown: { lineHeight: "unset" },
+    lineHeight: 1.5,
   },
 });
 
@@ -127,7 +128,10 @@ const ShuffleBtn = styled(IconBtn, {
   base: {
     backgroundColor: "var(--button-background-color)",
     color: "var(--button-text-color)",
-    border: "1px solid var(--border-color)",
+    border: "none",
+    opacity: 1,
+    fontSize: "1.5rem",
+    _canHover: { _hover: { opacity: 0.85 } },
   },
 });
 

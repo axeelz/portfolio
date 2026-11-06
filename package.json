@@ -22,8 +22,7 @@
     "nitro": "npm:nitro-nightly@3.0.1-20261018-041453-e3378f94",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "sonner": "^2.0.8",
-    "tone": "^15.1.22"
+    "sonner": "^2.0.8"
   },
   "devDependencies": {
     "@pandacss/dev": "^2.2.0",

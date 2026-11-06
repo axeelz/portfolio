@@ -38,25 +38,20 @@ const Chip = styled("div", {
 const ToggleChip = styled("button", {
   base: {
     ...chipBase,
-    backgroundImage: "var(--gradient-techs)",
+    position: "relative",
     padding: "5px 8px",
-    border: "none",
+    border: "1px solid var(--border-color)",
     cursor: "pointer",
+    _after: { content: '""', position: "absolute", inset: "-7px -2px" },
     appearance: "none",
-    color: "inherit",
     fontFamily: "inherit",
     lineHeight: "inherit",
     animationDelay: "var(--toggle-delay-lg)",
     mdDown: { fontSize: "0.8rem", animationDelay: "var(--toggle-delay-sm)" },
-    transition: "transform 0.16s cubic-bezier(0.23, 1, 0.32, 1)",
-    "@media (hover: hover) and (pointer: fine)": {
-      _hover: {
-        transform: "translateY(-1px) scale(1.03)",
-      },
-    },
-    _active: {
-      transform: "scale(0.96)",
-    },
+    color: "var(--text-secondary)",
+    transition: "transform 160ms var(--ease-out), color 160ms ease",
+    _canHover: { _hover: { color: "var(--text-color)" } },
+    _active: { transform: "scale(0.96)" },
   },
   variants: {
     largeHidden: {

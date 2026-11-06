@@ -1,6 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
 import { styled } from "styled-system/jsx";
 
 import type { Project } from "../../data/portfolio";
+
+import { projectStatsQueryOptions } from "../../utils/fetch";
 
 const numberFormatter = new Intl.NumberFormat("en");
 
@@ -16,37 +19,25 @@ const StatsContainer = styled("div", {
 
 const Badge = styled("span", {
   base: {
-    padding: "0.35em 0.45em",
+    padding: "0.25em 0.6em",
     fontSize: "0.85em",
     fontVariantNumeric: "tabular-nums",
-    backgroundColor: "var(--stats-badge-color)",
-    backgroundImage: "linear-gradient(to top, transparent, hsl(0 0% 100% / 0.2))",
-    color: "white",
+    border: "1px solid var(--secondary-border-color)",
     borderRadius: "var(--radius-full)",
     fontWeight: 600,
     whiteSpace: "nowrap",
-    md: {
-      padding: "0.35em 0.65em",
-    },
   },
 });
 
-interface ProjectStatsProps {
-  stats: Project["stats"];
-  fetchResponse: Record<string, unknown> | null;
-}
-
-const ProjectStats = ({ stats, fetchResponse }: ProjectStatsProps) => {
-  if (!stats) {
-    return null;
-  }
+const ProjectStats = ({ stats }: { stats: NonNullable<Project["stats"]> }) => {
+  const { data } = useQuery(projectStatsQueryOptions(stats.endpoint));
 
   return (
     <StatsContainer>
       {stats.fields.map((field) => {
         const label = field.label;
         let stat: number = field.default;
-        const value = fetchResponse?.[field.field];
+        const value = data?.[field.field];
         if (typeof value === "number") {
           stat = value;
         }

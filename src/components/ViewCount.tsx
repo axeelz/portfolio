@@ -6,12 +6,10 @@ import { incrementViewCount } from "../utils/fetch";
 
 const Count = styled("span", {
   base: {
-    fontSize: "1rem",
     fontWeight: 600,
     color: "var(--text-color)",
     fontVariantNumeric: "tabular-nums",
     marginRight: "0.25rem",
-    marginLeft: "0.25rem",
   },
 });
 

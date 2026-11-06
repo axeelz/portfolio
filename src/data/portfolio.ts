@@ -15,7 +15,6 @@ export interface Technology {
 export interface Project {
   name: string;
   image: string;
-  date: string | null;
   description: string;
   techs: string[];
   links: { source?: string; url?: string };

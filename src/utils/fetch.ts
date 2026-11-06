@@ -1,3 +1,5 @@
+import { queryOptions } from "@tanstack/react-query";
+
 export const GITHUB_USERNAME = "axeelz";
 
 export const QUERY_KEYS = {
@@ -42,7 +44,7 @@ export async function fetchRandomTrack(): Promise<RandomTrack> {
 }
 
 export async function fetchProjectStats(endpoint: string): Promise<Record<string, unknown>> {
-  const response = await fetch(endpoint);
+  const response = await fetch(endpoint, { signal: AbortSignal.timeout(5000) });
 
   if (!response.ok) {
     throw new Error(`Unable to fetch ${endpoint}`);
@@ -50,6 +52,13 @@ export async function fetchProjectStats(endpoint: string): Promise<Record<string
 
   return (await response.json()) as Record<string, unknown>;
 }
+
+export const projectStatsQueryOptions = (endpoint: string) =>
+  queryOptions({
+    queryKey: [QUERY_KEYS.projectStats, endpoint],
+    queryFn: () => fetchProjectStats(endpoint),
+    retry: false,
+  });
 
 interface PortfolioTool {
   name: string;
@@ -72,6 +81,19 @@ export interface DockApp {
   image: string;
 }
 
+interface FreelanceLink {
+  label: string;
+  url: string;
+  image?: string;
+}
+
+export interface FreelanceWork {
+  id: string;
+  name: string;
+  description: string;
+  links: FreelanceLink[];
+}
+
 interface PortfolioFeatures {
   musicWidget?: boolean;
 }
@@ -82,6 +104,7 @@ export interface PortfolioResponse {
   hosts?: PortfolioHost[];
   tools?: PortfolioTool[];
   dock?: DockApp[];
+  freelance?: FreelanceWork[];
 }
 
 export async function fetchPortfolioResponse(): Promise<PortfolioResponse> {

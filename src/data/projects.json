@@ -3,7 +3,6 @@
     {
       "name": "Canvas Downloader",
       "image": "cdfs.webp",
-      "date": null,
       "description": "A tool to download background video loops on Spotify.",
       "techs": ["flask", "postgresql", "html", "css", "javascript", "docker"],
       "links": {
@@ -28,7 +27,6 @@
     {
       "name": "Marked",
       "image": "marked.webp",
-      "date": null,
       "description": "A simple iOS app to easily log your workout days.",
       "techs": ["typescript", "react-native", "expo"],
       "links": {
@@ -38,7 +36,6 @@
     {
       "name": "Link Manager",
       "image": "link-manager.webp",
-      "date": null,
       "description": "A link redirection manager and shortener, with a dashboard to manage them.",
       "techs": ["typescript", "nextjs", "elysiajs", "docker", "drizzle-orm"],
       "links": {
@@ -48,7 +45,6 @@
     {
       "name": "Cafe sans-fil",
       "image": "cafesansfil.webp",
-      "date": "2023",
       "description": "Project to improve service at Université de Montréal student cafés.",
       "techs": ["react", "fastapi", "mongodb", "tailwindcss"],
       "links": {
@@ -69,7 +65,6 @@
     {
       "name": "moodrecap",
       "image": "moodrecap.webp",
-      "date": "2023",
       "description": "A simple mood tracker that helps you keep track of your daily mood.",
       "techs": ["react", "firebase", "pwa", "material-ui"],
       "links": {
@@ -79,7 +74,6 @@
     {
       "name": "MealRush",
       "image": "mealrush.webp",
-      "date": "2022",
       "description": "An Uber Eats-type food ordering site.",
       "techs": ["php", "mariadb", "html", "tailwindcss", "javascript"],
       "links": {

@@ -17,9 +17,7 @@ const Tree = styled("div", {
       alignItems: "flex-start",
       gap: "0.9rem 1.4rem",
     },
-    mdDown: {
-      fontSize: "0.73rem",
-    },
+    mdDown: { fontSize: "0.8rem" },
   },
 });
 
@@ -46,6 +44,7 @@ const Line = styled("div", {
     flexWrap: "nowrap",
     gap: "0.2rem 0.45rem",
     minWidth: 0,
+    mdDown: { minHeight: "2rem" },
   },
 });
 
@@ -69,6 +68,7 @@ const Prefix = styled("span", {
 
 const DomainLink = styled("a", {
   base: {
+    position: "relative",
     display: "inline",
     padding: 0,
     margin: 0,
@@ -79,10 +79,7 @@ const DomainLink = styled("a", {
     textUnderlineOffset: "0.18em",
     textDecorationThickness: "1px",
     backgroundColor: "transparent",
-    _hover: {
-      backgroundColor: "transparent",
-      textDecoration: "underline",
-    },
+    mdDown: { _after: { content: '""', position: "absolute", inset: "-0.5rem 0" } },
   },
   variants: {
     root: {
@@ -109,20 +106,14 @@ const SourceLink = styled("a", {
     backgroundColor: "transparent",
     flexShrink: 0,
     lineHeight: 1,
-    transition:
-      "transform 0.16s cubic-bezier(0.23, 1, 0.32, 1), color 0.2s cubic-bezier(0.23, 1, 0.32, 1)",
+    transition: "transform 160ms var(--ease-out), color 160ms ease",
+    mdDown: { width: "2rem", height: "2rem" },
     "& svg": {
       width: "1.18rem",
       height: "1.18rem",
     },
-    "@media (hover: hover) and (pointer: fine)": {
-      _hover: {
-        color: "var(--github-color)",
-      },
-    },
-    _active: {
-      transform: "scale(0.96)",
-    },
+    _canHover: { _hover: { color: "var(--github-color)" } },
+    _active: { transform: "scale(0.96)" },
   },
 });
 

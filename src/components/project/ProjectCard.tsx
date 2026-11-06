@@ -1,39 +1,21 @@
 import { styled } from "styled-system/jsx";
 
 import { getTechnologyLabel, type Project } from "../../data/portfolio";
-import { squircle } from "../ui/shared";
-import ProjectButtons from "./ProjectButtons";
+import { Surface } from "../ui/shared";
 import ProjectDescription from "./ProjectDescription";
+import ProjectLinks from "./ProjectLinks";
 import ProjectThumbnail from "./ProjectThumbnail";
 
-const Card = styled("div", {
+const Card = styled(Surface, {
   base: {
-    backgroundColor: "var(--card-background-color)",
-    ...squircle("lg"),
-    border: "1px solid var(--surface-outline-color)",
-    boxShadow: "var(--surface-shadow)",
-    padding: "1.5rem",
+    padding: "1.25rem",
     maxWidth: "480px",
     wordBreak: "break-word",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     width: "100%",
-    lg: {
-      maxWidth: "unset",
-      padding: "2rem",
-    },
-  },
-});
-
-const NameDateContainer = styled("div", {
-  base: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: "1rem",
-    marginTop: "1rem",
-    marginBottom: "0.3rem",
+    lg: { maxWidth: "unset", padding: "1.5rem" },
   },
 });
 
@@ -42,30 +24,22 @@ const ProjectName = styled("h3", {
     fontFamily: "var(--font-title)",
     fontWeight: 700,
     fontSize: "1.25rem",
-    margin: 0,
-  },
-});
-
-const ProjectDate = styled("p", {
-  base: {
-    fontSize: "0.9rem",
-    color: "var(--text-secondary)",
-    fontWeight: 600,
-    whiteSpace: "nowrap",
+    margin: "1rem 0 0.3rem 0",
   },
 });
 
 const TechStack = styled("p", {
   base: {
     marginTop: "0.5rem",
-    marginBottom: "1rem",
+    marginBottom: "0.25rem",
     color: "var(--text-secondary)",
-    fontWeight: 600,
+    fontSize: "0.9rem",
+    fontWeight: 500,
   },
 });
 
 const ProjectCard = ({ project }: { project: Project }) => {
-  const { name, date, techs, description } = project;
+  const { name, techs, description } = project;
   let { image } = project;
   if (!image) image = "placeholder.jpeg";
   const techLabels = techs.map(getTechnologyLabel);
@@ -74,16 +48,11 @@ const ProjectCard = ({ project }: { project: Project }) => {
     <Card>
       <div>
         <ProjectThumbnail image={image} name={name} links={project.links} />
-        <NameDateContainer>
-          <ProjectName>{name}</ProjectName>
-          <ProjectDate>{date}</ProjectDate>
-        </NameDateContainer>
+        <ProjectName>{name}</ProjectName>
         <ProjectDescription description={description} stats={project.stats} />
         <TechStack>{techLabels.join(" · ")}</TechStack>
       </div>
-      <div>
-        <ProjectButtons links={project.links} />
-      </div>
+      <ProjectLinks links={project.links} />
     </Card>
   );
 };

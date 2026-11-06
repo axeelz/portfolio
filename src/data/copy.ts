@@ -12,6 +12,7 @@ export const copy = {
     switchTheme: "Switch theme",
     presentation: "Home",
     projects: "Projects",
+    freelance: "Freelance",
     about: "About",
   },
   projects: {
@@ -21,6 +22,15 @@ export const copy = {
       source: "See on GitHub",
     },
     moreProjectsOn: "More projects on",
+  },
+  freelance: {
+    title: "Freelance",
+    pitch:
+      "I build websites, apps and tools for small teams. You talk directly to the person writing the code.",
+    getInTouch: "Get in touch",
+    next: "Next",
+    yourProject: "Your project",
+    yourProjectDescription: "A small website, an app, a tool. Tell me what you need.",
   },
   about: {
     title: "More about me",
@@ -47,5 +57,7 @@ type Segment = { text: string } | { label: string; href: string };
 export const bioParagraph: Segment[] = [
   { text: "Software engineer at " },
   { label: "SNCF Connect & Tech", href: "https://www.sncf-connect-tech.fr/" },
-  { text: ". I also build my own web and mobile apps, and take on freelance projects." },
+  { text: ". I also build my own web and mobile apps, and take on " },
+  { label: "freelance projects", href: "#freelance" },
+  { text: "." },
 ];

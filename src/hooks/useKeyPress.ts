@@ -9,7 +9,8 @@ export default function useKeyPress(key: string, callback: () => void) {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === key) {
+      const hasModifier = event.metaKey || event.ctrlKey || event.altKey;
+      if (event.key === key && !event.repeat && !hasModifier) {
         callbackRef.current();
       }
     };

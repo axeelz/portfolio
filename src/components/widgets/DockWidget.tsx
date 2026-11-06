@@ -3,24 +3,22 @@ import { styled } from "styled-system/jsx";
 
 import type { DockApp } from "../../utils/fetch";
 
-import { squircle, WidgetContainer } from "../ui/shared";
+import { squircle } from "../ui/shared";
 import { Tooltip } from "../ui/Tooltip";
 
-const DockGlass = styled("div", {
+const Dock = styled("div", {
   base: {
     display: "flex",
     gap: "0.5rem",
     padding: "0.5rem",
-    ...squircle("lg"),
+    ...squircle("md"),
     maxWidth: "100%",
-    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1))",
-    backdropFilter: "blur(20px) saturate(180%)",
-    border: "1px solid rgba(255, 255, 255, 0.18)",
-    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+    background: "var(--dock-background)",
+    border: "1px solid var(--dock-border)",
+    boxShadow: "var(--dock-shadow)",
     flexWrap: "nowrap",
     overflowX: "auto",
     overscrollBehaviorX: "contain",
-    WebkitOverflowScrolling: "touch",
     scrollbarWidth: "none",
     "&::-webkit-scrollbar": { display: "none" },
     justifyContent: "safe center",
@@ -34,15 +32,13 @@ const DockInfoItem = styled("div", {
     height: "56px",
     flexShrink: 0,
     transformOrigin: "bottom",
-    transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+    transition: "transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)",
     cursor: "pointer",
     userSelect: "none",
-    "@media (hover: hover) and (pointer: fine)": {
-      _hover: { transform: "translateY(-4px) scale(1.08)" },
-    },
+    _canHover: { _hover: { transform: "translateY(-4px) scale(1.08)" } },
     _active: {
       transform: "translateY(-2px) scale(1.04)",
-      transition: "transform 0.1s ease",
+      transition: "transform 100ms ease",
     },
     mdDown: {
       width: "48px",
@@ -72,7 +68,7 @@ const DockWidget = ({ items }: { items?: DockApp[] }) => {
     if (!openTooltip) return;
 
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (event.target instanceof Node && !containerRef.current?.contains(event.target)) {
         setOpenTooltip(null);
       }
     };
@@ -89,25 +85,23 @@ const DockWidget = ({ items }: { items?: DockApp[] }) => {
   }, [openTooltip]);
 
   return (
-    <WidgetContainer ref={containerRef}>
-      <DockGlass>
-        {items?.map((app) => (
-          <Tooltip
-            portal
-            key={app.name}
-            content={app.name}
-            side="top"
-            sideOffset={12}
-            open={openTooltip === app.name}
-            onOpenChange={(isOpen) => setOpenTooltip(isOpen ? app.name : null)}
-          >
-            <DockInfoItem onTouchStart={() => handleToggleTooltip(app.name)}>
-              <DockImage src={app.image} alt={app.name} loading="lazy" />
-            </DockInfoItem>
-          </Tooltip>
-        ))}
-      </DockGlass>
-    </WidgetContainer>
+    <Dock ref={containerRef}>
+      {items?.map((app) => (
+        <Tooltip
+          portal
+          key={app.name}
+          content={app.name}
+          side="top"
+          sideOffset={12}
+          open={openTooltip === app.name}
+          onOpenChange={(isOpen) => setOpenTooltip(isOpen ? app.name : null)}
+        >
+          <DockInfoItem onTouchStart={() => handleToggleTooltip(app.name)}>
+            <DockImage src={app.image} alt={app.name} loading="lazy" />
+          </DockInfoItem>
+        </Tooltip>
+      ))}
+    </Dock>
   );
 };
 

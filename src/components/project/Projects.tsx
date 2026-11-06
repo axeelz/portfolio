@@ -1,10 +1,9 @@
-import { ArrowRightIcon } from "lucide-react";
 import { styled } from "styled-system/jsx";
 
 import { copy } from "../../data/copy";
 import { portfolioData } from "../../data/portfolio";
 import { GITHUB_USERNAME } from "../../utils/fetch";
-import { SectionTitle } from "../ui/shared";
+import { ExternalLink, LinkRow, SectionTitle } from "../ui/shared";
 import ProjectCard from "./ProjectCard";
 
 const Grid = styled("div", {
@@ -19,22 +18,8 @@ const Grid = styled("div", {
   },
 });
 
-const GitHubCTA = styled("p", {
-  base: {
-    marginTop: "2rem",
-    textAlign: "center",
-    color: "var(--text-secondary)",
-    fontWeight: 600,
-    fontSize: "1.15rem",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "0.5rem",
-    "& a": {
-      color: "inherit",
-      fontWeight: 700,
-    },
-  },
+const MoreProjects = styled(LinkRow, {
+  base: { justifyContent: "center", marginTop: "1rem" },
 });
 
 const Projects = () => {
@@ -46,17 +31,11 @@ const Projects = () => {
           <ProjectCard key={project.name} project={project} />
         ))}
       </Grid>
-      <GitHubCTA>
-        <ArrowRightIcon />
-        {copy.projects.moreProjectsOn}{" "}
-        <a
-          href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          GitHub
-        </a>
-      </GitHubCTA>
+      <MoreProjects>
+        <ExternalLink href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}>
+          {copy.projects.moreProjectsOn} GitHub
+        </ExternalLink>
+      </MoreProjects>
     </>
   );
 };

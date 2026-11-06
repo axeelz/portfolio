@@ -2,46 +2,51 @@ import { styled } from "styled-system/jsx";
 
 import type { Project } from "../../data/portfolio";
 
-import { ImageGlowFrame, squircle } from "../ui/shared";
+import { squircle } from "../ui/shared";
+
+const Glow = styled("img", {
+  base: {
+    position: "absolute",
+    inset: "2%",
+    width: "96%",
+    height: "96%",
+    objectFit: "cover",
+    filter: "blur(28px) saturate(1.8)",
+    transform: "scale(1.08)",
+    opacity: 0,
+    transition: "opacity 300ms var(--ease-out)",
+    pointerEvents: "none",
+    "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+  },
+});
 
 const ImageLink = styled("a", {
   base: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    transition: "transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), filter 0.3s ease",
+    position: "relative",
+    display: "block",
     isolation: "isolate",
-    "@media (hover: hover) and (pointer: fine)": {
+    transition: "transform 200ms var(--ease-out)",
+    _canHover: {
       _hover: {
-        filter: "brightness(0.9)",
-        transform: "scale(1.02)",
+        transform: "translateY(-2px)",
+        "& > img:first-child": { opacity: 0.5 },
       },
     },
-    _active: {
-      transform: "scale(0.98)",
-    },
+    _active: { transform: "scale(0.98)" },
   },
 });
 
-const ProjectImageFrame = styled("div", {
+const ProjectImage = styled("img", {
   base: {
-    width: "100%",
     position: "relative",
-    isolation: "isolate",
-    borderRadius: "inherit",
-  },
-});
-
-const ProjectImage = styled("div", {
-  base: {
+    display: "block",
     width: "100%",
+    height: "auto",
     aspectRatio: "16/9",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    objectFit: "cover",
     ...squircle("md"),
-    boxShadow: "inset 0 0 0 1px var(--image-outline-color)",
-    position: "relative",
-    zIndex: 1,
+    outline: "1px solid var(--image-outline-color)",
+    outlineOffset: "-1px",
   },
 });
 
@@ -55,18 +60,11 @@ const ProjectThumbnail = ({ image, name, links }: ProjectThumbnailProps) => {
   const { url, source } = links;
   const href = url ?? source;
   const imageSrc = image.startsWith("http") ? image : "/img/" + image;
-  const img = (
-    <ProjectImageFrame>
-      <ImageGlowFrame
-        aria-hidden="true"
-        style={{ backgroundImage: `url(${imageSrc})`, opacity: 0.7 }}
-      />
-      <ProjectImage role="img" aria-label={name} style={{ backgroundImage: `url(${imageSrc})` }} />
-    </ProjectImageFrame>
-  );
+  const img = <ProjectImage src={imageSrc} alt={name} loading="lazy" />;
 
   return href ? (
-    <ImageLink href={href} target="_blank" tabIndex={-1}>
+    <ImageLink href={href} target="_blank" rel="noreferrer" tabIndex={-1}>
+      <Glow src={imageSrc} alt="" loading="lazy" />
       {img}
     </ImageLink>
   ) : (

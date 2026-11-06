@@ -1,3 +1,6 @@
+import type { ComponentProps } from "react";
+
+import { ArrowUpRightIcon } from "lucide-react";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
@@ -32,43 +35,112 @@ export const squircle = (size: SquircleSize) => {
   return squircleLg;
 };
 
-export const SectionTitle = styled("h2", {
-  base: {
-    fontFamily: "var(--font-body)",
-    fontWeight: 700,
-    textAlign: "left",
-    fontSize: "calc(1.325rem + 0.9vw)",
-    margin: "1rem 0 2rem 0",
-    textWrap: "balance",
-  },
+const surface = css.raw({
+  ...squircle("lg"),
+  backgroundColor: "var(--card-background-color)",
+  border: "1px solid var(--surface-outline-color)",
+  boxShadow: "var(--surface-shadow)",
 });
 
-export const buttonBase = css.raw({
-  fontFamily: "var(--font-body)",
-  lineHeight: 1,
-  border: "none",
-  ...squircle("md"),
-  padding: "0.75rem",
-  fontSize: "1rem",
-  fontWeight: 600,
-  cursor: "pointer",
-  transition: "transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)",
-  boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-  userSelect: "none",
-  textDecoration: "none",
-  textAlign: "center",
-  display: "inline-block",
-  "@media (hover: hover)": {
-    _hover: { transform: "scale(1.03) translateY(-1px)" },
-  },
-  _active: {
-    transform: "scale(0.98)",
-    transition: "transform 0.1s cubic-bezier(0.23, 1, 0.32, 1)",
+export const Surface = styled("div", { base: surface });
+
+export const SectionTitle = styled("h2", {
+  base: {
+    fontFamily: "var(--font-title)",
+    fontWeight: 700,
+    textAlign: "left",
+    fontSize: "clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem)",
+    lineHeight: 1.1,
+    letterSpacing: "-0.02em",
+    margin: "0.5rem 0 1.75rem 0",
   },
 });
 
 export const Button = styled("button", {
-  base: buttonBase,
+  base: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "0.6rem",
+    minHeight: "3rem",
+    padding: "0 1.75rem",
+    fontFamily: "var(--font-body)",
+    fontSize: "1rem",
+    fontWeight: 600,
+    lineHeight: 1,
+    whiteSpace: "nowrap",
+    border: "1px solid transparent",
+    ...squircle("md"),
+    cursor: "pointer",
+    userSelect: "none",
+    transition: "transform 160ms var(--ease-out), opacity 160ms ease",
+    _canHover: { _hover: { opacity: 0.85 } },
+    _active: { transform: "scale(0.96)" },
+  },
+  variants: {
+    intent: {
+      primary: {
+        backgroundColor: "var(--button-background-color)",
+        color: "var(--button-text-color)",
+      },
+      secondary: {
+        backgroundColor: "transparent",
+        color: "var(--text-color)",
+        borderColor: "var(--secondary-border-color)",
+      },
+    },
+  },
+  defaultVariants: { intent: "primary" },
+});
+
+const ExternalAnchor = styled("a", {
+  base: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "0.2rem",
+    minHeight: "2.75rem",
+    color: "var(--text-secondary)",
+    fontSize: "0.9rem",
+    fontWeight: 600,
+    textDecoration: "none",
+    transition: "color 160ms ease",
+    "& svg": { transition: "transform 200ms var(--ease-out)" },
+    "& > span": { position: "relative" },
+    "& > span::after": {
+      content: '""',
+      position: "absolute",
+      insetInline: 0,
+      bottom: "-2px",
+      height: "1px",
+      backgroundColor: "currentColor",
+      transform: "scaleX(0)",
+      transformOrigin: "right",
+      transition: "transform 280ms var(--ease-out)",
+      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+    },
+    _canHover: {
+      _hover: {
+        color: "var(--text-color)",
+        "& svg": { transform: "translate(1.5px, -1.5px)" },
+        "& > span::after": { transform: "scaleX(1)", transformOrigin: "left" },
+      },
+    },
+  },
+});
+
+export const ExternalLink = ({ children, ...props }: ComponentProps<typeof ExternalAnchor>) => (
+  <ExternalAnchor target="_blank" rel="noreferrer" {...props}>
+    <span>{children}</span>
+    <ArrowUpRightIcon size={14} strokeWidth={2.25} aria-hidden />
+  </ExternalAnchor>
+);
+
+export const LinkRow = styled("div", {
+  base: {
+    display: "flex",
+    flexWrap: "wrap",
+    columnGap: "1rem",
+  },
 });
 
 export const IconBtn = styled("button", {
@@ -78,31 +150,15 @@ export const IconBtn = styled("button", {
     border: "none",
     color: "var(--text-color)",
     cursor: "pointer",
-    transition:
-      "transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1)",
+    transition: "transform 160ms var(--ease-out), opacity 160ms var(--ease-out)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "var(--radius-sm)",
     fontSize: "2rem",
     opacity: 0.65,
-    "@media (hover: hover)": {
-      _hover: { opacity: 1 },
-    },
-    _active: {
-      transform: "scale(0.96)",
-      transition: "transform 0.1s cubic-bezier(0.23, 1, 0.32, 1)",
-    },
-  },
-});
-
-export const WidgetContainer = styled("div", {
-  base: {
-    fontWeight: 500,
-    ...squircle("lg"),
-    backgroundColor: "var(--card-background-color)",
-    border: "1px solid var(--surface-outline-color)",
-    boxShadow: "var(--surface-shadow)",
+    _canHover: { _hover: { opacity: 1 } },
+    _active: { transform: "scale(0.96)" },
   },
 });
 
@@ -123,15 +179,12 @@ export const ImageGlowFrame = styled("div", {
 
 export const BodyContainer = styled("div", {
   base: {
+    ...surface,
     fontWeight: 500,
-    fontSize: "1.15rem",
+    fontSize: "1.05rem",
     animation: "fadeUp 0.4s ease-out both",
-    backgroundColor: "var(--card-background-color)",
-    border: "1px solid var(--surface-outline-color)",
-    boxShadow: "var(--surface-shadow)",
-    padding: "1rem",
-    ...squircle("lg"),
-    mdDown: { fontSize: "0.9rem" },
+    padding: "1.25rem",
+    mdDown: { fontSize: "0.95rem", padding: "1rem" },
     "@media (prefers-reduced-motion: reduce)": {
       animation: "none",
     },
@@ -147,17 +200,8 @@ export const BodyContainer = styled("div", {
       textDecoration: "underline",
       textUnderlineOffset: "4px",
       color: "var(--text-color)",
-      margin: "0 0.1rem",
-      padding: "5px",
-      borderRadius: "var(--radius-sm)",
-      transition: "background-color 0.2s cubic-bezier(0.23, 1, 0.32, 1), text-decoration 0.2s",
-      md: {
-        _hover: {
-          backgroundColor: "var(--surface-hover-color)",
-          textDecoration: "none",
-        },
-      },
-      mdDown: { padding: 0 },
+      transition: "opacity 160ms ease",
+      _canHover: { _hover: { opacity: 0.7 } },
     },
   },
 });

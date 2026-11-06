@@ -3,19 +3,16 @@ import { useEffect, useState } from "react";
 import { styled } from "styled-system/jsx";
 
 import { copy } from "../../data/copy";
-import { WidgetContainer } from "../ui/shared";
+import { Surface } from "../ui/shared";
 
-const LocationContainer = styled(WidgetContainer, {
+const LocationContainer = styled(Surface, {
   base: {
     display: "flex",
-    gap: "2rem",
+    gap: "1rem",
     alignItems: "center",
-    padding: "1rem 2rem",
-
-    mdDown: {
-      gap: "1rem",
-      padding: "1rem",
-    },
+    fontWeight: 500,
+    padding: "1.25rem",
+    mdDown: { padding: "1rem" },
   },
 });
 
@@ -71,7 +68,7 @@ const CurrentTime = () => {
         timeZone: "Europe/Paris",
         hour: "numeric",
         minute: "numeric",
-      }) ?? "—"}
+      }) ?? "--:--"}
     </Time>
   );
 };

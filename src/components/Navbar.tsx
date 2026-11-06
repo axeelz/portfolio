@@ -4,7 +4,7 @@ import { copy } from "../data/copy";
 import ToggleDarkMode from "./ToggleDarkMode";
 import { Tooltip } from "./ui/Tooltip";
 
-const NavbarContainer = styled("nav", {
+const NavbarContainer = styled("header", {
   base: {
     width: "100%",
     display: "flex",
@@ -27,19 +27,18 @@ const ButtonsContainer = styled("div", {
     height: "100%",
     opacity: 0,
     animation: "fadeIn 0.3s ease-out 0.2s forwards",
+    "@media (prefers-reduced-motion: reduce)": { animation: "none", opacity: 1 },
   },
 });
 
 const Kbd = styled("kbd", {
   base: {
-    fontFamily: "system-ui",
-    border: "1px solid #ccc",
-    borderRadius: "var(--radius-sm)",
-    padding: "0.1em 0.5em",
-    margin: "0 0.2em",
-    boxShadow: "0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset",
-    backgroundColor: "#f7f7f7",
-    color: "black",
+    fontFamily: "var(--font-mono)",
+    fontSize: "0.85em",
+    border: "1px solid rgb(255 255 255 / 0.25)",
+    borderRadius: "var(--radius-xs)",
+    padding: "0 0.4em",
+    marginLeft: "0.25em",
     display: "inline-block",
     "@media (hover: none)": {
       display: "none",

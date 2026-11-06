@@ -8,7 +8,6 @@ type TooltipProps = TooltipPrimitive.TooltipProps &
   Pick<TooltipContentProps, "side" | "sideOffset"> & {
     content: React.ReactNode;
     link?: boolean;
-    forceAnimation?: boolean;
     portal?: boolean;
   };
 
@@ -26,17 +25,13 @@ const TooltipContentStyled = styled(TooltipPrimitive.Content, {
     fontWeight: 500,
     transformOrigin: "var(--radix-tooltip-content-transform-origin)",
     '&[data-state="delayed-open"]': {
-      animation: "scaleInSubtle 0.2s ease-out",
+      animation: "scaleInSubtle 125ms var(--ease-out)",
     },
     '&[data-state="closed"]': {
-      animation: "scaleOutSubtle 0.1s ease-out",
+      animation: "scaleOutSubtle 100ms ease-out",
     },
-  },
-  variants: {
-    forceAnimation: {
-      true: {
-        animation: "scaleInSubtle 0.2s ease-out",
-      },
+    "@media (prefers-reduced-motion: reduce)": {
+      '&[data-state="delayed-open"], &[data-state="closed"]': { animation: "none" },
     },
   },
 });
@@ -50,7 +45,6 @@ export function Tooltip({
   side = "bottom",
   sideOffset = 3,
   link = false,
-  forceAnimation = false,
   portal = false,
   ...props
 }: TooltipProps) {
@@ -60,7 +54,6 @@ export function Tooltip({
       align="center"
       collisionPadding={5}
       sideOffset={sideOffset}
-      forceAnimation={forceAnimation}
       onPointerDownOutside={(event: Event) => {
         event.preventDefault();
       }}

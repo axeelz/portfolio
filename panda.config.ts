@@ -13,6 +13,11 @@ export default defineConfig({
       },
     },
   },
+  conditions: {
+    extend: {
+      canHover: "@media (hover: hover) and (pointer: fine)",
+    },
+  },
   theme: {
     extend: {
       breakpoints: {
@@ -38,9 +43,23 @@ export default defineConfig({
           "0%, 100%": { opacity: 1 },
           "50%": { opacity: 0.5 },
         },
+        pileNudge: {
+          "0%, 100%": { translate: "0 0", rotate: "0deg" },
+          "40%": { translate: "52px -4px", rotate: "5deg" },
+        },
+        nameShine: {
+          from: { backgroundPosition: "100% 0" },
+          to: { backgroundPosition: "0% 0" },
+        },
+        contactSpotlight: {
+          "0%": { transform: "scale(0.96)", boxShadow: "0 0 0 10px transparent" },
+          "22%": { transform: "scale(1.045)", boxShadow: "0 0 0 2px var(--text-color)" },
+          "70%": { transform: "scale(1)", boxShadow: "0 0 0 2px var(--text-color)" },
+          "100%": { transform: "scale(1)", boxShadow: "0 0 0 2px transparent" },
+        },
         scaleInSubtle: {
           from: {
-            transform: "scale(0.8)",
+            transform: "scale(0.95)",
             opacity: 0,
           },
           to: {
@@ -54,7 +73,7 @@ export default defineConfig({
             opacity: 1,
           },
           to: {
-            transform: "scale(0.8)",
+            transform: "scale(0.95)",
             opacity: 0,
           },
         },

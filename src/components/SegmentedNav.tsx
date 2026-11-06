@@ -3,6 +3,7 @@ import { styled } from "styled-system/jsx";
 
 import { SECTIONS } from "../data/sections";
 import useMediaQuery from "../hooks/useMediaQuery";
+import { getScrollBehavior, scrollToSection } from "../utils/scroll";
 import { playNavClick } from "../utils/sounds";
 
 const NavContainer = styled("nav", {
@@ -11,7 +12,7 @@ const NavContainer = styled("nav", {
     bottom: "2rem",
     left: "50%",
     zIndex: 1000,
-    transition: "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    transition: "transform 300ms var(--ease-out)",
     mdDown: { bottom: "1rem" },
     "@media (prefers-reduced-motion: reduce)": {
       transition: "none",
@@ -48,8 +49,7 @@ const NavList = styled("ul", {
       position: "absolute",
       background: "var(--nav-indicator-color)",
       borderRadius: "var(--radius-md)",
-      transition:
-        "left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+      transition: "left 300ms var(--ease-out), width 300ms var(--ease-out)",
       pointerEvents: "none",
       zIndex: 0,
       top: "0.5rem",
@@ -59,6 +59,11 @@ const NavList = styled("ul", {
     },
     "@media (prefers-reduced-motion: reduce)": {
       _before: { transition: "none" },
+    },
+    mdDown: {
+      gap: "0.25rem",
+      padding: "0.375rem",
+      _before: { top: "0.375rem", bottom: "0.375rem" },
     },
   },
 });
@@ -83,7 +88,7 @@ const NavButton = styled("button", {
     fontWeight: 600,
     cursor: "pointer",
     borderRadius: "var(--radius-md)",
-    transition: "color 0.2s ease, transform 0.16s cubic-bezier(0.23, 1, 0.32, 1)",
+    transition: "color 160ms ease, transform 160ms var(--ease-out)",
     whiteSpace: "nowrap",
     userSelect: "none",
     "& .lucide": {
@@ -91,11 +96,11 @@ const NavButton = styled("button", {
       height: "20px",
       flexShrink: 0,
     },
-    "@media (hover: hover)": {
-      _hover: { color: "var(--text-color)" },
-    },
+    _canHover: { _hover: { color: "var(--text-color)" } },
     _active: { transform: "scale(0.96)" },
     mdDown: {
+      padding: "0.75rem 0.6rem",
+      fontSize: "0.85rem",
       "& .lucide": { display: "none" },
     },
   },
@@ -204,10 +209,9 @@ const SegmentedNav = () => {
     }
 
     if (sectionId === "presentation") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: getScrollBehavior() });
     } else {
-      const element = document.getElementById(sectionId);
-      element?.scrollIntoView({ behavior: "smooth" });
+      scrollToSection(sectionId);
     }
 
     scrollTimeoutRef.current = window.setTimeout(() => {
@@ -232,7 +236,7 @@ const SegmentedNav = () => {
   };
 
   return (
-    <NavContainer visible={isVisible}>
+    <NavContainer visible={isVisible} aria-label="Sections">
       <NavList ref={navListRef}>
         {SECTIONS.map(({ id, Icon, label }) => (
           <NavItem

@@ -7,16 +7,23 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import appCss from "../index.css?url";
 import { CRITICAL_THEME_CSS, THEME_INIT_SCRIPT, getThemeColor } from "../theme/dom";
 
+const SITE_URL = "https://axeelz.com/";
+const DESCRIPTION =
+  "Axel Zareb, software engineer based in the Paris area. I build websites, apps and tools for small teams.";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1.0" },
       { title: "axel zareb" },
-      {
-        name: "description",
-        content: "Axel Zareb, software engineer based in the Paris area.",
-      },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:title", content: "Axel Zareb" },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: `${SITE_URL}og.png` },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: getThemeColor(false) },
     ],
     links: [
@@ -35,6 +42,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         crossOrigin: "anonymous",
       },
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: SITE_URL },
       { rel: "shortcut icon", href: "/favicon/favicon.ico" },
     ],
   }),

@@ -1,8 +1,12 @@
+import type { MouseEvent } from "react";
+
 import { styled } from "styled-system/jsx";
 
 import { BodyContainer, Button } from "../components/ui/shared";
 import { bioParagraph, copy } from "../data/copy";
+import { SECTION_IDS } from "../data/sections";
 import usePortfolioResponse from "../hooks/usePortfolioResponse";
+import { scrollToContact, scrollToSection } from "../utils/scroll";
 import { playButtonClick } from "../utils/sounds";
 import Technologies from "./Technologies";
 
@@ -28,7 +32,7 @@ const Title = styled("h1", {
   },
 });
 
-const SecondaryTitle = styled("h2", {
+const Role = styled("p", {
   base: {
     padding: 0,
     margin: "0.4rem 0 0 0",
@@ -62,23 +66,8 @@ const CallToActionContainer = styled("div", {
 
 const CallToAction = styled(Button, {
   base: {
-    backgroundColor: "var(--button-background-color)",
-    color: "var(--button-text-color)",
-    padding: "0.75rem 2rem",
-    display: "block",
     width: "100%",
-    md: {
-      width: "fit-content",
-      padding: "0.75rem 5rem",
-    },
-  },
-});
-
-const SecondaryCallToAction = styled(CallToAction, {
-  base: {
-    backgroundColor: "var(--button-background-secondary)",
-    color: "var(--button-text-secondary)",
-    border: "1px solid var(--secondary-border-color)",
+    md: { width: "fit-content", padding: "0 3rem" },
   },
 });
 
@@ -90,7 +79,7 @@ const Presentation = () => {
     <div>
       <TitleContainer>
         <Title>Axel Zareb</Title>
-        <SecondaryTitle>{copy.presentation.title}</SecondaryTitle>
+        <Role>{copy.presentation.title}</Role>
       </TitleContainer>
       <CardsStack>
         <BodyContainer style={{ animationDelay: "0.1s" }}>
@@ -103,7 +92,18 @@ const Presentation = () => {
             )}
             {bioParagraph.map((seg) =>
               "href" in seg ? (
-                <a key={seg.href} href={seg.href} target="_blank" rel="noreferrer">
+                <a
+                  key={seg.href}
+                  href={seg.href}
+                  {...(seg.href.startsWith("#")
+                    ? {
+                        onClick: (event: MouseEvent) => {
+                          event.preventDefault();
+                          scrollToSection(seg.href.slice(1));
+                        },
+                      }
+                    : { target: "_blank", rel: "noreferrer" })}
+                >
                   {seg.label}
                 </a>
               ) : (
@@ -121,19 +121,20 @@ const Presentation = () => {
         <CallToAction
           onClick={() => {
             void playButtonClick();
-            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+            scrollToSection(SECTION_IDS.PROJECTS);
           }}
         >
           {copy.presentation.seeProjects}
         </CallToAction>
-        <SecondaryCallToAction
+        <CallToAction
+          intent="secondary"
           onClick={() => {
             void playButtonClick();
-            document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+            scrollToContact();
           }}
         >
           {copy.presentation.contactMe}
-        </SecondaryCallToAction>
+        </CallToAction>
       </CallToActionContainer>
     </div>
   );
