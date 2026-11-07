@@ -26,7 +26,7 @@ const NavList = styled("ul", {
     padding: "4px",
     borderRadius: "var(--radius-full)",
     backgroundColor: "var(--sheet-color)",
-    boxShadow: "var(--surface-shadow), inset 0 0 0 1px var(--border-color)",
+    boxShadow: "var(--nav-shadow), inset 0 0 0 1px var(--border-color)",
     _before: {
       content: '""',
       position: "absolute",

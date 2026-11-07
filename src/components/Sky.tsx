@@ -9,28 +9,49 @@ const MINUTE_MS = 60_000;
 const DENSITY = 0.03;
 const TOP_ROW = 13;
 const CLOUD_TICKS_PER_PIXEL = 8;
-const CLOUD_SCALE = 2;
-const CLOUD_MARGIN = 22 * CLOUD_SCALE;
-const COLUMNS_PER_CLOUD = 80;
+const COLUMNS_PER_CLOUD = 45;
 
 const CLOUD_SPRITES = [
   [
-    ".....####........",
-    "...########.###..",
-    "..##############.",
-    "#################",
-    ".###############.",
+    "...........######.............",
+    "..........########............",
+    ".........##########.####......",
+    ".....####################.....",
+    "....######################....",
+    "...#######################....",
+    "...########################...",
+    ".############################.",
+    "##############################",
+    "##############################",
+    ".############################.",
   ],
-  ["...###......", ".########...", "############", ".##########."],
   [
-    "........####..........",
-    "...####.#######.......",
-    "..#################...",
-    ".####################.",
-    "######################",
-    ".####################.",
+    "........####........",
+    ".......######.......",
+    "...##.########......",
+    "..##############....",
+    ".################...",
+    ".##################.",
+    "####################",
+    "####################",
+    ".##################.",
+  ],
+  [
+    "...................##########...........",
+    "............##################..........",
+    "...........###################..........",
+    "..........#########################.....",
+    ".....###############################....",
+    "....################################....",
+    "...#################################....",
+    "...#################################....",
+    ".######################################.",
+    "########################################",
+    "########################################",
+    ".######################################.",
   ],
 ];
+const CLOUD_MARGIN = Math.max(...CLOUD_SPRITES.map(([row]) => row.length));
 
 const CLOUD_COLORS = {
   dawn: "#ecc6d3",
@@ -67,12 +88,17 @@ const hash = (x: number, y: number) => {
   return value - Math.floor(value);
 };
 
+/** One cloud per slot of the drift loop, fully inside it, so clouds never overlap. */
 const placeClouds = (columns: number, rows: number) =>
-  Array.from({ length: Math.ceil(columns / COLUMNS_PER_CLOUD) }, (_, index) => ({
-    x: Math.floor((index + hash(index, 1)) * COLUMNS_PER_CLOUD),
-    y: TOP_ROW + Math.floor(hash(index, 2) * Math.max(1, rows - TOP_ROW - 6 * CLOUD_SCALE)),
-    sprite: CLOUD_SPRITES[index % CLOUD_SPRITES.length],
-  }));
+  Array.from({ length: Math.floor((columns + CLOUD_MARGIN) / COLUMNS_PER_CLOUD) }, (_, index) => {
+    const sprite = CLOUD_SPRITES[index % CLOUD_SPRITES.length];
+    const slack = COLUMNS_PER_CLOUD - sprite[0].length;
+    return {
+      x: index * COLUMNS_PER_CLOUD + Math.floor(hash(index, 1) * slack),
+      y: TOP_ROW + Math.floor(hash(index, 2) * Math.max(1, rows - TOP_ROW - sprite.length)),
+      sprite,
+    };
+  });
 
 const placeStars = (columns: number, rows: number) => {
   const stars = [];
@@ -132,12 +158,7 @@ const Sky = ({ until }: { until: RefObject<HTMLElement | null> }) => {
         sprite.forEach((row, rowIndex) => {
           Array.from(row).forEach((pixel, column) => {
             if (pixel !== "#") return;
-            context.fillRect(
-              left + column * CLOUD_SCALE,
-              y + rowIndex * CLOUD_SCALE,
-              CLOUD_SCALE,
-              CLOUD_SCALE,
-            );
+            context.fillRect(left + column, y + rowIndex, 1, 1);
           });
         });
       }

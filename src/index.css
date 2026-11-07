@@ -29,6 +29,8 @@
   --nav-indicator-color: #e6e6ea;
   --border-color: rgba(0, 0, 60, 0.12);
   --surface-shadow: 0 1px 1px rgba(0, 0, 0, 0.04), 0 14px 34px rgba(0, 0, 0, 0.14);
+  /* Fades out within the nav's bottom gap: iOS Safari clips fixed elements at the viewport edge. */
+  --nav-shadow: 0 1px 1px rgba(0, 0, 0, 0.04), 0 4px 10px -2px rgba(0, 0, 0, 0.12);
   --glow-opacity: 0.26;
 
   /* Garden */
@@ -84,6 +86,7 @@
   --nav-indicator-color: #2c2c32;
   --border-color: rgba(255, 255, 255, 0.14);
   --surface-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 14px 34px rgba(0, 0, 0, 0.6);
+  --nav-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 4px 10px -2px rgba(0, 0, 0, 0.6);
   --glow-opacity: 0.45;
 
   /* Garden */
