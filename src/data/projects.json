@@ -4,7 +4,6 @@
       "name": "Canvas Downloader",
       "image": "cdfs.webp",
       "description": "A tool to download background video loops on Spotify.",
-      "techs": ["flask", "postgresql", "html", "css", "javascript", "docker"],
       "links": {
         "url": "https://www.canvasdownloader.com/"
       },
@@ -28,7 +27,6 @@
       "name": "Marked",
       "image": "marked.webp",
       "description": "A simple iOS app to easily log your workout days.",
-      "techs": ["typescript", "react-native", "expo"],
       "links": {
         "url": "https://axlz.me/markedapp"
       }
@@ -37,7 +35,6 @@
       "name": "Link Manager",
       "image": "link-manager.webp",
       "description": "A link redirection manager and shortener, with a dashboard to manage them.",
-      "techs": ["typescript", "nextjs", "elysiajs", "docker", "drizzle-orm"],
       "links": {
         "url": "https://axlz.me/why"
       }
@@ -46,27 +43,15 @@
       "name": "Cafe sans-fil",
       "image": "cafesansfil.webp",
       "description": "Project to improve service at Université de Montréal student cafés.",
-      "techs": ["react", "fastapi", "mongodb", "tailwindcss"],
       "links": {
         "source": "https://github.com/ceduni/cafe-sans-fil",
         "url": "https://ceduni.github.io/cafe-sans-fil/"
-      },
-      "stats": {
-        "endpoint": " https://api.github.com/repos/ceduni/cafe-sans-fil",
-        "fields": [
-          {
-            "field": "stargazers_count",
-            "default": 9,
-            "label": "GitHub ⭐️"
-          }
-        ]
       }
     },
     {
       "name": "moodrecap",
       "image": "moodrecap.webp",
       "description": "A simple mood tracker that helps you keep track of your daily mood.",
-      "techs": ["react", "firebase", "pwa", "material-ui"],
       "links": {
         "url": "https://axlz.me/mood"
       }
@@ -75,7 +60,6 @@
       "name": "MealRush",
       "image": "mealrush.webp",
       "description": "An Uber Eats-type food ordering site.",
-      "techs": ["php", "mariadb", "html", "tailwindcss", "javascript"],
       "links": {
         "source": "https://github.com/axeelz/mealrush",
         "url": "https://mealrush.axeelz.com/"
@@ -83,162 +67,18 @@
     }
   ],
   "technologies": [
-    {
-      "id": "typescript",
-      "label": "TypeScript",
-      "featured": true,
-      "icon": {
-        "light": "typescript"
-      }
-    },
-    {
-      "id": "react",
-      "label": "React",
-      "featured": true,
-      "icon": {
-        "light": "react_light",
-        "dark": "react_dark"
-      }
-    },
-    {
-      "id": "nextjs",
-      "label": "Next.js",
-      "featured": true,
-      "icon": {
-        "light": "nextjs_icon_dark"
-      }
-    },
-    {
-      "id": "react-native",
-      "label": "React Native",
-      "featured": true,
-      "icon": {
-        "light": "react_light",
-        "dark": "react_dark"
-      }
-    },
-    {
-      "id": "astro",
-      "label": "Astro",
-      "featured": true,
-      "icon": {
-        "light": "astro-icon-light",
-        "dark": "astro-icon-dark"
-      }
-    },
-    {
-      "id": "nodejs",
-      "label": "Node.js",
-      "featured": true,
-      "icon": {
-        "light": "nodejs"
-      }
-    },
-    {
-      "id": "python",
-      "label": "Python",
-      "featured": true,
-      "icon": {
-        "light": "python"
-      }
-    },
-    {
-      "id": "flask",
-      "label": "Flask",
-      "featured": true,
-      "icon": {
-        "light": "flask-light",
-        "dark": "flask-dark"
-      }
-    },
-    {
-      "id": "postgresql",
-      "label": "PostgreSQL",
-      "featured": true,
-      "icon": {
-        "light": "postgresql"
-      }
-    },
-    {
-      "id": "mongodb",
-      "label": "MongoDB",
-      "featured": true,
-      "icon": {
-        "light": "mongodb-icon-light",
-        "dark": "mongodb-icon-dark"
-      }
-    },
-    {
-      "id": "tailwindcss",
-      "label": "Tailwind CSS",
-      "featured": true,
-      "icon": {
-        "light": "tailwindcss"
-      }
-    },
-    {
-      "id": "docker",
-      "label": "Docker",
-      "featured": true,
-      "icon": {
-        "light": "docker"
-      }
-    },
-    {
-      "id": "cloudflare-workers",
-      "label": "Cloudflare Workers",
-      "featured": true,
-      "icon": {
-        "light": "cloudflare-workers"
-      }
-    },
-    {
-      "id": "html",
-      "label": "HTML"
-    },
-    {
-      "id": "css",
-      "label": "CSS"
-    },
-    {
-      "id": "javascript",
-      "label": "JavaScript"
-    },
-    {
-      "id": "expo",
-      "label": "Expo"
-    },
-    {
-      "id": "elysiajs",
-      "label": "ElysiaJS"
-    },
-    {
-      "id": "drizzle-orm",
-      "label": "Drizzle ORM"
-    },
-    {
-      "id": "fastapi",
-      "label": "FastAPI"
-    },
-    {
-      "id": "firebase",
-      "label": "Firebase"
-    },
-    {
-      "id": "pwa",
-      "label": "PWA"
-    },
-    {
-      "id": "material-ui",
-      "label": "Material UI"
-    },
-    {
-      "id": "php",
-      "label": "PHP"
-    },
-    {
-      "id": "mariadb",
-      "label": "MariaDB"
-    }
+    "TypeScript",
+    "React",
+    "Next.js",
+    "React Native",
+    "Astro",
+    "Node.js",
+    "Python",
+    "Flask",
+    "PostgreSQL",
+    "MongoDB",
+    "Tailwind CSS",
+    "Docker",
+    "Cloudflare Workers"
   ]
 }

@@ -4,16 +4,7 @@ import { ArrowUpRightIcon } from "lucide-react";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
-type SquircleSize = "sm" | "md" | "lg";
-const squircleSm = css.raw({
-  borderRadius: "var(--radius-sm)",
-  "@supports (corner-shape: squircle)": {
-    cornerShape: "squircle",
-    borderRadius: "var(--squircle-sm)",
-  },
-});
-
-const squircleMd = css.raw({
+export const squircle = css.raw({
   borderRadius: "var(--radius-md)",
   "@supports (corner-shape: squircle)": {
     cornerShape: "squircle",
@@ -21,108 +12,213 @@ const squircleMd = css.raw({
   },
 });
 
-const squircleLg = css.raw({
-  borderRadius: "var(--radius-lg)",
-  "@supports (corner-shape: squircle)": {
-    cornerShape: "squircle",
-    borderRadius: "var(--squircle-lg)",
+/** Fades an element in as it enters the viewport. CSS only, skipped where unsupported. */
+export const reveal = css.raw({
+  "@supports (animation-timeline: view())": {
+    "@media (prefers-reduced-motion: no-preference)": {
+      animationName: "rise",
+      animationTimingFunction: "linear",
+      animationFillMode: "both",
+      animationTimeline: "view()",
+      animationRange: "entry 0% entry 35%",
+    },
   },
 });
 
-export const squircle = (size: SquircleSize) => {
-  if (size === "sm") return squircleSm;
-  if (size === "md") return squircleMd;
-  return squircleLg;
-};
-
-const surface = css.raw({
-  ...squircle("lg"),
-  backgroundColor: "var(--card-background-color)",
-  border: "1px solid var(--surface-outline-color)",
-  boxShadow: "var(--surface-shadow)",
+/** A sheet stacked over the previous one, overlapping its rounded corners. */
+export const stackedSheet = css.raw({
+  position: "relative",
+  marginTop: "calc(-1 * var(--sheet-radius))",
+  borderRadius: "var(--sheet-radius) var(--sheet-radius) 0 0",
+  paddingInline: "var(--gutter)",
+  paddingTop: "var(--sheet-padding)",
 });
 
-export const Surface = styled("div", { base: surface });
+/** Text sized so it fills its container: pass the text's width in em as `--fit`. */
+export const FitBox = styled("div", { base: { containerType: "inline-size" } });
+
+export const fitText = css.raw({
+  display: "block",
+  width: "max-content",
+  fontSize: "calc(100cqi / var(--fit))",
+  letterSpacing: "-0.03em",
+  lineHeight: 0.86,
+  whiteSpace: "nowrap",
+});
+
+export const SectionHead = styled("div", {
+  base: {
+    display: "grid",
+    gap: "0.9rem",
+    paddingBottom: "clamp(1.5rem, 3vw, 2.5rem)",
+  },
+});
 
 export const SectionTitle = styled("h2", {
+  base: { fontSize: "var(--text-h2)" },
+});
+
+export const Lead = styled("p", {
   base: {
-    fontFamily: "var(--font-title)",
-    fontWeight: 700,
-    textAlign: "left",
-    fontSize: "clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem)",
-    lineHeight: 1.1,
-    letterSpacing: "-0.02em",
-    margin: "0.5rem 0 1.75rem 0",
+    maxWidth: "34ch",
+    color: "var(--text-secondary)",
+    fontSize: "var(--text-lead)",
+    letterSpacing: "-0.01em",
+    lineHeight: 1.3,
   },
 });
 
-export const Button = styled("button", {
+export const Block = styled("div", {
   base: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "0.6rem",
-    minHeight: "3rem",
-    padding: "0 1.75rem",
+    ...reveal,
+    display: "grid",
+    gridTemplateColumns: "minmax(0, 1fr)",
+    alignContent: "start",
+    gap: "1rem",
+    minWidth: 0,
+  },
+});
+
+export const BlockLabel = styled("h3", {
+  base: {
+    color: "var(--text-secondary)",
     fontFamily: "var(--font-body)",
-    fontSize: "1rem",
-    fontWeight: 600,
-    lineHeight: 1,
-    whiteSpace: "nowrap",
-    border: "1px solid transparent",
-    ...squircle("md"),
-    cursor: "pointer",
-    userSelect: "none",
-    transition: "transform 160ms var(--ease-out), opacity 160ms ease",
-    _canHover: { _hover: { opacity: 0.85 } },
-    _active: { transform: "scale(0.96)" },
+    fontSize: "0.875rem",
+    fontWeight: 500,
+    letterSpacing: 0,
+    lineHeight: 1.4,
+  },
+});
+
+/** A list of large text links. Set `--link-size` to resize them. */
+export const TextLinks = styled("ul", {
+  base: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "0.1rem 1rem",
+    _canHover: { _hover: { "& a:not(:hover)": { color: "var(--text-secondary)" } } },
+    "& a": {
+      color: "inherit",
+      fontFamily: "var(--font-title)",
+      fontSize: "var(--link-size, clamp(1.25rem, 1.9vw, 1.5rem))",
+      fontWeight: 700,
+      letterSpacing: "-0.02em",
+      lineHeight: 1.3,
+      textDecoration: "none",
+      transition: "color 200ms ease",
+    },
+  },
+});
+
+export const CardGrid = styled("div", {
+  base: {
+    display: "grid",
+    alignItems: "start",
   },
   variants: {
-    intent: {
-      primary: {
-        backgroundColor: "var(--button-background-color)",
-        color: "var(--button-text-color)",
+    size: {
+      featured: {
+        gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+        gap: "clamp(2rem, 3vw, 2.5rem)",
+        mdDown: { gridTemplateColumns: "minmax(0, 1fr)" },
       },
-      secondary: {
-        backgroundColor: "transparent",
-        color: "var(--text-color)",
-        borderColor: "var(--secondary-border-color)",
+      compact: {
+        "--card-gap": "1rem",
+        gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+        gap: "clamp(1.5rem, 2.5vw, 2rem)",
+        marginTop: "clamp(2rem, 3vw, 2.5rem)",
+        mdDown: { gridTemplateColumns: "repeat(2, minmax(0, 1fr))" },
       },
     },
   },
-  defaultVariants: { intent: "primary" },
+  defaultVariants: { size: "featured" },
+});
+
+export const Card = styled("article", {
+  base: {
+    ...reveal,
+    position: "relative",
+    display: "grid",
+    gap: "var(--card-gap, 1.25rem)",
+    minWidth: 0,
+  },
+});
+
+export const CardMedia = styled("div", {
+  base: {
+    ...squircle,
+    position: "relative",
+    aspectRatio: "16/9",
+    overflow: "hidden",
+    backgroundColor: "var(--soft-color)",
+    _after: {
+      content: '""',
+      position: "absolute",
+      inset: 0,
+      borderRadius: "inherit",
+      cornerShape: "inherit",
+      boxShadow: "inset 0 0 0 1px var(--border-color)",
+      pointerEvents: "none",
+    },
+  },
+});
+
+export const CardBody = styled("div", {
+  base: {
+    display: "grid",
+    justifyItems: "start",
+    gap: "0.55rem",
+  },
+});
+
+export const CardTitle = styled("h3", {
+  base: { fontSize: "var(--text-h3)" },
+  variants: {
+    size: {
+      compact: { fontSize: "1.25rem", letterSpacing: "-0.015em" },
+    },
+  },
+});
+
+export const CardDescription = styled("p", {
+  base: {
+    maxWidth: "52ch",
+    color: "var(--text-secondary)",
+  },
+  variants: {
+    size: {
+      compact: { fontSize: "0.9375rem", mdDown: { fontSize: "0.875rem", lineHeight: 1.45 } },
+    },
+  },
 });
 
 const ExternalAnchor = styled("a", {
   base: {
     display: "inline-flex",
     alignItems: "center",
-    gap: "0.2rem",
-    minHeight: "2.75rem",
-    color: "var(--text-secondary)",
-    fontSize: "0.9rem",
-    fontWeight: 600,
+    gap: "0.25rem",
+    color: "inherit",
+    fontWeight: 500,
     textDecoration: "none",
-    transition: "color 160ms ease",
-    "& svg": { transition: "transform 200ms var(--ease-out)" },
+    "& svg": {
+      transition: "transform 200ms var(--ease-out)",
+      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+    },
     "& > span": { position: "relative" },
     "& > span::after": {
       content: '""',
       position: "absolute",
       insetInline: 0,
-      bottom: "-2px",
+      bottom: "-1px",
       height: "1px",
       backgroundColor: "currentColor",
-      transform: "scaleX(0)",
-      transformOrigin: "right",
-      transition: "transform 280ms var(--ease-out)",
-      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+      opacity: 0.25,
+      transition: "opacity 200ms ease",
     },
     _canHover: {
       _hover: {
-        color: "var(--text-color)",
         "& svg": { transform: "translate(1.5px, -1.5px)" },
-        "& > span::after": { transform: "scaleX(1)", transformOrigin: "left" },
+        "& > span::after": { opacity: 1 },
       },
     },
   },
@@ -139,69 +235,24 @@ export const LinkRow = styled("div", {
   base: {
     display: "flex",
     flexWrap: "wrap",
-    columnGap: "1rem",
+    gap: "0.25rem 1.25rem",
   },
 });
 
 export const IconBtn = styled("button", {
   base: {
-    padding: "8px",
-    backgroundColor: "transparent",
-    border: "none",
-    color: "var(--text-color)",
-    cursor: "pointer",
-    transition: "transform 160ms var(--ease-out), opacity 160ms var(--ease-out)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "var(--radius-sm)",
-    fontSize: "2rem",
-    opacity: 0.65,
-    _canHover: { _hover: { opacity: 1 } },
+    width: "2.5rem",
+    height: "2.5rem",
+    padding: 0,
+    border: "none",
+    borderRadius: "var(--radius-md)",
+    backgroundColor: "transparent",
+    color: "var(--text-color)",
+    cursor: "pointer",
+    transition: "transform 160ms var(--ease-out)",
     _active: { transform: "scale(0.96)" },
-  },
-});
-
-export const ImageGlowFrame = styled("div", {
-  base: {
-    position: "absolute",
-    inset: "2%",
-    borderRadius: "inherit",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "blur(28px) saturate(1.8)",
-    transform: "scale(1.08)",
-    pointerEvents: "none",
-    zIndex: 0,
-    transition: "opacity 180ms ease-out",
-  },
-});
-
-export const BodyContainer = styled("div", {
-  base: {
-    ...surface,
-    fontWeight: 500,
-    fontSize: "1.05rem",
-    animation: "fadeUp 0.4s ease-out both",
-    padding: "1.25rem",
-    mdDown: { fontSize: "0.95rem", padding: "1rem" },
-    "@media (prefers-reduced-motion: reduce)": {
-      animation: "none",
-    },
-    "& > span": {
-      color: "var(--text-secondary)",
-      fontWeight: 600,
-      marginBottom: "0.85rem",
-      fontSize: "0.9rem",
-      display: "block",
-      mdDown: { fontSize: "0.8rem" },
-    },
-    "& a": {
-      textDecoration: "underline",
-      textUnderlineOffset: "4px",
-      color: "var(--text-color)",
-      transition: "opacity 160ms ease",
-      _canHover: { _hover: { opacity: 0.7 } },
-    },
   },
 });

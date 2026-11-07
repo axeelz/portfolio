@@ -1,33 +1,19 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-system/jsx";
 
 import { SECTIONS } from "../data/sections";
 import useMediaQuery from "../hooks/useMediaQuery";
-import { getScrollBehavior, scrollToSection } from "../utils/scroll";
+import { scrollToSection } from "../utils/scroll";
 import { playNavClick } from "../utils/sounds";
+import ToggleDarkMode from "./ToggleDarkMode";
 
 const NavContainer = styled("nav", {
   base: {
     position: "fixed",
-    bottom: "2rem",
+    bottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))",
     left: "50%",
     zIndex: 1000,
-    transition: "transform 300ms var(--ease-out)",
-    mdDown: { bottom: "1rem" },
-    "@media (prefers-reduced-motion: reduce)": {
-      transition: "none",
-    },
-  },
-  variants: {
-    visible: {
-      true: {
-        transform: "translateX(-50%) translateY(0)",
-      },
-      false: {
-        transform: "translateX(-50%) translateY(calc(100% + 4rem))",
-        mdDown: { transform: "translateX(-50%) translateY(calc(100% + 3rem))" },
-      },
-    },
+    transform: "translateX(-50%)",
   },
 });
 
@@ -35,74 +21,48 @@ const NavList = styled("ul", {
   base: {
     position: "relative",
     display: "flex",
-    gap: "0.5rem",
-    padding: "0.5rem",
-    margin: 0,
-    listStyle: "none",
-    background: "var(--navbar-color)",
-    backdropFilter: "blur(12px)",
-    borderRadius: "var(--radius-lg)",
-    boxShadow:
-      "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 0 1px var(--border-color)",
+    alignItems: "center",
+    gap: "2px",
+    padding: "4px",
+    borderRadius: "var(--radius-full)",
+    backgroundColor: "var(--sheet-color)",
+    boxShadow: "var(--surface-shadow), inset 0 0 0 1px var(--border-color)",
     _before: {
       content: '""',
       position: "absolute",
-      background: "var(--nav-indicator-color)",
-      borderRadius: "var(--radius-md)",
-      transition: "left 300ms var(--ease-out), width 300ms var(--ease-out)",
-      pointerEvents: "none",
-      zIndex: 0,
-      top: "0.5rem",
-      bottom: "0.5rem",
+      top: "4px",
+      bottom: "4px",
       left: "var(--indicator-left)",
       width: "var(--indicator-width)",
-    },
-    "@media (prefers-reduced-motion: reduce)": {
-      _before: { transition: "none" },
-    },
-    mdDown: {
-      gap: "0.25rem",
-      padding: "0.375rem",
-      _before: { top: "0.375rem", bottom: "0.375rem" },
+      borderRadius: "var(--radius-full)",
+      backgroundColor: "var(--nav-indicator-color)",
+      opacity: "var(--indicator-opacity, 0)",
+      pointerEvents: "none",
+      transition: "left 300ms var(--ease-out), width 300ms var(--ease-out), opacity 200ms ease",
+      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
     },
   },
 });
 
 const NavItem = styled("li", {
-  base: {
-    position: "relative",
-    zIndex: 1,
-  },
+  base: { position: "relative", zIndex: 1 },
 });
 
-const NavButton = styled("button", {
+const NavLink = styled("a", {
   base: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-    padding: "0.75rem 1rem",
-    border: "none",
-    background: "transparent",
-    fontFamily: "var(--font-body)",
-    fontSize: "0.9rem",
-    fontWeight: 600,
-    cursor: "pointer",
-    borderRadius: "var(--radius-md)",
-    transition: "color 160ms ease, transform 160ms var(--ease-out)",
+    display: "grid",
+    placeItems: "center",
+    height: "2.5rem",
+    padding: "0 0.75rem",
+    borderRadius: "var(--radius-full)",
+    fontSize: "0.8125rem",
+    fontWeight: 500,
+    textDecoration: "none",
     whiteSpace: "nowrap",
     userSelect: "none",
-    "& .lucide": {
-      width: "20px",
-      height: "20px",
-      flexShrink: 0,
-    },
+    transition: "color 160ms ease, transform 160ms var(--ease-out)",
     _canHover: { _hover: { color: "var(--text-color)" } },
     _active: { transform: "scale(0.96)" },
-    mdDown: {
-      padding: "0.75rem 0.6rem",
-      fontSize: "0.85rem",
-      "& .lucide": { display: "none" },
-    },
   },
   variants: {
     active: {
@@ -112,156 +72,109 @@ const NavButton = styled("button", {
   },
 });
 
-const getScrollVisibility = () => window.scrollY > 100;
-const getServerScrollVisibility = () => false;
-
-const subscribeScrollVisibility = (callback: () => void) => {
-  window.addEventListener("scroll", callback, { passive: true });
-  return () => window.removeEventListener("scroll", callback);
-};
-
-const updateIndicatorPosition = (
+const updateIndicator = (
   navList: HTMLUListElement | null,
-  buttons: Map<string, HTMLButtonElement>,
-  sectionId: string,
+  links: Map<string, HTMLAnchorElement>,
+  sectionId: string | null,
 ) => {
-  const button = buttons.get(sectionId);
+  const link = sectionId ? links.get(sectionId) : undefined;
+  navList?.style.setProperty("--indicator-opacity", link ? "1" : "0");
 
-  if (button) {
-    const rect = button.getBoundingClientRect();
-    const parentRect = button.parentElement?.parentElement?.getBoundingClientRect();
-
-    if (parentRect) {
-      navList?.style.setProperty("--indicator-left", `${rect.left - parentRect.left}px`);
-      navList?.style.setProperty("--indicator-width", `${rect.width}px`);
-    }
+  const item = link?.parentElement;
+  if (item) {
+    navList?.style.setProperty("--indicator-left", `${item.offsetLeft}px`);
+    navList?.style.setProperty("--indicator-width", `${item.offsetWidth}px`);
   }
 };
 
 const SegmentedNav = () => {
-  const [activeSection, setActiveSection] = useState<string>("presentation");
-  const isVisible = useSyncExternalStore(
-    subscribeScrollVisibility,
-    getScrollVisibility,
-    getServerScrollVisibility,
-  );
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const isScrollingRef = useRef(false);
   const scrollTimeoutRef = useRef<number>(0);
-  const navListRef = useRef<HTMLUListElement | null>(null);
-  const buttonRefsMap = useRef(new Map<string, HTMLButtonElement>());
-  const activeSectionRef = useRef(activeSection);
+  const navListRef = useRef<HTMLUListElement>(null);
+  const linksRef = useRef(new Map<string, HTMLAnchorElement>());
   const supportsHover = useMediaQuery("(hover: hover)");
 
   useEffect(() => {
-    activeSectionRef.current = activeSection;
-    updateIndicatorPosition(navListRef.current, buttonRefsMap.current, activeSection);
+    const syncIndicator = () =>
+      updateIndicator(navListRef.current, linksRef.current, activeSection);
+
+    syncIndicator();
+    window.addEventListener("resize", syncIndicator);
+    return () => window.removeEventListener("resize", syncIndicator);
   }, [activeSection]);
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-50% 0px -50% 0px",
-      threshold: 0,
-    };
+    // The line sits below the middle: the last sheet can be shorter than half a phone screen.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isScrollingRef.current) return;
 
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      if (isScrollingRef.current) return;
-
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+        entries.forEach(({ isIntersecting, target: { id } }) => {
+          if (isIntersecting) setActiveSection(id);
+          else setActiveSection((current) => (current === id ? null : current));
+        });
+      },
+      { rootMargin: "-55% 0px -45% 0px" },
+    );
 
     SECTIONS.forEach(({ id }) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
     });
 
     return () => {
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-
+      window.clearTimeout(scrollTimeoutRef.current);
       observer.disconnect();
     };
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () =>
-      updateIndicatorPosition(navListRef.current, buttonRefsMap.current, activeSectionRef.current);
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleNavClick = (sectionId: string) => {
     void playNavClick();
     setActiveSection(sectionId);
+    scrollToSection(sectionId);
 
     isScrollingRef.current = true;
-
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
-    }
-
-    if (sectionId === "presentation") {
-      window.scrollTo({ top: 0, behavior: getScrollBehavior() });
-    } else {
-      scrollToSection(sectionId);
-    }
-
+    window.clearTimeout(scrollTimeoutRef.current);
     scrollTimeoutRef.current = window.setTimeout(() => {
       isScrollingRef.current = false;
     }, 1000);
-
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-  };
-
-  const handleMouseEnter = (id: string) => {
-    if (supportsHover) {
-      updateIndicatorPosition(navListRef.current, buttonRefsMap.current, id);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (supportsHover) {
-      updateIndicatorPosition(navListRef.current, buttonRefsMap.current, activeSection);
-    }
   };
 
   return (
-    <NavContainer visible={isVisible} aria-label="Sections">
+    <NavContainer aria-label="Sections">
       <NavList ref={navListRef}>
-        {SECTIONS.map(({ id, Icon, label }) => (
+        {SECTIONS.map(({ id, label }) => (
           <NavItem
             key={id}
-            onMouseEnter={() => handleMouseEnter(id)}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => {
+              if (supportsHover) updateIndicator(navListRef.current, linksRef.current, id);
+            }}
+            onMouseLeave={() => {
+              if (supportsHover)
+                updateIndicator(navListRef.current, linksRef.current, activeSection);
+            }}
           >
-            <NavButton
-              ref={(el: HTMLButtonElement | null) => {
-                if (el) {
-                  buttonRefsMap.current.set(id, el);
-                } else {
-                  buttonRefsMap.current.delete(id);
-                }
+            <NavLink
+              ref={(element: HTMLAnchorElement | null) => {
+                if (element) linksRef.current.set(id, element);
+                else linksRef.current.delete(id);
               }}
+              href={`#${id}`}
               active={activeSection === id}
-              onClick={() => handleNavClick(id)}
-              aria-label={label}
               aria-current={activeSection === id ? "location" : undefined}
+              onClick={(event) => {
+                event.preventDefault();
+                handleNavClick(id);
+              }}
             >
-              <Icon />
-              <span>{label}</span>
-            </NavButton>
+              {label}
+            </NavLink>
           </NavItem>
         ))}
+        <NavItem>
+          <ToggleDarkMode />
+        </NavItem>
       </NavList>
     </NavContainer>
   );

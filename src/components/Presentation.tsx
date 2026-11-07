@@ -1,142 +1,142 @@
-import type { MouseEvent } from "react";
-
+import { ArrowUpRightIcon } from "lucide-react";
+import { useRef } from "react";
 import { styled } from "styled-system/jsx";
 
-import { BodyContainer, Button } from "../components/ui/shared";
 import { bioParagraph, copy } from "../data/copy";
-import { SECTION_IDS } from "../data/sections";
-import usePortfolioResponse from "../hooks/usePortfolioResponse";
-import { scrollToContact, scrollToSection } from "../utils/scroll";
-import { playButtonClick } from "../utils/sounds";
-import Technologies from "./Technologies";
+import { scrollToSection } from "../utils/scroll";
+import ParisTime from "./ParisTime";
+import Sky from "./Sky";
+import { FitBox, fitText } from "./ui/shared";
 
-const TitleContainer = styled("div", {
+const Hero = styled("header", {
   base: {
+    position: "sticky",
+    top: 0,
+    isolation: "isolate",
     display: "flex",
     flexDirection: "column",
-    animation: "fadeUp 0.35s ease-out both",
-    marginBottom: "2rem",
-    "@media (prefers-reduced-motion: reduce)": {
-      animation: "none",
+    gap: "1.5rem",
+    // Leaves the top of the next sheet showing, as an invitation to scroll.
+    minHeight: "calc(100svh - 2.25rem)",
+    padding: "1rem var(--gutter) 4.75rem",
+    transformOrigin: "50% 45%",
+    "@supports (animation-timeline: scroll())": {
+      "@media (prefers-reduced-motion: no-preference) and (min-height: 560px)": {
+        animationName: "recede",
+        animationTimingFunction: "linear",
+        animationFillMode: "both",
+        animationTimeline: "scroll(root)",
+        animationRange: "0 100svh",
+      },
     },
   },
 });
 
-const Title = styled("h1", {
-  base: {
-    fontFamily: "var(--font-title)",
-    fontSize: "clamp(2.75rem, 7vw, 5rem)",
-    fontWeight: 700,
-    lineHeight: 1,
-    letterSpacing: "-0.02em",
-  },
-});
-
-const Role = styled("p", {
-  base: {
-    padding: 0,
-    margin: "0.4rem 0 0 0",
-    color: "var(--text-secondary)",
-    fontSize: "1.1rem",
-    fontWeight: 500,
-  },
-});
-
-const CardsStack = styled("div", {
+const Top = styled("div", {
   base: {
     display: "flex",
-    flexDirection: "column",
+    justifyContent: "space-between",
     gap: "1rem",
+    fontSize: "0.875rem",
+    fontWeight: 500,
+    "& > :last-child": { color: "var(--text-secondary)" },
   },
 });
 
-const CallToActionContainer = styled("div", {
+const Bio = styled("p", {
   base: {
-    display: "flex",
-    justifyContent: "flex-start",
-    gap: "0.75rem",
-    flexWrap: "wrap",
-    marginTop: "2rem",
-    animation: "fadeUp 0.4s ease-out 0.25s both",
-    "@media (prefers-reduced-motion: reduce)": {
-      animation: "none",
+    marginTop: "auto",
+    maxWidth: "36ch",
+    fontSize: "var(--text-lead)",
+    letterSpacing: "-0.01em",
+    lineHeight: 1.34,
+    "@media (prefers-reduced-motion: no-preference)": {
+      animation: "fadeIn 700ms ease-out 200ms both",
+    },
+    "& a": {
+      color: "inherit",
+      textDecorationColor: "var(--border-color)",
+      textDecorationThickness: "1px",
+      textUnderlineOffset: "0.2em",
+      transition: "text-decoration-color 200ms ease",
+      _canHover: {
+        _hover: {
+          textDecorationColor: "currentColor",
+          "& svg": { translate: "1.5px -1.5px" },
+        },
+      },
+    },
+    "& svg": {
+      display: "inline-block",
+      marginLeft: "0.08em",
+      verticalAlign: "0.02em",
+      transition: "translate 200ms var(--ease-out)",
+      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
     },
   },
 });
 
-const CallToAction = styled(Button, {
+const NameBox = styled(FitBox, { base: { marginTop: "-0.4rem" } });
+
+const Name = styled("h1", {
   base: {
-    width: "100%",
-    md: { width: "fit-content", padding: "0 3rem" },
+    ...fitText,
+    "--fit": "4.73",
+    mdDown: { "--fit": "2.56" },
+    "& > span": {
+      display: "inline-block",
+      mdDown: { display: "block" },
+      "@media (prefers-reduced-motion: no-preference)": {
+        animation: "nameUp 900ms var(--ease-out) both",
+      },
+    },
+    "& > span + span": { animationDelay: "70ms" },
   },
 });
 
 const Presentation = () => {
-  const { data: portfolioResponse } = usePortfolioResponse();
-  const age = portfolioResponse?.age;
+  const bioRef = useRef<HTMLParagraphElement>(null);
 
   return (
-    <div>
-      <TitleContainer>
-        <Title>Axel Zareb</Title>
-        <Role>{copy.presentation.title}</Role>
-      </TitleContainer>
-      <CardsStack>
-        <BodyContainer style={{ animationDelay: "0.1s" }}>
-          <span>{copy.presentation.about}</span>
-          <p>
-            {typeof age === "number" ? (
-              <>I'm {age} years old and I live in the Paris area. </>
-            ) : (
-              <>I live in the Paris area. </>
-            )}
-            {bioParagraph.map((seg) =>
-              "href" in seg ? (
-                <a
-                  key={seg.href}
-                  href={seg.href}
-                  {...(seg.href.startsWith("#")
-                    ? {
-                        onClick: (event: MouseEvent) => {
-                          event.preventDefault();
-                          scrollToSection(seg.href.slice(1));
-                        },
-                      }
-                    : { target: "_blank", rel: "noreferrer" })}
-                >
-                  {seg.label}
-                </a>
-              ) : (
-                <span key={seg.text}>{seg.text}</span>
-              ),
-            )}
-          </p>
-        </BodyContainer>
-        <BodyContainer style={{ animationDelay: "0.18s" }}>
-          <span>Technologies</span>
-          <Technologies showIcons />
-        </BodyContainer>
-      </CardsStack>
-      <CallToActionContainer>
-        <CallToAction
-          onClick={() => {
-            void playButtonClick();
-            scrollToSection(SECTION_IDS.PROJECTS);
-          }}
-        >
-          {copy.presentation.seeProjects}
-        </CallToAction>
-        <CallToAction
-          intent="secondary"
-          onClick={() => {
-            void playButtonClick();
-            scrollToContact();
-          }}
-        >
-          {copy.presentation.contactMe}
-        </CallToAction>
-      </CallToActionContainer>
-    </div>
+    <Hero>
+      <Sky until={bioRef} />
+      <Top>
+        <span>{copy.presentation.role}</span>
+        <ParisTime />
+      </Top>
+      <Bio ref={bioRef}>
+        {bioParagraph.map((segment) => {
+          if ("text" in segment) return <span key={segment.text}>{segment.text}</span>;
+
+          if ("section" in segment) {
+            return (
+              <a
+                key={segment.section}
+                href={`#${segment.section}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection(segment.section);
+                }}
+              >
+                {segment.label}
+              </a>
+            );
+          }
+
+          return (
+            <a key={segment.href} href={segment.href} target="_blank" rel="noreferrer">
+              {segment.label}
+              <ArrowUpRightIcon size="0.7em" strokeWidth={2.5} aria-hidden />
+            </a>
+          );
+        })}
+      </Bio>
+      <NameBox>
+        <Name>
+          <span>Axel</span> <span>Zareb</span>
+        </Name>
+      </NameBox>
+    </Hero>
   );
 };
 

@@ -6,23 +6,7 @@ export const QUERY_KEYS = {
   portfolioResponse: "portfolio-response",
   randomTrack: "random-track",
   projectStats: "project-stats",
-  githubUser: "github-user",
 };
-
-export interface GithubUser {
-  avatar_url: string;
-  name: string;
-}
-
-export async function fetchGithubData(username: string): Promise<GithubUser> {
-  const response = await fetch(`https://api.github.com/users/${username}`);
-
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-
-  return (await response.json()) as GithubUser;
-}
 
 export interface RandomTrack {
   uri: string;
@@ -65,17 +49,6 @@ interface PortfolioTool {
   link: string;
 }
 
-export interface PortfolioItem {
-  name: string;
-  link: string;
-  description: string;
-  repoLink?: string;
-}
-
-export interface PortfolioHost extends PortfolioItem {
-  subdomains?: PortfolioItem[];
-}
-
 export interface DockApp {
   name: string;
   image: string;
@@ -99,9 +72,7 @@ interface PortfolioFeatures {
 }
 
 export interface PortfolioResponse {
-  age?: number;
   features?: PortfolioFeatures;
-  hosts?: PortfolioHost[];
   tools?: PortfolioTool[];
   dock?: DockApp[];
   freelance?: FreelanceWork[];

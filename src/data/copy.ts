@@ -1,63 +1,60 @@
 export const copy = {
   presentation: {
-    title: "software engineer",
-    about: "About me",
-    others: "others",
-    less: "Show less",
-    enjoyedRecently: "Tools I enjoyed using recently",
-    seeProjects: "See my projects",
-    contactMe: "Contact me",
+    role: "Software engineer",
   },
   navbar: {
     switchTheme: "Switch theme",
-    presentation: "Home",
-    projects: "Projects",
-    freelance: "Freelance",
-    about: "About",
-  },
-  projects: {
-    title: "Some projects",
-    card: {
-      website: "Visit website",
-      source: "See on GitHub",
-    },
-    moreProjectsOn: "More projects on",
   },
   freelance: {
     title: "Freelance",
     pitch:
       "I build websites, apps and tools for small teams. You talk directly to the person writing the code.",
-    getInTouch: "Get in touch",
-    next: "Next",
-    yourProject: "Your project",
-    yourProjectDescription: "A small website, an app, a tool. Tell me what you need.",
+    yourProject: "Your project?",
+    yourProjectDescription:
+      "A small website, an app, a tool. I take on a few projects on evenings and weekends.",
   },
-  about: {
-    title: "More about me",
-    domains: "A few domains I host",
-    appsInDock: "Cool apps in my dock",
+  projects: {
+    title: "Projects",
+    visit: "Visit website",
+    source: "See on GitHub",
+    more: "More projects on GitHub",
+    moreDescription: "Smaller tools and experiments.",
+  },
+  garden: {
+    title: "Garden",
+    pitch: "Music, tools and apps I'm enjoying right now.",
+    song: "Random song from my playlist",
+    tools: "Tools I enjoyed recently",
+    builtWith: "What I usually build with",
+    dock: "Cool apps in my dock",
+    play: "Play",
+    pause: "Pause",
+    anotherSong: "Another one",
+    songError: "Could not load a song. Please try again.",
+    playError: "Could not play this preview.",
   },
   contact: {
-    currently: "it is",
-    forMe: "local time",
-    randomSong: "Random song from my playlist",
-    getRandomSong: "Get a random song",
+    navLabel: "Contact",
+    title: "Got a project?",
+    pitch: "A small website, an app, a tool. Tell me what you need.",
     copyEmail: "Copy email address",
     copied: "Copied",
-    errorFetchTrack: "Failed to load track. Please try again.",
-  },
-  footer: {
-    createdBy: "Created by",
+    elsewhere: "Elsewhere",
     views: "views",
   },
 } as const;
 
-type Segment = { text: string } | { label: string; href: string };
+type Segment =
+  | { text: string }
+  | { label: string; section: string }
+  | { label: string; href: string };
 
 export const bioParagraph: Segment[] = [
-  { text: "Software engineer at " },
-  { label: "SNCF Connect & Tech", href: "https://www.sncf-connect-tech.fr/" },
-  { text: ". I also build my own web and mobile apps, and take on " },
-  { label: "freelance projects", href: "#freelance" },
-  { text: "." },
+  { text: "I work at " },
+  { label: "SNCF Connect & Tech", href: "https://www.sncf-connect-tech.fr/en/" },
+  { text: ". On the side I build " },
+  { label: "my own apps", section: "projects" },
+  { text: " and " },
+  { label: "freelance", section: "freelance" },
+  { text: " for small teams." },
 ];

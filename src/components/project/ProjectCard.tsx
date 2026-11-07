@@ -1,59 +1,98 @@
+import { ArrowUpRightIcon } from "lucide-react";
 import { styled } from "styled-system/jsx";
 
-import { getTechnologyLabel, type Project } from "../../data/portfolio";
-import { Surface } from "../ui/shared";
-import ProjectDescription from "./ProjectDescription";
-import ProjectLinks from "./ProjectLinks";
-import ProjectThumbnail from "./ProjectThumbnail";
+import type { Project } from "../../data/portfolio";
 
-const Card = styled(Surface, {
+import { copy } from "../../data/copy";
+import { Card, CardBody, CardDescription, CardMedia, CardTitle, ExternalLink } from "../ui/shared";
+import ProjectStats from "./ProjectStats";
+
+const Thumbnail = styled("img", {
   base: {
-    padding: "1.25rem",
-    maxWidth: "480px",
-    wordBreak: "break-word",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
     width: "100%",
-    lg: { maxWidth: "unset", padding: "1.5rem" },
+    height: "100%",
+    objectFit: "cover",
+    transition: "transform 500ms var(--ease-out)",
+    "@media (prefers-reduced-motion: reduce)": { transition: "none" },
   },
 });
 
-const ProjectName = styled("h3", {
+/** The title link covers the whole card; the card reacts to it through :has. */
+const HoverCard = styled(Card, {
   base: {
-    fontFamily: "var(--font-title)",
-    fontWeight: 700,
-    fontSize: "1.25rem",
-    margin: "1rem 0 0.3rem 0",
+    _canHover: {
+      "&:has(a[data-card-link]:hover) img": { transform: "scale(1.03)" },
+      "&:has(a[data-card-link]:hover) [data-visit] svg": { transform: "translate(2px, -2px)" },
+    },
   },
 });
 
-const TechStack = styled("p", {
+const CardLink = styled("a", {
   base: {
-    marginTop: "0.5rem",
-    marginBottom: "0.25rem",
-    color: "var(--text-secondary)",
-    fontSize: "0.9rem",
+    color: "inherit",
+    textDecoration: "none",
+    _after: { content: '""', position: "absolute", inset: 0 },
+  },
+});
+
+const Visit = styled("span", {
+  base: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "0.25rem",
     fontWeight: 500,
+    textDecoration: "underline",
+    textDecorationColor: "var(--border-color)",
+    textDecorationThickness: "1px",
+    textUnderlineOffset: "0.2em",
+    "& svg": {
+      transition: "transform 250ms var(--ease-out)",
+      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+    },
   },
 });
 
-const ProjectCard = ({ project }: { project: Project }) => {
-  const { name, techs, description } = project;
-  let { image } = project;
-  if (!image) image = "placeholder.jpeg";
-  const techLabels = techs.map(getTechnologyLabel);
+const SourceLink = styled(ExternalLink, {
+  base: { position: "relative", zIndex: 1 },
+});
+
+interface ProjectCardProps {
+  project: Project;
+  size?: "compact";
+}
+
+const ProjectCard = ({ project, size }: ProjectCardProps) => {
+  const { name, image, description, links, stats } = project;
 
   return (
-    <Card>
-      <div>
-        <ProjectThumbnail image={image} name={name} links={project.links} />
-        <ProjectName>{name}</ProjectName>
-        <ProjectDescription description={description} stats={project.stats} />
-        <TechStack>{techLabels.join(" · ")}</TechStack>
-      </div>
-      <ProjectLinks links={project.links} />
-    </Card>
+    <HoverCard>
+      <CardMedia>
+        <Thumbnail src={`/img/${image}`} alt="" loading="lazy" />
+      </CardMedia>
+      <CardBody>
+        <CardTitle size={size}>
+          <CardLink
+            data-card-link
+            href={links.url ?? links.source}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {name}
+          </CardLink>
+        </CardTitle>
+        <CardDescription size={size}>{description}</CardDescription>
+        {stats && <ProjectStats stats={stats} />}
+        {!size && (
+          <Visit data-visit aria-hidden>
+            {copy.projects.visit}
+            <ArrowUpRightIcon size={14} strokeWidth={2.25} />
+          </Visit>
+        )}
+        {links.source && links.url && (
+          <SourceLink href={links.source}>{copy.projects.source}</SourceLink>
+        )}
+      </CardBody>
+    </HoverCard>
   );
 };
 

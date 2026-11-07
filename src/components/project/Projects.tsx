@@ -1,43 +1,41 @@
-import { styled } from "styled-system/jsx";
-
 import { copy } from "../../data/copy";
 import { portfolioData } from "../../data/portfolio";
 import { GITHUB_USERNAME } from "../../utils/fetch";
-import { ExternalLink, LinkRow, SectionTitle } from "../ui/shared";
+import Cta from "../ui/Cta";
+import { CardGrid, SectionHead, SectionTitle } from "../ui/shared";
 import ProjectCard from "./ProjectCard";
 
-const Grid = styled("div", {
-  base: {
-    display: "grid",
-    gridTemplateColumns: "repeat(1, minmax(0, 1fr))",
-    gap: "1.5rem",
-    justifyItems: "center",
-    md: {
-      gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    },
-  },
-});
+const FEATURED_COUNT = 2;
+const featured = portfolioData.projects.slice(0, FEATURED_COUNT);
+const others = portfolioData.projects.slice(FEATURED_COUNT);
 
-const MoreProjects = styled(LinkRow, {
-  base: { justifyContent: "center", marginTop: "1rem" },
-});
-
-const Projects = () => {
-  return (
-    <>
+const Projects = () => (
+  <>
+    <SectionHead>
       <SectionTitle>{copy.projects.title}</SectionTitle>
-      <Grid>
-        {portfolioData.projects.map((project) => (
-          <ProjectCard key={project.name} project={project} />
-        ))}
-      </Grid>
-      <MoreProjects>
-        <ExternalLink href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}>
-          {copy.projects.moreProjectsOn} GitHub
-        </ExternalLink>
-      </MoreProjects>
-    </>
-  );
-};
+    </SectionHead>
+
+    <CardGrid>
+      {featured.map((project) => (
+        <ProjectCard key={project.name} project={project} />
+      ))}
+    </CardGrid>
+
+    <CardGrid size="compact">
+      {others.map((project) => (
+        <ProjectCard key={project.name} project={project} size="compact" />
+      ))}
+    </CardGrid>
+
+    <Cta
+      href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
+      target="_blank"
+      rel="noreferrer"
+      direction="external"
+      title={copy.projects.more}
+      description={copy.projects.moreDescription}
+    />
+  </>
+);
 
 export default Projects;

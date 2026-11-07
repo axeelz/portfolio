@@ -3,50 +3,54 @@ import { styled } from "styled-system/jsx";
 
 import type { Project } from "../../data/portfolio";
 
+import usePlayOnceInView from "../../hooks/usePlayOnceInView";
 import { projectStatsQueryOptions } from "../../utils/fetch";
-
-const numberFormatter = new Intl.NumberFormat("en");
+import RollingNumber, { rollOnPlay } from "../ui/RollingNumber";
 
 const StatsContainer = styled("div", {
   base: {
+    ...rollOnPlay,
     display: "flex",
-    gap: "0.25rem",
-    paddingTop: "0.5rem",
-    paddingBottom: "0.25rem",
     flexWrap: "wrap",
+    gap: "0.25rem 1.75rem",
   },
 });
 
-const Badge = styled("span", {
+const Stat = styled("div", {
   base: {
-    padding: "0.25em 0.6em",
-    fontSize: "0.85em",
-    fontVariantNumeric: "tabular-nums",
-    border: "1px solid var(--secondary-border-color)",
-    borderRadius: "var(--radius-full)",
-    fontWeight: 600,
-    whiteSpace: "nowrap",
+    display: "flex",
+    alignItems: "baseline",
+    gap: "0.4rem",
+    color: "var(--text-secondary)",
+    fontSize: "0.875rem",
+  },
+});
+
+const Value = styled("b", {
+  base: {
+    color: "var(--text-color)",
+    fontFamily: "var(--font-title)",
+    fontSize: "1.25rem",
+    letterSpacing: "-0.02em",
   },
 });
 
 const ProjectStats = ({ stats }: { stats: NonNullable<Project["stats"]> }) => {
   const { data } = useQuery(projectStatsQueryOptions(stats.endpoint));
+  const containerRef = usePlayOnceInView<HTMLDivElement>(0.1);
 
   return (
-    <StatsContainer>
-      {stats.fields.map((field) => {
-        const label = field.label;
-        let stat: number = field.default;
-        const value = data?.[field.field];
-        if (typeof value === "number") {
-          stat = value;
-        }
-        const formattedStat = numberFormatter.format(stat);
+    <StatsContainer ref={containerRef}>
+      {stats.fields.map(({ field, label, default: fallback }) => {
+        const value = data?.[field];
 
         return (
-          <Badge key={field.field}>
-            {formattedStat} {label}
-          </Badge>
+          <Stat key={field}>
+            <Value>
+              <RollingNumber value={typeof value === "number" ? value : fallback} />
+            </Value>
+            {label}
+          </Stat>
         );
       })}
     </StatsContainer>

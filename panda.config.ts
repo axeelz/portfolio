@@ -25,57 +25,29 @@ export default defineConfig({
         lg: "51.875rem",
       },
       keyframes: {
-        fadeUp: {
-          from: { opacity: 0, transform: "translateY(12px)" },
-          to: { opacity: 1, transform: "translateY(0)" },
+        rise: {
+          from: { opacity: 0, transform: "translateY(22px)" },
+        },
+        nameUp: {
+          from: { opacity: 0, transform: "translateY(14%)" },
         },
         fadeIn: {
-          from: {
-            opacity: 0.1,
-            transform: "translateY(-1rem)",
-          },
-          to: {
-            opacity: 1,
-            transform: "translateY(0)",
-          },
+          from: { opacity: 0 },
         },
-        pulse: {
-          "0%, 100%": { opacity: 1 },
-          "50%": { opacity: 0.5 },
+        recede: {
+          to: { opacity: 0.12, transform: "scale(0.9)" },
         },
-        pileNudge: {
-          "0%, 100%": { translate: "0 0", rotate: "0deg" },
-          "40%": { translate: "52px -4px", rotate: "5deg" },
+        breathe: {
+          "50%": { opacity: 0.3 },
         },
-        nameShine: {
-          from: { backgroundPosition: "100% 0" },
-          to: { backgroundPosition: "0% 0" },
+        spin: {
+          to: { transform: "rotate(360deg)" },
         },
-        contactSpotlight: {
-          "0%": { transform: "scale(0.96)", boxShadow: "0 0 0 10px transparent" },
-          "22%": { transform: "scale(1.045)", boxShadow: "0 0 0 2px var(--text-color)" },
-          "70%": { transform: "scale(1)", boxShadow: "0 0 0 2px var(--text-color)" },
-          "100%": { transform: "scale(1)", boxShadow: "0 0 0 2px transparent" },
+        coverIn: {
+          from: { opacity: 0.2, transform: "scale(0.96)" },
         },
-        scaleInSubtle: {
-          from: {
-            transform: "scale(0.95)",
-            opacity: 0,
-          },
-          to: {
-            transform: "scale(1)",
-            opacity: 1,
-          },
-        },
-        scaleOutSubtle: {
-          from: {
-            transform: "scale(1)",
-            opacity: 1,
-          },
-          to: {
-            transform: "scale(0.95)",
-            opacity: 0,
-          },
+        roll: {
+          from: { transform: "translateY(0)" },
         },
       },
     },

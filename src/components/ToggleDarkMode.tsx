@@ -1,27 +1,45 @@
-import { MoonIcon, SunIcon, MonitorIcon } from "lucide-react";
+import { ContrastIcon } from "lucide-react";
+import { useRef } from "react";
+import { styled } from "styled-system/jsx";
 
-import { IconBtn } from "../components/ui/shared";
 import { copy } from "../data/copy";
 import useKeyPress from "../hooks/useKeyPress";
 import { useTheme } from "../hooks/useTheme";
 import { playThemeSwitch } from "../utils/sounds";
+import { IconBtn } from "./ui/shared";
+import { TooltipHost, TooltipLabel } from "./ui/Tooltip";
+
+const Kbd = styled("kbd", {
+  base: {
+    padding: "0 0.35em",
+    borderRadius: "var(--radius-xs)",
+    backgroundColor: "var(--soft-color)",
+    color: "var(--text-secondary)",
+    fontFamily: "inherit",
+  },
+});
 
 const ToggleDarkMode = () => {
-  const { isDark, isOverriding, toggle } = useTheme();
+  const { toggle } = useTheme();
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleToggle = () => {
     void playThemeSwitch();
-    toggle();
+    toggle(buttonRef.current);
   };
 
   useKeyPress("m", handleToggle);
 
-  const icon = isOverriding ? isDark ? <MoonIcon /> : <SunIcon /> : <MonitorIcon />;
-
   return (
-    <IconBtn aria-label={copy.navbar.switchTheme} onClick={handleToggle}>
-      {icon}
-    </IconBtn>
+    <TooltipHost>
+      <IconBtn ref={buttonRef} aria-label={copy.navbar.switchTheme} onClick={handleToggle}>
+        <ContrastIcon size={18} aria-hidden />
+      </IconBtn>
+      <TooltipLabel>
+        {copy.navbar.switchTheme}
+        <Kbd>M</Kbd>
+      </TooltipLabel>
+    </TooltipHost>
   );
 };
 

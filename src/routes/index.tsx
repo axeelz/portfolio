@@ -1,40 +1,33 @@
-import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { createFileRoute } from "@tanstack/react-router";
-import { Toaster } from "sonner";
 import { styled } from "styled-system/jsx";
 
-import About from "../components/About";
-import Footer from "../components/Footer";
+import Contact from "../components/Contact";
 import Freelance from "../components/freelance/Freelance";
-import Navbar from "../components/Navbar";
+import Garden from "../components/Garden";
 import Presentation from "../components/Presentation";
 import Projects from "../components/project/Projects";
 import SegmentedNav from "../components/SegmentedNav";
-import { squircle } from "../components/ui/shared";
 import { portfolioData } from "../data/portfolio";
 import { SECTION_IDS } from "../data/sections";
 import usePortfolioResponse, { portfolioQueryOptions } from "../hooks/usePortfolioResponse";
 import { projectStatsQueryOptions } from "../utils/fetch";
 
-const Section = styled("section", {
+const WorkSheet = styled("div", {
   base: {
-    padding: "2rem",
-    ...squircle("lg"),
-    backgroundColor: "var(--section-background-color)",
-    boxShadow: "inset 0 0 0 1px var(--section-outline)",
-    marginBottom: "2rem",
-    scrollMarginTop: "1rem",
-    mdDown: { padding: "2rem 1rem" },
+    position: "relative",
+    zIndex: 1,
+    display: "grid",
+    gap: "clamp(4.5rem, 8vw, 7rem)",
+    padding:
+      "var(--sheet-padding) var(--gutter) calc(clamp(4.5rem, 8vw, 7rem) + var(--sheet-radius))",
+    borderRadius: "var(--sheet-radius) var(--sheet-radius) 0 0",
+    backgroundColor: "var(--sheet-color)",
+    boxShadow: "0 -1px 0 var(--border-color)",
   },
-  variants: {
-    section: {
-      projects: {
-        "@media (prefers-reduced-motion: no-preference)": {
-          animation: "fadeUp 0.5s ease-out both",
-        },
-      },
-    },
-  },
+});
+
+const Section = styled("section", {
+  base: { minWidth: 0, scrollMarginTop: "var(--sheet-padding)" },
 });
 
 export const Route = createFileRoute("/")({
@@ -55,25 +48,21 @@ function Home() {
   const { data } = usePortfolioResponse();
 
   return (
-    <TooltipProvider>
-      <Navbar />
+    <>
+      <Presentation />
       <main>
-        <Section id={SECTION_IDS.PRESENTATION}>
-          <Presentation />
-        </Section>
-        <Section id={SECTION_IDS.PROJECTS} section="projects">
-          <Projects />
-        </Section>
-        <Section id={SECTION_IDS.FREELANCE}>
-          <Freelance clients={data?.freelance ?? []} />
-        </Section>
-        <Section id={SECTION_IDS.ABOUT}>
-          <About />
-        </Section>
+        <WorkSheet>
+          <Section id={SECTION_IDS.FREELANCE} tabIndex={-1}>
+            <Freelance clients={data?.freelance ?? []} />
+          </Section>
+          <Section id={SECTION_IDS.PROJECTS} tabIndex={-1}>
+            <Projects />
+          </Section>
+        </WorkSheet>
+        <Garden />
+        <Contact />
       </main>
-      <Footer />
       <SegmentedNav />
-      <Toaster />
-    </TooltipProvider>
+    </>
   );
 }

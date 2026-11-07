@@ -9,23 +9,48 @@ const getStoredTheme = () => localStorage.getItem(THEME_STORAGE_KEY);
 
 const getThemeState = () => resolveThemeState(getStoredTheme(), getSystemDark());
 
-const getThemeSnapshot = () => {
-  const { isDark, isOverriding } = getThemeState();
-  return `${isDark ? "dark" : "light"}:${isOverriding ? "override" : "system"}`;
-};
-
-const getServerThemeSnapshot = () => "light:system";
+const getIsOverriding = () => getThemeState().isOverriding;
+const getServerIsOverriding = () => false;
 
 const notifyThemeChange = () => window.dispatchEvent(new Event("themechange"));
 
 const applyTheme = (isDark: boolean) => applyThemeToDocument(document, isDark);
 
-const applyThemeWithTransition = (isDark: boolean) => {
-  if (!document.startViewTransition) {
+/** Reveals the new theme as a circle growing from the toggle. */
+const applyThemeWithTransition = (isDark: boolean, origin: Element | null) => {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!document.startViewTransition || !origin || reduced) {
     applyTheme(isDark);
     return;
   }
-  document.startViewTransition(() => applyTheme(isDark));
+
+  const { x, y, width, height } = origin.getBoundingClientRect();
+  const centerX = x + width / 2;
+  const centerY = y + height / 2;
+  const radius = Math.hypot(
+    Math.max(centerX, window.innerWidth - centerX),
+    Math.max(centerY, window.innerHeight - centerY),
+  );
+
+  void document
+    .startViewTransition(() => applyTheme(isDark))
+    .ready.then(() =>
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0 at ${centerX}px ${centerY}px)`,
+            `circle(${radius}px at ${centerX}px ${centerY}px)`,
+          ],
+        },
+        {
+          duration: 550,
+          easing: "cubic-bezier(0.3, 0.7, 0.2, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      ),
+    )
+    // A newer toggle skips this transition, which rejects `ready`.
+    .catch(() => undefined);
 };
 
 const subscribeTheme = (callback: () => void) => {
@@ -49,12 +74,9 @@ const subscribeTheme = (callback: () => void) => {
 
 export const useTheme = () => {
   "use no memo";
-  const snapshot = useSyncExternalStore(subscribeTheme, getThemeSnapshot, getServerThemeSnapshot);
-  const [theme, source] = snapshot.split(":");
-  const isDark = theme === "dark";
-  const isOverriding = source === "override";
+  const isOverriding = useSyncExternalStore(subscribeTheme, getIsOverriding, getServerIsOverriding);
 
-  const toggle = () => {
+  const toggle = (origin: Element | null) => {
     const nextOverriding = !isOverriding;
     const nextDark = nextOverriding ? !getSystemDark() : getSystemDark();
     if (nextOverriding) {
@@ -62,9 +84,9 @@ export const useTheme = () => {
     } else {
       localStorage.removeItem(THEME_STORAGE_KEY);
     }
-    applyThemeWithTransition(nextDark);
+    applyThemeWithTransition(nextDark, origin);
     notifyThemeChange();
   };
 
-  return { isDark, isOverriding, toggle };
+  return { toggle };
 };

@@ -1,108 +1,99 @@
-import { useState, useEffect, useRef } from "react";
+import type { MouseEvent } from "react";
+
+import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
 import type { DockApp } from "../../utils/fetch";
 
-import { squircle } from "../ui/shared";
-import { Tooltip } from "../ui/Tooltip";
+import { playButtonClick } from "../../utils/sounds";
+import { TooltipLabel, tooltipHost, tooltipVisible } from "../ui/Tooltip";
 
 const Dock = styled("div", {
   base: {
+    "--icon": "clamp(36px, 5.2vw, 68px)",
     display: "flex",
-    gap: "0.5rem",
-    padding: "0.5rem",
-    ...squircle("md"),
+    alignItems: "flex-end",
+    gap: "7px",
+    width: "fit-content",
     maxWidth: "100%",
-    background: "var(--dock-background)",
-    border: "1px solid var(--dock-border)",
-    boxShadow: "var(--dock-shadow)",
-    flexWrap: "nowrap",
-    overflowX: "auto",
-    overscrollBehaviorX: "contain",
-    scrollbarWidth: "none",
-    "&::-webkit-scrollbar": { display: "none" },
-    justifyContent: "safe center",
-    mdDown: { gap: "0.4rem" },
-  },
-});
-
-const DockInfoItem = styled("div", {
-  base: {
-    width: "56px",
-    height: "56px",
-    flexShrink: 0,
-    transformOrigin: "bottom",
-    transition: "transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)",
-    cursor: "pointer",
-    userSelect: "none",
-    _canHover: { _hover: { transform: "translateY(-4px) scale(1.08)" } },
-    _active: {
-      transform: "translateY(-2px) scale(1.04)",
-      transition: "transform 100ms ease",
-    },
+    padding: "12px",
+    borderRadius: "calc(var(--icon) * 0.42)",
+    backgroundColor: "var(--soft-color)",
     mdDown: {
-      width: "48px",
-      height: "48px",
+      "--icon": "clamp(30px, 9.4vw, 48px)",
+      gap: "4px",
+      padding: "8px",
     },
   },
 });
 
-const DockImage = styled("img", {
-  base: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    pointerEvents: "none",
-  },
+const App = styled("button", {
+  base: css.raw(tooltipHost, {
+    flexShrink: 1,
+    minWidth: 0,
+    width: "var(--icon)",
+    padding: 0,
+    border: "none",
+    borderRadius: "22%",
+    background: "none",
+    color: "inherit",
+    cursor: "default",
+    font: "inherit",
+    transition: "margin 220ms var(--ease-out)",
+    "@media (prefers-reduced-motion: reduce)": {
+      transition: "none",
+      "& img": { transition: "none" },
+    },
+    "& img": {
+      width: "100%",
+      aspectRatio: "1",
+      objectFit: "contain",
+      transformOrigin: "50% 100%",
+      transition: "scale 220ms var(--ease-out)",
+    },
+    "@media (hover: none)": { "&:hover > [data-tooltip]": tooltipVisible },
+    _canHover: {
+      _hover: {
+        marginInline: "calc(var(--icon) * 0.16)",
+        "& img": { scale: 1.38 },
+        "& > [data-tooltip]": { translate: "-50% calc(var(--icon) * -0.38)" },
+      },
+      "&:has(+ button:hover)": {
+        marginInline: "calc(var(--icon) * 0.06)",
+        "& img": { scale: 1.16 },
+      },
+      "button:hover + &": {
+        marginInline: "calc(var(--icon) * 0.06)",
+        "& img": { scale: 1.16 },
+      },
+    },
+  }),
 });
 
-const DockWidget = ({ items }: { items?: DockApp[] }) => {
-  const [openTooltip, setOpenTooltip] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleToggleTooltip = (appName: string) => {
-    setOpenTooltip((current) => (current === appName ? null : appName));
-  };
-
-  useEffect(() => {
-    if (!openTooltip) return;
-
-    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (event.target instanceof Node && !containerRef.current?.contains(event.target)) {
-        setOpenTooltip(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside, {
-      passive: true,
-    });
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("touchstart", handleClickOutside);
-    };
-  }, [openTooltip]);
-
-  return (
-    <Dock ref={containerRef}>
-      {items?.map((app) => (
-        <Tooltip
-          portal
-          key={app.name}
-          content={app.name}
-          side="top"
-          sideOffset={12}
-          open={openTooltip === app.name}
-          onOpenChange={(isOpen) => setOpenTooltip(isOpen ? app.name : null)}
-        >
-          <DockInfoItem onTouchStart={() => handleToggleTooltip(app.name)}>
-            <DockImage src={app.image} alt={app.name} loading="lazy" />
-          </DockInfoItem>
-        </Tooltip>
-      ))}
-    </Dock>
+const bounce = ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
+  void playButtonClick();
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  currentTarget.animate(
+    [
+      { transform: "none" },
+      { transform: "translateY(-34%)", offset: 0.3 },
+      { transform: "none", offset: 0.6 },
+      { transform: "translateY(-10%)", offset: 0.78 },
+      { transform: "none" },
+    ],
+    { duration: 600, easing: "ease-out" },
   );
 };
+
+const DockWidget = ({ items }: { items: DockApp[] }) => (
+  <Dock>
+    {items.map((app) => (
+      <App key={app.name} type="button" onClick={bounce}>
+        <img src={app.image} alt={app.name} loading="lazy" />
+        <TooltipLabel>{app.name}</TooltipLabel>
+      </App>
+    ))}
+  </Dock>
+);
 
 export default DockWidget;
