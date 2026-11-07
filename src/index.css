@@ -47,10 +47,10 @@
   --contact-border: rgba(255, 255, 255, 0.14);
 
   /* Accents */
-  --grade-a: #12a565;
-  --grade-c: #dfbd00;
-  --grade-d: #f08c00;
-  --grade-e: #e5282d;
+  --grade-a: #6f9a72;
+  --grade-c: #c9b06a;
+  --grade-d: #d1915e;
+  --grade-e: #b9614f;
 
   /* Shape */
   --radius-xs: 4px;
@@ -103,10 +103,10 @@
   --contact-border: rgba(0, 0, 60, 0.12);
 
   /* Accents */
-  --grade-a: #25c47f;
-  --grade-c: #f5d90a;
-  --grade-d: #f7a21b;
-  --grade-e: #f0443f;
+  --grade-a: #86b489;
+  --grade-c: #d8c07c;
+  --grade-d: #dea172;
+  --grade-e: #cc7564;
 }
 
 /* Theme reveal: useTheme.ts animates the new snapshot as a circle from the toggle. */

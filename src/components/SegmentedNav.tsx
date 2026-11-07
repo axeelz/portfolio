@@ -44,8 +44,9 @@ const NavList = styled("ul", {
   },
 });
 
+// Flex, not a line box: the theme button holds only absolute icons, so it has no text baseline.
 const NavItem = styled("li", {
-  base: { position: "relative", zIndex: 1 },
+  base: { position: "relative", zIndex: 1, display: "flex" },
 });
 
 const NavLink = styled("a", {
