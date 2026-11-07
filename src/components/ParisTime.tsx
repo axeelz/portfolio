@@ -31,14 +31,11 @@ const ParisTime = () => {
   );
 
   return (
-    <span>
-      <Time>
-        {hours}
-        <Colon>:</Colon>
-        {minutes}
-      </Time>{" "}
-      in Paris
-    </span>
+    <Time>
+      {hours}
+      <Colon>:</Colon>
+      {minutes}
+    </Time>
   );
 };
 

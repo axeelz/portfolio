@@ -1,6 +1,6 @@
 export const copy = {
   presentation: {
-    role: "Software engineer",
+    location: "Paris, France",
   },
   navbar: {
     switchTheme: "Switch theme",
@@ -50,9 +50,9 @@ type Segment =
   | { label: string; href: string };
 
 export const bioParagraph: Segment[] = [
-  { text: "I work at " },
+  { text: "I'm a software engineer at " },
   { label: "SNCF Connect & Tech", href: "https://www.sncf-connect-tech.fr/en/" },
-  { text: ". On the side I build " },
+  { text: " and on the side I build " },
   { label: "my own apps", section: "projects" },
   { text: " and " },
   { label: "freelance", section: "freelance" },

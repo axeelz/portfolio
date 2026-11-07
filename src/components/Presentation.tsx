@@ -101,7 +101,7 @@ const Presentation = () => {
     <Hero>
       <Sky until={bioRef} />
       <Top>
-        <span>{copy.presentation.role}</span>
+        <span>{copy.presentation.location}</span>
         <ParisTime />
       </Top>
       <Bio ref={bioRef}>

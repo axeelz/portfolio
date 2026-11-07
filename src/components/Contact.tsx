@@ -172,7 +172,9 @@ const Contact = () => {
       </Links>
 
       <Colophon>
-        <ParisTime />
+        <span>
+          <ParisTime /> in Paris
+        </span>
         <ViewCount />
       </Colophon>
     </Sheet>
