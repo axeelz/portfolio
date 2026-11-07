@@ -4,8 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-system/jsx";
 
 import { copy } from "../../data/copy";
-import usePortfolioResponse from "../../hooks/usePortfolioResponse";
-import { fetchRandomTrack, QUERY_KEYS, type RandomTrack } from "../../utils/fetch";
+import { fetchRandomTrack, portfolioQueryOptions, QUERY_KEYS } from "../../utils/fetch";
 import { playButtonClick } from "../../utils/sounds";
 import { Block, BlockLabel } from "../ui/shared";
 
@@ -213,7 +212,7 @@ const MusicWidget = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
   const wasPlayingRef = useRef(false);
-  const { data: portfolioResponse } = usePortfolioResponse();
+  const { data: portfolioResponse } = useQuery(portfolioQueryOptions);
   const isFeatureEnabled = portfolioResponse?.features?.musicWidget ?? false;
 
   const {
@@ -221,7 +220,7 @@ const MusicWidget = () => {
     refetch,
     isFetching,
     error,
-  } = useQuery<RandomTrack, Error>({
+  } = useQuery({
     queryKey: [QUERY_KEYS.randomTrack],
     enabled: false,
     retry: false,

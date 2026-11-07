@@ -55,11 +55,10 @@ const applyThemeWithTransition = (isDark: boolean, origin: Element | null) => {
 
 const subscribeTheme = (callback: () => void) => {
   const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  // A new system theme wins over an override, which only ever means "the other one".
   const syncTheme = () => {
-    const { isDark, isOverriding } = getThemeState();
-    if (!isOverriding) {
-      applyTheme(isDark);
-    }
+    localStorage.removeItem(THEME_STORAGE_KEY);
+    applyTheme(getSystemDark());
     callback();
   };
 

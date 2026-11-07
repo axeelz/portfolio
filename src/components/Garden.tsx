@@ -1,9 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
 import { styled } from "styled-system/jsx";
 
 import { copy } from "../data/copy";
 import { portfolioData } from "../data/portfolio";
 import { SECTION_IDS } from "../data/sections";
-import usePortfolioResponse from "../hooks/usePortfolioResponse";
+import { portfolioQueryOptions } from "../utils/fetch";
 import {
   Block,
   BlockLabel,
@@ -86,7 +87,7 @@ const DockBlock = styled(Block, {
 });
 
 const Garden = () => {
-  const { data } = usePortfolioResponse();
+  const { data } = useQuery(portfolioQueryOptions);
   const tools = data?.tools ?? [];
   const dockItems = data?.dock ?? [];
 

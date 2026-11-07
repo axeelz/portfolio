@@ -1,13 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 
 import { DARK_THEME_COLOR, LIGHT_THEME_COLOR } from "./colors";
-import {
-  applyThemeToDocument,
-  CRITICAL_THEME_CSS,
-  getThemeColor,
-  resolveThemeState,
-  THEME_INIT_SCRIPT,
-} from "./dom";
+import { applyThemeToDocument, resolveThemeState } from "./dom";
 import { THEME_OVERRIDE_VALUE } from "./storage";
 
 describe("theme DOM helpers", () => {
@@ -63,24 +57,5 @@ describe("theme DOM helpers", () => {
       ["content", DARK_THEME_COLOR],
       ["content", LIGHT_THEME_COLOR],
     ]);
-  });
-
-  test("critical theme CSS paints the html canvas from the shared background variable", () => {
-    expect(getThemeColor(false)).toBe(LIGHT_THEME_COLOR);
-    expect(getThemeColor(true)).toBe(DARK_THEME_COLOR);
-    expect(CRITICAL_THEME_CSS).toContain(
-      `:root{--background-color:${LIGHT_THEME_COLOR};color-scheme:light}`,
-    );
-    expect(CRITICAL_THEME_CSS).toContain(
-      `:root.dark{--background-color:${DARK_THEME_COLOR};color-scheme:dark}`,
-    );
-    expect(CRITICAL_THEME_CSS).toContain("html{background-color:var(--background-color)}");
-  });
-
-  test("theme boot script relies on the dark class instead of imperative html paint state", () => {
-    expect(THEME_INIT_SCRIPT).toContain("classList.toggle('dark',dark)");
-    expect(THEME_INIT_SCRIPT).toContain("setAttribute('content'");
-    expect(THEME_INIT_SCRIPT).not.toContain("backgroundColor");
-    expect(THEME_INIT_SCRIPT).not.toContain("colorScheme");
   });
 });

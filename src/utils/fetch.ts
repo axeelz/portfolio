@@ -88,6 +88,12 @@ export async function fetchPortfolioResponse(): Promise<PortfolioResponse> {
   return (await response.json()) as PortfolioResponse;
 }
 
+export const portfolioQueryOptions = queryOptions({
+  queryKey: [QUERY_KEYS.portfolioResponse],
+  queryFn: fetchPortfolioResponse,
+  retry: false,
+});
+
 export async function incrementViewCount(): Promise<number | null> {
   try {
     const response = await fetch("https://static.axlz.me/api/portfolio/views", {

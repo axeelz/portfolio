@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { styled } from "styled-system/jsx";
 
@@ -9,8 +10,7 @@ import Projects from "../components/project/Projects";
 import SegmentedNav from "../components/SegmentedNav";
 import { portfolioData } from "../data/portfolio";
 import { SECTION_IDS } from "../data/sections";
-import usePortfolioResponse, { portfolioQueryOptions } from "../hooks/usePortfolioResponse";
-import { projectStatsQueryOptions } from "../utils/fetch";
+import { portfolioQueryOptions, projectStatsQueryOptions } from "../utils/fetch";
 
 const WorkSheet = styled("div", {
   base: {
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { data } = usePortfolioResponse();
+  const { data } = useQuery(portfolioQueryOptions);
 
   return (
     <>
