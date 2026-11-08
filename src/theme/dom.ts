@@ -16,9 +16,10 @@ export const resolveThemeState = (storedTheme: string | null, systemDark: boolea
 
 export const applyThemeToDocument = (
   doc: Pick<Document, "documentElement" | "querySelector">,
-  isDark: boolean,
+  { isDark, isOverriding }: ReturnType<typeof resolveThemeState>,
 ) => {
   doc.documentElement.classList.toggle("dark", isDark);
+  doc.documentElement.classList.toggle("theme-override", isOverriding);
   doc
     .querySelector<HTMLMetaElement>(THEME_META_SELECTOR)
     ?.setAttribute("content", getThemeColor(isDark));
@@ -26,4 +27,4 @@ export const applyThemeToDocument = (
 
 export const CRITICAL_THEME_CSS = `:root{--background-color:${LIGHT_THEME_COLOR};color-scheme:light}:root.dark{--background-color:${DARK_THEME_COLOR};color-scheme:dark}html{background-color:var(--background-color)}`;
 
-export const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem('${THEME_STORAGE_KEY}');var d=matchMedia('(prefers-color-scheme: dark)').matches;var dark=s==='${THEME_OVERRIDE_VALUE}'?!d:d;var r=document.documentElement;var m=document.querySelector('${THEME_META_SELECTOR}');r.classList.toggle('dark',dark);if(m)m.setAttribute('content',dark?'${DARK_THEME_COLOR}':'${LIGHT_THEME_COLOR}');}catch(e){}})();history.scrollRestoration='manual';`;
+export const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem('${THEME_STORAGE_KEY}');var d=matchMedia('(prefers-color-scheme: dark)').matches;var dark=s==='${THEME_OVERRIDE_VALUE}'?!d:d;var r=document.documentElement;var m=document.querySelector('${THEME_META_SELECTOR}');r.classList.toggle('dark',dark);r.classList.toggle('theme-override',s==='${THEME_OVERRIDE_VALUE}');if(m)m.setAttribute('content',dark?'${DARK_THEME_COLOR}':'${LIGHT_THEME_COLOR}');}catch(e){}})();history.scrollRestoration='manual';`;

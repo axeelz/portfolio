@@ -3,7 +3,7 @@ export const copy = {
     location: "Paris, France",
   },
   navbar: {
-    switchTheme: "Switch theme",
+    theme: { dark: "Dark mode", light: "Light mode", system: "System theme" },
   },
   freelance: {
     title: "Freelance",
@@ -52,9 +52,9 @@ type Segment =
 export const bioParagraph: Segment[] = [
   { text: "I'm a software engineer at " },
   { label: "SNCF Connect & Tech", href: "https://www.sncf-connect-tech.fr/en/" },
-  { text: " and on the side I build " },
-  { label: "my own apps", section: "projects" },
-  { text: " and " },
+  { text: " and on the side I " },
   { label: "freelance", section: "freelance" },
-  { text: " for small teams." },
+  { text: " for small teams and build " },
+  { label: "my own apps", section: "projects" },
+  { text: "." },
 ];

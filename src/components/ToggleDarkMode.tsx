@@ -1,4 +1,4 @@
-import { MoonIcon, SunIcon } from "lucide-react";
+import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useRef } from "react";
 import { styled } from "styled-system/jsx";
 
@@ -19,26 +19,30 @@ const Kbd = styled("kbd", {
   },
 });
 
-/** Shows the theme a click leads to: the moon by day, the sun by night. */
+const shownIcon = { opacity: 1, transform: "none" };
+
+/** Shows what a click leads to: the other theme, or back to the system one. CSS reads the
+ * classes the boot script sets, so the right icon shows before hydration. */
 const ThemeBtn = styled(IconBtn, {
   base: {
     position: "relative",
     overflow: "hidden",
     "& svg": {
       position: "absolute",
+      opacity: 0,
+      transform: "translateY(120%) rotate(90deg)",
       transition: "transform 400ms var(--ease-out), opacity 250ms ease",
       "@media (prefers-reduced-motion: reduce)": { transition: "none" },
     },
-    "& [data-icon=sun]": { opacity: 0, transform: "translateY(120%) rotate(-90deg)" },
-    ".dark &": {
-      "& [data-icon=sun]": { opacity: 1, transform: "none" },
-      "& [data-icon=moon]": { opacity: 0, transform: "translateY(120%) rotate(90deg)" },
-    },
+    ":root:not(.dark, .theme-override) &": { "& [data-icon=moon]": shownIcon },
+    ":root.dark:not(.theme-override) &": { "& [data-icon=sun]": shownIcon },
+    ":root.theme-override &": { "& [data-icon=system]": shownIcon },
   },
 });
 
 const ToggleDarkMode = () => {
-  const { toggle } = useTheme();
+  const { nextTheme, toggle } = useTheme();
+  const label = copy.navbar.theme[nextTheme];
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleToggle = () => {
@@ -50,12 +54,13 @@ const ToggleDarkMode = () => {
 
   return (
     <TooltipHost>
-      <ThemeBtn ref={buttonRef} aria-label={copy.navbar.switchTheme} onClick={handleToggle}>
+      <ThemeBtn ref={buttonRef} aria-label={label} onClick={handleToggle}>
         <MoonIcon data-icon="moon" size={18} aria-hidden />
         <SunIcon data-icon="sun" size={18} aria-hidden />
+        <MonitorIcon data-icon="system" size={18} aria-hidden />
       </ThemeBtn>
       <TooltipLabel>
-        {copy.navbar.switchTheme}
+        {label}
         <Kbd>M</Kbd>
       </TooltipLabel>
     </TooltipHost>

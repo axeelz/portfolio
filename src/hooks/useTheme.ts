@@ -9,18 +9,24 @@ const getStoredTheme = () => localStorage.getItem(THEME_STORAGE_KEY);
 
 const getThemeState = () => resolveThemeState(getStoredTheme(), getSystemDark());
 
-const getIsOverriding = () => getThemeState().isOverriding;
-const getServerIsOverriding = () => false;
+/** What the toggle leads to: the other theme, or back to the system one. */
+const getNextTheme = (): "dark" | "light" | "system" => {
+  const { isDark, isOverriding } = getThemeState();
+  return isOverriding ? "system" : isDark ? "light" : "dark";
+};
+const getServerNextTheme = (): ReturnType<typeof getNextTheme> => "dark";
 
 const notifyThemeChange = () => window.dispatchEvent(new Event("themechange"));
 
-const applyTheme = (isDark: boolean) => applyThemeToDocument(document, isDark);
+type ThemeState = ReturnType<typeof getThemeState>;
+
+const applyTheme = (state: ThemeState) => applyThemeToDocument(document, state);
 
 /** Reveals the new theme as a circle growing from the toggle. */
-const applyThemeWithTransition = (isDark: boolean, origin: Element | null) => {
+const applyThemeWithTransition = (state: ThemeState, origin: Element | null) => {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!document.startViewTransition || !origin || reduced) {
-    applyTheme(isDark);
+    applyTheme(state);
     return;
   }
 
@@ -33,7 +39,7 @@ const applyThemeWithTransition = (isDark: boolean, origin: Element | null) => {
   );
 
   void document
-    .startViewTransition(() => applyTheme(isDark))
+    .startViewTransition(() => applyTheme(state))
     .ready.then(() =>
       document.documentElement.animate(
         {
@@ -58,7 +64,7 @@ const subscribeTheme = (callback: () => void) => {
   // A new system theme wins over an override, which only ever means "the other one".
   const syncTheme = () => {
     localStorage.removeItem(THEME_STORAGE_KEY);
-    applyTheme(getSystemDark());
+    applyTheme({ isDark: getSystemDark(), isOverriding: false });
     callback();
   };
 
@@ -73,19 +79,17 @@ const subscribeTheme = (callback: () => void) => {
 
 export const useTheme = () => {
   "use no memo";
-  const isOverriding = useSyncExternalStore(subscribeTheme, getIsOverriding, getServerIsOverriding);
+  const nextTheme = useSyncExternalStore(subscribeTheme, getNextTheme, getServerNextTheme);
 
   const toggle = (origin: Element | null) => {
-    const nextOverriding = !isOverriding;
-    const nextDark = nextOverriding ? !getSystemDark() : getSystemDark();
-    if (nextOverriding) {
-      localStorage.setItem(THEME_STORAGE_KEY, THEME_OVERRIDE_VALUE);
-    } else {
+    if (getThemeState().isOverriding) {
       localStorage.removeItem(THEME_STORAGE_KEY);
+    } else {
+      localStorage.setItem(THEME_STORAGE_KEY, THEME_OVERRIDE_VALUE);
     }
-    applyThemeWithTransition(nextDark, origin);
+    applyThemeWithTransition(getThemeState(), origin);
     notifyThemeChange();
   };
 
-  return { toggle };
+  return { nextTheme, toggle };
 };

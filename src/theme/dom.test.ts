@@ -18,7 +18,7 @@ describe("theme DOM helpers", () => {
     });
   });
 
-  test("applyThemeToDocument toggles the dark class and syncs theme-color meta", () => {
+  test("applyThemeToDocument toggles the theme classes and syncs theme-color meta", () => {
     const calls = {
       classToggle: [] as [string, boolean][],
       selectors: [] as string[],
@@ -45,12 +45,14 @@ describe("theme DOM helpers", () => {
       },
     } as Pick<Document, "documentElement" | "querySelector">;
 
-    applyThemeToDocument(doc, true);
-    applyThemeToDocument(doc, false);
+    applyThemeToDocument(doc, { isDark: true, isOverriding: true });
+    applyThemeToDocument(doc, { isDark: false, isOverriding: false });
 
     expect(calls.classToggle).toEqual([
       ["dark", true],
+      ["theme-override", true],
       ["dark", false],
+      ["theme-override", false],
     ]);
     expect(calls.selectors).toEqual(['meta[name="theme-color"]', 'meta[name="theme-color"]']);
     expect(calls.attributes).toEqual([
