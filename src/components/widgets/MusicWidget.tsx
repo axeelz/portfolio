@@ -38,6 +38,8 @@ const Glow = styled("img", {
     maxWidth: "none",
     objectFit: "cover",
     filter: "blur(36px)",
+    // Its own layer: iOS Safari otherwise repaints the blur in tiles and leaves hard edges.
+    transform: "translateZ(0)",
     opacity: "var(--glow-opacity)",
     pointerEvents: "none",
   },
