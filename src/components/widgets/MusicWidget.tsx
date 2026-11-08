@@ -5,7 +5,6 @@ import { styled } from "styled-system/jsx";
 
 import { copy } from "../../data/copy";
 import { fetchRandomTrack, portfolioQueryOptions, QUERY_KEYS } from "../../utils/fetch";
-import { playButtonClick } from "../../utils/sounds";
 import { Block, BlockLabel } from "../ui/shared";
 
 const Song = styled("div", {
@@ -266,7 +265,6 @@ const MusicWidget = () => {
   }, [track]);
 
   const anotherSong = async () => {
-    void playButtonClick();
     setPlaybackFailed(false);
     wasPlayingRef.current = isPlaying;
     audioRef.current?.pause();
