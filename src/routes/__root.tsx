@@ -3,7 +3,9 @@ import type { QueryClient } from "@tanstack/react-query";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { Suspense } from "react";
 
+import NotFound from "../components/NotFound";
 import appCss from "../index.css?url";
 import { CRITICAL_THEME_CSS, THEME_INIT_SCRIPT, getThemeColor } from "../theme/dom";
 
@@ -49,6 +51,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
   }),
   shellComponent: RootDocument,
+  // Same tree as the /404 route, Suspense boundary included, so its prerendered HTML hydrates on any unknown URL.
+  notFoundComponent: () => (
+    <Suspense>
+      <NotFound />
+    </Suspense>
+  ),
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {

@@ -42,6 +42,14 @@ export const copy = {
     elsewhere: "Elsewhere",
     views: "views",
   },
+  notFound: {
+    title: "Page not found",
+    label: "Error 404",
+    lead: "Nothing up here but",
+    clouds: "clouds",
+    stars: "stars",
+    home: "Let's get you back home",
+  },
 } as const;
 
 type Segment =

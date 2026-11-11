@@ -8,7 +8,7 @@ import ParisTime from "./ParisTime";
 import Sky from "./Sky";
 import { FitBox, fitText } from "./ui/shared";
 
-const Hero = styled("header", {
+export const Hero = styled("header", {
   base: {
     position: "sticky",
     top: 0,
@@ -32,7 +32,7 @@ const Hero = styled("header", {
   },
 });
 
-const Top = styled("div", {
+export const Top = styled("div", {
   base: {
     display: "flex",
     justifyContent: "space-between",
@@ -43,7 +43,7 @@ const Top = styled("div", {
   },
 });
 
-const Bio = styled("p", {
+export const Bio = styled("p", {
   base: {
     marginTop: "auto",
     maxWidth: "36ch",
@@ -76,9 +76,9 @@ const Bio = styled("p", {
   },
 });
 
-const NameBox = styled(FitBox, { base: { marginTop: "-0.4rem" } });
+export const NameBox = styled(FitBox, { base: { marginTop: "-0.4rem" } });
 
-const Name = styled("h1", {
+export const Name = styled("h1", {
   base: {
     ...fitText,
     "--fit": "4.73",
