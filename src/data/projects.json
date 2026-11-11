@@ -34,8 +34,9 @@
     {
       "name": "Link Manager",
       "image": "link-manager.webp",
-      "description": "A link redirection manager and shortener, with a dashboard to manage them.",
+      "description": "My personal link shortener, with a dashboard to manage links and track visits.",
       "links": {
+        "source": "https://github.com/axeelz/link-manager",
         "url": "https://axlz.me/why"
       }
     },
